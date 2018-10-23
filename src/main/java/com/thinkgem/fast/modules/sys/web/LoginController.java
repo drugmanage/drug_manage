@@ -148,7 +148,13 @@ public class LoginController extends BaseController{
 				return "redirect:" + adminPath + "/login";
 			}
 		}
-		
+
+		//TODO 增加默认为默认样式
+//		String theme =CookieUtils.getCookie(request, "theme");
+//		if(StringUtils.isBlank(theme)){
+//			CookieUtils.setCookie(response, "theme", "default");
+//		}
+
 		// 如果是手机登录，则返回JSON字符串
 		if (principal.isMobileLogin()){
 			if (request.getParameter("login") != null){
