@@ -66,6 +66,14 @@ public class RoleController extends BaseController {
 	public String form(Role role, Model model) {
 		if (role.getOffice()==null){
 			role.setOffice(UserUtils.getUser().getOffice());
+		}else{
+			//查询office信息 add by renshuo
+			if(StringUtils.isNotBlank(role.getOffice().getId())){
+				Office office = officeService.get(role.getOffice().getId());
+				if(office!=null){
+					role.setOffice(office);
+				}
+			}
 		}
 		model.addAttribute("role", role);
 		model.addAttribute("menuList", systemService.findAllMenu());
