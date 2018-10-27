@@ -6,9 +6,27 @@
 	<title>${fns:getConfig('productName')} 登录</title>
 	<meta name="decorator" content="blank"/>
 	<style type="text/css">
+	  /*   -----------------------------------------------------------
+		Rest Style
+		------------------------------------------------------------ */
+		body, div, img, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, legend, input, textarea, p, fieldset, table, pre, th, td, dl, dt, dd, blockquote{ margin: 0; padding: 0; }
+		html,body {
+		  height: 100%;
+		  font-family: "MicroSoft YaHei", tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;
+		}
+		input, button, select, textarea {
+		    font-family: "MicroSoft YaHei", tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif
+		}
+		ul,ol {
+		    list-style: none;
+		}
+		img {
+		    border :0;
+		}
       html,body,table{background-color:#f5f5f5;width:100%;height: 100%;text-align:center;}.form-signin-heading{font-family:Helvetica, Georgia, Arial, sans-serif, 黑体;font-size:36px;margin-bottom:20px;color:#0663a2;}
-      .form-signin{position:relative;text-align:left;width:300px;padding:25px 29px 29px;margin:0 auto 20px;background-color:#fff;border:1px solid #e5e5e5;
-        	-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.05);-moz-box-shadow:0 1px 2px rgba(0,0,0,.05);box-shadow:0 1px 2px rgba(0,0,0,.05);}
+      .form-signin{position:relative;text-align:left;width:300px;padding:25px 29px 29px;margin:0 auto 20px;
+      /*background-color:#fff;border:1px solid #e5e5e5;
+        	-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.05);-moz-box-shadow:0 1px 2px rgba(0,0,0,.05);box-shadow:0 1px 2px rgba(0,0,0,.05);*/}
       .form-signin .checkbox{margin-bottom:10px;color:#0663a2;} .form-signin .input-label{font-size:16px;line-height:23px;color:#999;}
       .form-signin .input-block-level{font-size:16px;height:auto;margin-bottom:15px;padding:7px;*width:283px;*padding-bottom:0;_padding:7px 7px 9px 7px;}
       .form-signin .btn.btn-large{font-size:16px;} .form-signin #themeSwitch{position:absolute;right:15px;bottom:10px;}
@@ -25,7 +43,25 @@
 		/*padding-right:13%;*/
 		position:relative;
 	  }
+	  #loginForm {
+	  	float: right;
+	    margin-top: 135px;
+	    width: 290px;
+	    margin-right: 290px;
+	    /*box-shadow: 0px 0px 15px #727272;
+	    -webkit-box-shadow: 0px 0px 15px #727272;
+	    -moz-box-shadow: 0px 0px 15px #727272;
+	    border-radius: 8px;
+	    -webkit-border-radius: 8px;
+	    -moz-border-radius: 8px;
+	    background: rgba(255,255,255,0.8);
+	    filter: progid:DXImageTransform.Micros*/
+	  }
     </style>
+    <!--[if lt IE 9]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#loginForm").validate({
@@ -57,7 +93,7 @@
 			<label id="loginError" class="error">${message}</label>
 		</div>
 	</div>
-	<h1 class="form-signin-heading">${fns:getConfig('productName')}</h1>
+	<!-- <h1 class="form-signin-heading">${fns:getConfig('productName')}</h1> -->
 	<form id="loginForm" class="form-signin" action="${ctx}/login" method="post">
 		<label class="input-label" for="username">登录名</label>
 		<input type="text" id="username" name="username" class="input-block-level required" value="${username}">
@@ -78,7 +114,7 @@
 			<%--<!--[if lte IE 6]><script type="text/javascript">$('#themeSwitch').hide();</script><![endif]-->--%>
 		<%--</div>--%>
 	</form>
-	<div class="footer">
+	<div class="footer" style="display:none;">
 		Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="${pageContext.request.contextPath}${fns:getFrontPath()}">${fns:getConfig('productName')}</a> - Powered By ${fns:getConfig('powered')} ${fns:getConfig('version')}
 	</div>
 	<script src="${ctxStatic}/flash/zoom.min.js" type="text/javascript"></script>

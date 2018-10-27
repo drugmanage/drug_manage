@@ -60,4 +60,7 @@
 	</table>
 	<div class="pagination">${page}</div>
 </body>
+<scriprt>
+$("#contentTable").jqGrid('filterToolbar',{searchOperators : true});
+</scriprt>
 </html>

@@ -3212,7 +3212,50 @@ the specific language governing permissions and limitations under the Apache Lic
         maximumSelectionSize: 0,
         id: function (e) { return e.id; },
         matcher: function(term, text) {
-            return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
+        	// Always return the object if there is nothing to compare
+        	if ($.trim(term) === '') {
+    			return text;
+        	}
+        	      
+        	// Do a recursive check for options with children
+        	if (text.children && text.children.length > 0) {
+    			// Clone the data object if there are children
+    	        // This is required as we modify the object to remove any non-matches
+        		var match = $.extend(true, {}, text);
+    	        // Check each child of the option
+    	        for (var c = text.children.length - 1; c >= 0; c--) {
+    	          var child = text.children[c];
+    	          var matches = matcher(term, child);
+    	          // If there wasn't a match, remove the object in the array
+    	          if (matches == null) {
+    	            match.children.splice(c, 1);
+    	          }
+    	        }
+    	        // If any children matched, return the new object
+    	        if (match.children.length > 0) {
+    	          return match;
+    	        }
+    	        // If there were no matching children, check just the plain object
+    	        return matcher(term, match);
+    	      }
+        	 
+	      var original = '';
+	      var term = stripDiacritics(term).toUpperCase()
+	      if (stripDiacritics(text).toPinYin != undefined) 
+	    	  original = stripDiacritics(text).toPinYin().indexOf(stripDiacritics(term).toUpperCase());//从pinyin.js中返回的拼音与输入的拼音比较，只从第一个开始有不间断的匹配就能展示，如果中间有断开例如："FAN"与"FAAN"则认为是不匹配
+	      	  if(original==-1){//此处是在中文没有匹配时，匹配对应的拼音
+	      		original = stripDiacritics(text).toUpperCase().indexOf(term);
+	      	  }
+	      	  
+	      // Check if the text contains the term
+	      if (original > -1) {//如果匹配则original为0
+	        return text;
+	      }
+	      // If it doesn't contain the term, don't return anything
+	      return null;
+        	      
+
+            //return stripDiacritics(''+text).toUpperCase().indexOf(stripDiacritics(''+term).toUpperCase()) >= 0;
         },
         separator: ",",
         tokenSeparators: [],
