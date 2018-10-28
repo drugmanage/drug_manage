@@ -333,7 +333,15 @@ public class SystemService extends BaseService implements InitializingBean {
 	public List<Menu> findAllMenu(){
 		return UserUtils.getMenuList();
 	}
-	
+
+	/**
+	 * 获取显示的菜单总条数
+	 * @return int
+	 */
+	public int findIsShowCountNum(){
+		return menuDao.findIsShowCountNum();
+	}
+
 	@Transactional(readOnly = false)
 	public void saveMenu(Menu menu) {
 		

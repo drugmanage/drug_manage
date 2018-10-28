@@ -1,10 +1,13 @@
 package com.thinkgem.fast.modules.sys.web;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.thinkgem.fast.common.config.Global;
+import com.thinkgem.fast.common.utils.StringUtils;
+import com.thinkgem.fast.common.web.BaseController;
+import com.thinkgem.fast.modules.sys.entity.Menu;
+import com.thinkgem.fast.modules.sys.service.SystemService;
+import com.thinkgem.fast.modules.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,14 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.thinkgem.fast.common.config.Global;
-import com.thinkgem.fast.common.utils.StringUtils;
-import com.thinkgem.fast.common.web.BaseController;
-import com.thinkgem.fast.modules.sys.entity.Menu;
-import com.thinkgem.fast.modules.sys.service.SystemService;
-import com.thinkgem.fast.modules.sys.utils.UserUtils;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单Controller
@@ -52,6 +51,11 @@ public class MenuController extends BaseController {
 		List<Menu> sourcelist = systemService.findAllMenu();
 		Menu.sortList(list, sourcelist, Menu.getRootId(), true);
         model.addAttribute("list", list);
+		int total = systemService.findIsShowCountNum();
+		//增加汇总
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("total",total);
+		model.addAttribute("totalInfo", map);
 		return "modules/sys/menuList";
 	}
 
@@ -145,7 +149,7 @@ public class MenuController extends BaseController {
 	/**
 	 * isShowHide是否显示隐藏菜单
 	 * @param extId
-	 * @param isShowHidden
+	 * @param isShowHide
 	 * @param response
 	 * @return
 	 */

@@ -42,6 +42,16 @@
 		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
 		ORDER BY a.sort
 	</select>
+
+	<!--查询功能菜单，不包含查询，修改，新增类型-->
+	<select id="findIsShowCountNum" resultType="int">
+		SELECT
+			count(*)
+		FROM sys_menu a
+		<include refid="menuJoins"/>
+		WHERE a.del_flag = 0
+		and a.is_show=1
+	</select>
 	
 	<select id="findByParentIdsLike" resultType="Menu">
 		SELECT

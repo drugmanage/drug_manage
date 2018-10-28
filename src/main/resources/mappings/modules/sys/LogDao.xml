@@ -32,7 +32,16 @@
 		<if test="exception != null and exception != ''">
 			AND a.type = #{TYPE_EXCEPTION}
 		</if>
-		ORDER BY a.create_date DESC
+
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date DESC
+			</otherwise>
+		</choose>
+
 	</select>
 	
 	<insert id="insert">
