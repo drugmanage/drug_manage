@@ -39,12 +39,7 @@
         </thead>
 
         <tbody>
-        <c:if test="${totalInfo!=null}">
-            <tr>
-                <td>汇总</td>
-                <td colspan="6">${totalInfo.total}</td>
-            </tr>
-        </c:if>
+
         <c:forEach items="${list}" var="menu">
             <tr id="${menu.id}" pId="${menu.parent.id ne '1'?menu.parent.id:'0'}">
                 <td nowrap><i class="icon-${not empty menu.icon?menu.icon:' hide'}"></i><a
@@ -70,7 +65,14 @@
                     </td>
                 </shiro:hasPermission>
             </tr>
-        </c:forEach></tbody>
+        </c:forEach>
+        <c:if test="${totalInfo!=null}">
+            <tr>
+                <td>汇总</td>
+                <td colspan="6">${totalInfo.total}</td>
+            </tr>
+        </c:if>
+        </tbody>
     </table>
     <shiro:hasPermission name="sys:menu:edit">
         <div class="form-actions pagination-left">
