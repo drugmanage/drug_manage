@@ -70,24 +70,28 @@
         </shiro:hasPermission>
     </tr>
 
-    <tr>
+    <tr >
         <td><input id="queryRoleName" class="input-medium"  placeholder="输入完成后请按回车键查询"></td>
         <td><input id="queryEngName" class="input-medium"  placeholder="输入完成后请按回车键查询"></td>
         <td>
-            <sys:treeselect id="queryOffice" name="queryOfficeId" value="${officeId}" labelName="queryOfficeName"
+            <sys:treeselect id="queryO ffice" name="queryOfficeId" value="${officeId}" labelName="queryOfficeName"
                             labelValue="${officeName}"
                             title="机构" url="/sys/office/treeData" cssClass="required" callBack="querySearch()"/>
         </td>
         <td>
             <select id="queryDataScope" class="input-medium select2-offscreen" tabindex="-1">
                 <option value="-1" <c:if test="${dataScope==null} || ${dataScope=='-1'} ">selected="selected"</c:if> >请选择</option>
-                <option value="1" <c:if test="${dataScope!=null} || ${dataScope=='1'} ">selected="selected"</c:if>>所有数据</option>
-                <option value="2" <c:if test="${dataScope!=null} || ${dataScope=='2'} ">selected="selected"</c:if>>所在公司及以下数据</option>
-                <option value="3" <c:if test="${dataScope!=null} || ${dataScope=='3'} ">selected="selected"</c:if>>所在公司数据</option>
-                <option value="4" <c:if test="${dataScope!=null} || ${dataScope=='4'} ">selected="selected"</c:if>>所在部门及以下数据</option>
-                <option value="5" <c:if test="${dataScope!=null} || ${dataScope=='5'} ">selected="selected"</c:if>>所在部门数据</option>
-                <option value="8" <c:if test="${dataScope!=null} || ${dataScope=='8'} ">selected="selected"</c:if>>仅本人数据</option>
-                <option value="9" <c:if test="${dataScope!=null} || ${dataScope=='9'} ">selected="selected"</c:if>>按明细设置</option>
+                <c:forEach items="${fns:getDictList('sys_data_scope')}" var="dict">
+                    <option value="${dict.value}" <c:if test="${dataScope!=null} || ${dataScope==dict.value} ">selected="selected"</c:if>>${dict.label}</option>
+                </c:forEach>
+                <%--<option value="-1" <c:if test="${dataScope==null} || ${dataScope=='-1'} ">selected="selected"</c:if> >请选择</option>--%>
+                <%--<option value="1" <c:if test="${dataScope!=null} || ${dataScope=='1'} ">selected="selected"</c:if>>所有数据</option>--%>
+                <%--<option value="2" <c:if test="${dataScope!=null} || ${dataScope=='2'} ">selected="selected"</c:if>>所在公司及以下数据</option>--%>
+                <%--<option value="3" <c:if test="${dataScope!=null} || ${dataScope=='3'} ">selected="selected"</c:if>>所在公司数据</option>--%>
+                <%--<option value="4" <c:if test="${dataScope!=null} || ${dataScope=='4'} ">selected="selected"</c:if>>所在部门及以下数据</option>--%>
+                <%--<option value="5" <c:if test="${dataScope!=null} || ${dataScope=='5'} ">selected="selected"</c:if>>所在部门数据</option>--%>
+                <%--<option value="8" <c:if test="${dataScope!=null} || ${dataScope=='8'} ">selected="selected"</c:if>>仅本人数据</option>--%>
+                <%--<option value="9" <c:if test="${dataScope!=null} || ${dataScope=='9'} ">selected="selected"</c:if>>按明细设置</option>--%>
             </select>
         </td>
         <td></td>
