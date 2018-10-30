@@ -3212,7 +3212,7 @@ the specific language governing permissions and limitations under the Apache Lic
         maximumSelectionSize: 0,
         id: function (e) { return e.id; },
         matcher: function(term, text) {
-        	// Always return the object if there is nothing to compare
+/*        	// Always return the object if there is nothing to compare
         	if ($.trim(term) === '') {
     			return text;
         	}
@@ -3238,7 +3238,7 @@ the specific language governing permissions and limitations under the Apache Lic
     	        // If there were no matching children, check just the plain object
     	        return matcher(term, match);
     	      }
-        	 
+        	 */
 	      var original = '';
 	      var term = stripDiacritics(term).toUpperCase()
 	      if (stripDiacritics(text).toPinYin != undefined) 

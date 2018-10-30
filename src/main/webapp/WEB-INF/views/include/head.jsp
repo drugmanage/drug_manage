@@ -11,6 +11,7 @@
 <link href="${ctxStatic}/jquery-select2/3.4/select2.min.css" rel="stylesheet" />
 <script src="${ctxStatic}/jquery-select2/3.4/select2.js" type="text/javascript"></script>
 <script src="${ctxStatic}/jquery-select2/3.4/pinyin.js" type="text/javascript"></script>
+<script src="${ctxStatic}/jquery-select2/3.4/pinyin2.js" type="text/javascript"></script>
 <link href="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/jquery-validation/1.11.0/jquery.validate.min.js" type="text/javascript"></script>
 <link href="${ctxStatic}/jquery-jbox/2.3/Skins/Bootstrap/jbox.min.css" rel="stylesheet" />
