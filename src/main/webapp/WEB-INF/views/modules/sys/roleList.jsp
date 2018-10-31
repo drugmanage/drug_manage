@@ -42,6 +42,10 @@
             $("#searchForm").submit();
         }
     </script>
+    <style type="text/css">
+
+    </style>
+
 </head>
 <body>
 <ul class="nav nav-tabs">
@@ -74,7 +78,7 @@
         <td><input id="queryRoleName" class="input-medium"  placeholder="输入完成后请按回车键查询"></td>
         <td><input id="queryEngName" class="input-medium"  placeholder="输入完成后请按回车键查询"></td>
         <td>
-            <sys:treeselect id="queryO ffice" name="queryOfficeId" value="${officeId}" labelName="queryOfficeName"
+            <sys:treeselect id="queryOffice" name="queryOfficeId" value="${officeId}" labelName="queryOfficeName"
                             labelValue="${officeName}"
                             title="机构" url="/sys/office/treeData" cssClass="required" callBack="querySearch()"/>
         </td>
