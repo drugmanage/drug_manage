@@ -20,4 +20,7 @@
 <script src="${ctxStatic}/common/mustache.min.js" type="text/javascript"></script>
 <link href="${ctxStatic}/common/fast.css" type="text/css" rel="stylesheet" />
 <script src="${ctxStatic}/common/fast.js" type="text/javascript"></script>
+<!--获取拼音-->
+<script src="${ctxStatic}/common/Mtils.js" type="text/javascript"></script>
+
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>
