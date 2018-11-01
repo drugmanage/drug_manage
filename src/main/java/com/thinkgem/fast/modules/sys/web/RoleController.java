@@ -3,6 +3,7 @@ package com.thinkgem.fast.modules.sys.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -55,7 +56,10 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Role role, Model model) {
+	public String list(HttpServletRequest request, Role role, Model model) {
+		Map<String,Object> map = getParams(request,model);
+		//map放入实体中，queryMap在父类中，xml里获取queryMap
+		role.setQueryMap(map);
 		List<Role> list = systemService.findAllRole();
 		model.addAttribute("list", list);
 		return "modules/sys/roleList";
@@ -265,8 +269,8 @@ public class RoleController extends BaseController {
 
 	/**
 	 * 验证角色英文名是否有效
-	 * @param oldName
-	 * @param name
+	 * @param oldEnname
+	 * @param enname
 	 * @return
 	 */
 	@RequiresPermissions("user")

@@ -40,7 +40,9 @@ public abstract class BaseEntity<T> implements Serializable {
 	 * 当前实体分页对象
 	 */
 	protected Page<T> page;
-	
+
+	protected Map<String,Object> queryMap;
+
 	/**
 	 * 自定义SQL（SQL标识，SQL内容）
 	 */
@@ -95,6 +97,19 @@ public abstract class BaseEntity<T> implements Serializable {
 	public Page<T> setPage(Page<T> page) {
 		this.page = page;
 		return page;
+	}
+
+	@JsonIgnore
+	@XmlTransient
+	public Map<String, Object> getQueryMap() {
+		if (sqlMap == null){
+			sqlMap = Maps.newHashMap();
+		}
+		return queryMap;
+	}
+
+	public void setQueryMap(Map<String, Object> queryMap) {
+		this.queryMap = queryMap;
 	}
 
 	@JsonIgnore
