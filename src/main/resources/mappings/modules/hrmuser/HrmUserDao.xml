@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.hrmuser.dao.HrmUserDao">
+    
+	<sql id="hrmUserColumns">
+		a.id AS "id",
+		a.sys_user_id AS "sysUser",
+		a.emp_number AS "empNumber",
+		a.emp_name AS "empName",
+		a.pinyin AS "pinyin",
+		a.birth AS "birth",
+		a.sex AS "sex",
+		a.age AS "age",
+		a.education AS "education",
+		a.native_place AS "nativePlace",
+		a.marital_status AS "maritalStatus",
+		a.nation AS "nation",
+		a.qq_number AS "qqNumber",
+		a.mobile AS "mobile",
+		a.email AS "email",
+		a.zip_code AS "zipCode",
+		a.pro_code AS "proCode",
+		a.city_code AS "cityCode",
+		a.county_code AS "countyCode",
+		a.contact_address AS "contactAddress",
+		a.school_name AS "schoolName",
+		a.reg_time AS "regTime",
+		a.job_objective AS "jobObjective",
+		a.health AS "health",
+		a.political_outlook AS "politicalOutlook",
+		a.telephone AS "telephone",
+		a.emergency_contact_name AS "emergencyContactName",
+		a.emergency_contact_phone AS "emergencyContactPhone",
+		a.personal_desc AS "personalDesc",
+		a.apply_time AS "applyTime",
+		a.user_type AS "userType",
+		a.cert_type AS "certType",
+		a.cert_number AS "certNumber",
+		a.company_type AS "companyType",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="hrmUserJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.sys_user_id
+	</sql>
+    
+	<select id="get" resultType="HrmUser">
+		SELECT 
+			<include refid="hrmUserColumns"/>
+		FROM hrm_user a
+		<include refid="hrmUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="HrmUser">
+		SELECT 
+			<include refid="hrmUserColumns"/>
+		FROM hrm_user a
+		<include refid="hrmUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="empNumber != null and empNumber != ''">
+				AND a.emp_number = #{empNumber}
+			</if>
+			<if test="empName != null and empName != ''">
+				AND a.emp_name = #{empName}
+			</if>
+			<if test="pinyin != null and pinyin != ''">
+				AND a.pinyin = #{pinyin}
+			</if>
+			<if test="education != null and education != ''">
+				AND a.education = #{education}
+			</if>
+			<if test="qqNumber != null and qqNumber != ''">
+				AND a.qq_number = #{qqNumber}
+			</if>
+			<if test="mobile != null and mobile != ''">
+				AND a.mobile = #{mobile}
+			</if>
+			<if test="email != null and email != ''">
+				AND a.email = #{email}
+			</if>
+			<if test="beginRegTime != null and endRegTime != null and beginRegTime != '' and endRegTime != ''">
+				AND a.reg_time BETWEEN #{beginRegTime} AND #{endRegTime}
+			</if>
+			<if test="jobObjective != null and jobObjective != ''">
+				AND a.job_objective = #{jobObjective}
+			</if>
+			<if test="userType != null and userType != ''">
+				AND a.user_type = #{userType}
+			</if>
+			<if test="companyType != null and companyType != ''">
+				AND a.company_type = #{companyType}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="HrmUser">
+		SELECT 
+			<include refid="hrmUserColumns"/>
+		FROM hrm_user a
+		<include refid="hrmUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO hrm_user(
+			id,
+			sys_user_id,
+			emp_number,
+			emp_name,
+			pinyin,
+			birth,
+			sex,
+			age,
+			education,
+			native_place,
+			marital_status,
+			nation,
+			qq_number,
+			mobile,
+			email,
+			zip_code,
+			pro_code,
+			city_code,
+			county_code,
+			contact_address,
+			school_name,
+			reg_time,
+			job_objective,
+			health,
+			political_outlook,
+			telephone,
+			emergency_contact_name,
+			emergency_contact_phone,
+			personal_desc,
+			apply_time,
+			user_type,
+			cert_type,
+			cert_number,
+			company_type,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{sysUser},
+			#{empNumber},
+			#{empName},
+			#{pinyin},
+			#{birth},
+			#{sex},
+			#{age},
+			#{education},
+			#{nativePlace},
+			#{maritalStatus},
+			#{nation},
+			#{qqNumber},
+			#{mobile},
+			#{email},
+			#{zipCode},
+			#{proCode},
+			#{cityCode},
+			#{countyCode},
+			#{contactAddress},
+			#{schoolName},
+			#{regTime},
+			#{jobObjective},
+			#{health},
+			#{politicalOutlook},
+			#{telephone},
+			#{emergencyContactName},
+			#{emergencyContactPhone},
+			#{personalDesc},
+			#{applyTime},
+			#{userType},
+			#{certType},
+			#{certNumber},
+			#{companyType},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE hrm_user SET 	
+			sys_user_id = #{sysUser},
+			emp_number = #{empNumber},
+			emp_name = #{empName},
+			pinyin = #{pinyin},
+			birth = #{birth},
+			sex = #{sex},
+			age = #{age},
+			education = #{education},
+			native_place = #{nativePlace},
+			marital_status = #{maritalStatus},
+			nation = #{nation},
+			qq_number = #{qqNumber},
+			mobile = #{mobile},
+			email = #{email},
+			zip_code = #{zipCode},
+			pro_code = #{proCode},
+			city_code = #{cityCode},
+			county_code = #{countyCode},
+			contact_address = #{contactAddress},
+			school_name = #{schoolName},
+			reg_time = #{regTime},
+			job_objective = #{jobObjective},
+			health = #{health},
+			political_outlook = #{politicalOutlook},
+			telephone = #{telephone},
+			emergency_contact_name = #{emergencyContactName},
+			emergency_contact_phone = #{emergencyContactPhone},
+			personal_desc = #{personalDesc},
+			apply_time = #{applyTime},
+			user_type = #{userType},
+			cert_type = #{certType},
+			cert_number = #{certNumber},
+			company_type = #{companyType},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE hrm_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1067,13 +1067,16 @@ textarea::-webkit-input-placeholder {
   width: 150px;
 }
 .input-large {
-  width: 210px;
+  width: 224px;
 }
 .input-xlarge {
   width: 270px;
 }
 .input-xxlarge {
   width: 530px;
+}
+.input-xlselect{
+  width:283px
 }
 input[class*="span"],
 select[class*="span"],

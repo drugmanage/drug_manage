@@ -24,3 +24,10 @@
 <script src="${ctxStatic}/common/Mtils.js" type="text/javascript"></script>
 
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>
+
+<style>
+    .div-a{ float:left;width:49%;border:0px solid #F00}
+    .div-b{ float:left;width:49%;border:0px solid #000}
+    .div-c{ margin:150px 180px; width:400px;  vertical-align:middel; border:0px solid #F00}
+    .textarea-xlarge {width: 915px;}
+</style>

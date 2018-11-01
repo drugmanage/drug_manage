@@ -1294,7 +1294,7 @@ textarea::-webkit-input-placeholder {
 }
 
 .input-large {
-  width: 210px;
+  width: 224px;
 }
 
 .input-xlarge {
@@ -1303,6 +1303,9 @@ textarea::-webkit-input-placeholder {
 
 .input-xxlarge {
   width: 530px;
+}
+.input-xlselect{
+  width:283px
 }
 
 input[class*="span"],
