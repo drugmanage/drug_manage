@@ -75,8 +75,8 @@
     </tr>
 
     <tr >
-        <td><input id="queryRoleName" class="input-medium"  placeholder="输入完成后请按回车键查询"></td>
-        <td><input id="queryEngName" class="input-medium"  placeholder="输入完成后请按回车键查询"></td>
+        <td><input id="queryRoleName" class="input-medium"  placeholder="输入完成后请按回车键查询" value="${roleName}"></td>
+        <td><input id="queryEngName" class="input-medium"  placeholder="输入完成后请按回车键查询" value="${engName}"></td>
         <td>
             <sys:treeselect id="queryOffice" name="queryOfficeId" value="${officeId}" labelName="queryOfficeName"
                             labelValue="${officeName}"
@@ -84,9 +84,9 @@
         </td>
         <td>
             <select id="queryDataScope" class="input-medium select2-offscreen" tabindex="-1">
-                <option value="-1" <c:if test="${dataScope==null} || ${dataScope=='-1'} ">selected="selected"</c:if> >请选择</option>
+                <option value="" <c:if test="${empty dataScope} ">selected="selected"</c:if> >请选择</option>
                 <c:forEach items="${fns:getDictList('sys_data_scope')}" var="dict">
-                    <option value="${dict.value}" <c:if test="${dataScope!=null} || ${dataScope==dict.value} ">selected="selected"</c:if>>${dict.label}</option>
+                    <option value="${dict.value}" <c:if test="${not empty dataScope && dataScope eq dict.value}">selected="selected"</c:if>>${dict.label}</option>
                 </c:forEach>
                 <%--<option value="-1" <c:if test="${dataScope==null} || ${dataScope=='-1'} ">selected="selected"</c:if> >请选择</option>--%>
                 <%--<option value="1" <c:if test="${dataScope!=null} || ${dataScope=='1'} ">selected="selected"</c:if>>所有数据</option>--%>

@@ -2,9 +2,9 @@ package com.thinkgem.fast.common.web;
 
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -111,7 +112,7 @@ public abstract class BaseController {
 	
 	/**
 	 * 添加Model消息
-	 * @param message
+	 * @param messages
 	 */
 	protected void addMessage(Model model, String... messages) {
 		StringBuilder sb = new StringBuilder();
@@ -123,7 +124,7 @@ public abstract class BaseController {
 	
 	/**
 	 * 添加Flash消息
-	 * @param message
+	 * @param messages
 	 */
 	protected void addMessage(RedirectAttributes redirectAttributes, String... messages) {
 		StringBuilder sb = new StringBuilder();
@@ -209,5 +210,47 @@ public abstract class BaseController {
 //			}
 		});
 	}
-	
+
+
+	/**
+	 * 获取查询参数（前缀为query.的参数）方法并放入model回显
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	public static Map<String,Object> getParams(HttpServletRequest request,Model model){
+
+		return getParams(request, new HashMap<String,Object>(),model);
+	}
+	public static Map<String,Object> getParams(HttpServletRequest request,Map<String,Object> map, Model model){
+		Enumeration enu=request.getParameterNames();
+		while(enu.hasMoreElements()){
+			String paraName=(String)enu.nextElement();
+			if(paraName.indexOf("query.") >= 0){
+				String param = paraName.substring(paraName.indexOf(".") + 1);
+				Object value = request.getParameter(paraName).replaceAll("%","\\\\%").replaceAll("_","\\\\_");
+				param = param.replace("#", "");
+
+				if(null != value && !StringUtils.isEmpty(value.toString()) && !sqlValidate((String)value)){
+					map.put(param, value);
+					model.addAttribute(param,value);
+				}
+			}
+		}
+		return map;
+	}
+
+	//效验SQL关键字
+	protected static boolean sqlValidate(String str) {
+		str = str.toLowerCase();//统一转为小写
+		//设定过滤掉的sql关键字，在每个关键字后面加个空格,可以避免单词中的某些字符正好匹配关键字，被清空的错误判断
+		String badStr = "and |or |exec |execute |insert |select |delete |truncate |update |alter |drop ";
+		String[] badStrs = badStr.split("\\|");
+		for (int i = 0; i < badStrs.length; i++) {
+			if (str.indexOf(badStrs[i]) >= 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
