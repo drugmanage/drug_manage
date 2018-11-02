@@ -2,7 +2,11 @@ package com.thinkgem.fast.modules.hrmuser.entity;
 
 import com.thinkgem.fast.modules.sys.entity.User;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
@@ -50,7 +54,37 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private String companyType;		// 公司类型
 	private Date beginRegTime;		// 开始 应聘登记时间
 	private Date endRegTime;		// 结束 应聘登记时间
-	
+	//对应的教育信息列表信息
+	private List<HrmEducation> hrmEduList = new ArrayList<HrmEducation>();
+	//对应的家庭人员信息列表信息
+	private List<HrmFamilyContact> hrmFamilyList;
+	//对应的工作经历列表信息
+	private List<HrmWorkExper> hrmWorkExperList;
+
+	public List<HrmEducation> getHrmEduList() {
+		return hrmEduList;
+	}
+
+	public void setHrmEduList(List<HrmEducation> hrmEduList) {
+		this.hrmEduList = hrmEduList;
+	}
+
+	public List<HrmFamilyContact> getHrmFamilyList() {
+		return hrmFamilyList;
+	}
+
+	public void setHrmFamilyList(List<HrmFamilyContact> hrmFamilyList) {
+		this.hrmFamilyList = hrmFamilyList;
+	}
+
+	public List<HrmWorkExper> getHrmWorkExperList() {
+		return hrmWorkExperList;
+	}
+
+	public void setHrmWorkExperList(List<HrmWorkExper> hrmWorkExperList) {
+		this.hrmWorkExperList = hrmWorkExperList;
+	}
+
 	public HrmUser() {
 		super();
 	}

@@ -3,6 +3,7 @@ package com.thinkgem.fast.modules.hrmuser.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.fast.modules.hrmuser.entity.HrmEducation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,9 @@ import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.modules.hrmuser.entity.HrmUser;
 import com.thinkgem.fast.modules.hrmuser.service.HrmUserService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 内部员工信息操作Controller
@@ -64,7 +68,9 @@ public class HrmUserController extends BaseController {
 		if (!beanValidator(model, hrmUser)){
 			return form(hrmUser, model);
 		}
-		hrmUserService.save(hrmUser);
+		//TODO 页面删除后下标还在原来位置映射后list中的下标对应所以需要判断改list集合中对象的属性是否不为空在进行保存
+//		hrmUser.getHrmEduList()
+//		hrmUserService.save(hrmUser);
 		addMessage(redirectAttributes, "保存内部员工成功");
 		return "redirect:"+Global.getAdminPath()+"/hrmuser/hrmUser/?repage";
 	}
