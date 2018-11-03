@@ -22,7 +22,6 @@
                     }
                 }
             });
-
             //Tab页签
             $('#myTab a:first').tab('show');
             $('#myTab a').click(function (e) {
@@ -31,124 +30,359 @@
             });
         });
         var oper = {
-            edu :{
+            edu: {
                 socpName: "edu_",
-                add : function() {
-                    if($("input[name='itemEduId']") && $("input[name='itemEduId']").length!=0){
-                        var itemEduId=[];
-                        $("input[name='itemEduId']").each(function(){
+                add: function () {
+                    if ($("input[name='itemEduId']") && $("input[name='itemEduId']").length != 0) {
+                        var itemEduId = [];
+                        $("input[name='itemEduId']").each(function () {
                             itemEduId.push(parseInt($(this).val()));
                         });
-                        if(itemEduId.length!=0){
+                        if (itemEduId.length != 0) {
                             var maxId = Math.max.apply(null, itemEduId);
-                            if(maxId != undefined){
-                                var newMaxId=maxId+1;
+                            if (maxId != undefined) {
+                                var newMaxId = maxId + 1;
                                 var html = this.appendHtml(newMaxId);
-                                $("#"+this.socpName+"tr_"+maxId).after(html);
+                                $("#" + this.socpName + "tr_" + maxId).after(html);
                             }
                         }
-                    }else{
-                        var newMaxId=0;
+                    } else {
+                        var newMaxId = 0;
                         var html = this.appendHtml(newMaxId);
-                        $("#"+this.socpName+"contentField").html(html);
+                        $("#" + this.socpName + "contentField").html(html);
                     }
                 },
-                del : function(itemEduId){
-                    $("#"+this.socpName+"tr_"+itemEduId).remove();
+                del: function (itemEduId) {
+                    $("#" + this.socpName + "tr_" + itemEduId).remove();
                 },
-                appendHtml :function(newMaxId){
-                    var trStr='<tr id="'+this.socpName+'tr_'+newMaxId+'">'
-                        +'<td>'
-                        +'<input type="hidden"  name="itemEduId" value="'+newMaxId+'"/>'
-                        +'<input type="text" name="hrmEduList['+newMaxId+'].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                        +'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" name="hrmEduList['+newMaxId+'].endDate" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                        +'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<select class="table-form-control" id="selectOptId_'+newMaxId+'" onchange="changeDefault('+newMaxId+')" name="hrmEduList['+newMaxId+'].stage">'
+                appendHtml: function (newMaxId) {
+                    var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
+                        + '<td>'
+                        + '<input type="hidden"  name="itemEduId" value="' + newMaxId + '"/>'
+                        + '<input type="text" name="hrmEduList[' + newMaxId + '].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
+                        + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" name="hrmEduList[' + newMaxId + '].endDate" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
+                        + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<select class="table-form-control" id="selectOptId_' + newMaxId + '" onchange="changeDefault(' + newMaxId + ')" name="hrmEduList[' + newMaxId + '].stage">'
                         <c:forEach items="${fns:getDictList('edu_stage')}" var="dict" varStatus="idx">
-                        +'<option value="${dict.value}">${dict.label}</option>'
+                        + '<option value="${dict.value}">${dict.label}</option>'
                         </c:forEach>
-                        +'</select>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmEduList['+newMaxId+'].schoolName" value="" valid="vtext"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmEduList['+newMaxId+'].major"  value="" valid="vtext"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmEduList['+newMaxId+'].witness" value="" valid="vtext"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmEduList['+newMaxId+'].phone" value="" valid="vnum"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<a href="javascript:void(0)" class="btnDel" onclick="oper.edu.del('+newMaxId+');">删除</a>'
-                        +'</td>'
-                        +'</tr>';
-                    var html=trStr;
+                        + '</select>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].schoolName" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].major"  value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].witness" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].phone" value="" valid="vnum"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<a href="javascript:void(0)" class="btnDel" onclick="oper.edu.del(' + newMaxId + ');">删除</a>'
+                        + '</td>'
+                        + '</tr>';
+                    var html = trStr;
                     return html;
                 }
             },
-            work:{
+            work: {
                 socpName: "work_",
                 //工作经历页面
-                add : function() {
-                    if($("input[name='itemWorkId']") && $("input[name='itemWorkId']").length!=0){
-                        var itemWorkId=[];
-                        $("input[name='itemWorkId']").each(function(){
+                add: function () {
+                    if ($("input[name='itemWorkId']") && $("input[name='itemWorkId']").length != 0) {
+                        var itemWorkId = [];
+                        $("input[name='itemWorkId']").each(function () {
                             itemWorkId.push(parseInt($(this).val()));
                         });
-                        if(itemWorkId.length!=0){
+                        if (itemWorkId.length != 0) {
                             var maxId = Math.max.apply(null, itemWorkId);
-                            if(maxId != undefined){
-                                var newMaxId=maxId+1;
+                            if (maxId != undefined) {
+                                var newMaxId = maxId + 1;
                                 var html = this.appendHtml(newMaxId);
-                                $("#"+this.socpName+"tr_"+maxId).after(html);
+                                $("#" + this.socpName + "tr_" + maxId).after(html);
                             }
                         }
-                    }else{
-                        var newMaxId=0;
+                    } else {
+                        var newMaxId = 0;
                         var html = this.appendHtml(newMaxId);
-                        $("#"+this.socpName+"contentField").html(html);
+                        $("#" + this.socpName + "contentField").html(html);
                     }
                 },
-                del : function(itemWorkId){
-                    $("#"+this.socpName+"tr_"+itemWorkId).remove();
+                del: function (itemWorkId) {
+                    $("#" + this.socpName + "tr_" + itemWorkId).remove();
                 },
-                appendHtml :function(newMaxId){
-                    var trStr='<tr id="'+this.socpName+'tr_'+newMaxId+'">'
-                        +'<td>'
-                        +'<input type="hidden"  name="itemWorkId" value="'+newMaxId+'"/>'
-                        +'<input type="text" name="hrmWorkExperList['+newMaxId+'].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                        +'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" name="hrmWorkExperList['+newMaxId+'].endDate" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                        +'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
-                        +'</td>'
+                appendHtml: function (newMaxId) {
+                    var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
+                        + '<td>'
+                        + '<input type="hidden"  name="itemWorkId" value="' + newMaxId + '"/>'
+                        + '<input type="text" name="hrmWorkExperList[' + newMaxId + '].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
+                        + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" name="hrmWorkExperList[' + newMaxId + '].endDate" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
+                        + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
+                        + '</td>'
 
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmWorkExperList['+newMaxId+'].companyName" value="" valid="vtext"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmWorkExperList['+newMaxId+'].companyAddress"  value="" valid="vtext"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmWorkExperList['+newMaxId+'].post" value="" valid="vtext"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<input type="text" class="table-form-control" name="hrmWorkExperList['+newMaxId+'].phone" value="" valid="vnum"/>'
-                        +'</td>'
-                        +'<td>'
-                        +'<a href="javascript:void(0)" class="btnDel" onclick="oper.work.del('+newMaxId+');">删除</a>'
-                        +'</td>'
-                        +'</tr>';
-                    var html=trStr;
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].companyName" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].companyAddress"  value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].post" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].phone" value="" valid="vnum"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<a href="javascript:void(0)" class="btnDel" onclick="oper.work.del(' + newMaxId + ');">删除</a>'
+                        + '</td>'
+                        + '</tr>';
+                    var html = trStr;
+                    return html;
+                }
+            },
+            family: {
+                socpName: "family_",
+                //工作经历页面
+                add: function () {
+                    if ($("input[name='itemFamilyId']") && $("input[name='itemFamilyId']").length != 0) {
+                        var itemFamilyId = [];
+                        $("input[name='itemFamilyId']").each(function () {
+                            itemFamilyId.push(parseInt($(this).val()));
+                        });
+                        if (itemFamilyId.length != 0) {
+                            var maxId = Math.max.apply(null, itemFamilyId);
+                            if (maxId != undefined) {
+                                var newMaxId = maxId + 1;
+                                var html = this.appendHtml(newMaxId);
+                                $("#" + this.socpName + "tr_" + maxId).after(html);
+                            }
+                        }
+                    } else {
+                        var newMaxId = 0;
+                        var html = this.appendHtml(newMaxId);
+                        $("#" + this.socpName + "contentField").html(html);
+                    }
+                },
+                del: function (itemWorkId) {
+                    $("#" + this.socpName + "tr_" + itemWorkId).remove();
+                },
+                appendHtml: function (newMaxId) {
+                    var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
+
+                        + '<td>'
+                        + '<input type="hidden" name="itemFamilyId" value="' + newMaxId + '"/>'
+                        + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].name" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].relationship" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].workUnit"  value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].post" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].phone" value="" valid="vnum"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<a href="javascript:void(0)" class="btnDel" onclick="oper.family.del(' + newMaxId + ');">删除</a>'
+                        + '</td>'
+                        + '</tr>';
+                    var html = trStr;
+                    return html;
+                }
+            },
+            bank: {
+                socpName: "bank_",
+                //工作经历页面
+                add: function () {
+                    if ($("input[name='itemBankId']") && $("input[name='itemBankId']").length != 0) {
+                        var itemBankId = [];
+                        $("input[name='itemBankId']").each(function () {
+                            itemBankId.push(parseInt($(this).val()));
+                        });
+                        if (itemBankId.length != 0) {
+                            var maxId = Math.max.apply(null, itemBankId);
+                            if (maxId != undefined) {
+                                var newMaxId = maxId + 1;
+                                var html = this.appendHtml(newMaxId);
+                                $("#" + this.socpName + "tr_" + maxId).after(html);
+                            }
+                        }
+                    } else {
+                        var newMaxId = 0;
+                        var html = this.appendHtml(newMaxId);
+                        $("#" + this.socpName + "contentField").html(html);
+                    }
+                },
+                del: function (itemBankId) {
+                    $("#" + this.socpName + "tr_" + itemBankId).remove();
+                },
+                appendHtml: function (newMaxId) {
+                    var frontUploadId="front"+newMaxId;
+                    var backUploadId = "back"+newMaxId;
+                    var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
+                        + '<td>'
+                        + '<input type="hidden" name="itemBankId" value="' + newMaxId + '"/>'
+                        + '<select class="table-form-control" name="hrmBanksList[' + newMaxId + '].bank">'
+                        + '<c:forEach items="${fns:getDictList('bank')}" var="dict" varStatus="idx">'
+                        + '<option value="${dict.value}"  >${dict.label}</option>'
+                        + '</c:forEach>'
+                        + '</select>'
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmBanksList[' + newMaxId + '].bankNumber" value="" valid="vtext"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<select class="table-form-control" name="hrmBanksList[' + newMaxId + '].status">'
+                        + '<c:forEach items="${fns:getDictList('bank_status')}" var="dict" varStatus="idx">'
+                        + '<option value="${dict.value}">${dict.label}</option>'
+                        + '</c:forEach>'
+                        + '</select>'
+
+                        + '</td>'
+                        + '<td>'
+
+                        + '<input id="nameImage' + frontUploadId + '" name="hrmBanksList[' + newMaxId + '].positivePhoto" type="hidden" >'
+                        + '<ol id="nameImage' + frontUploadId + 'Preview"><li style="list-style:none;padding-top:5px;">无</li></ol>'
+
+                        + '<a href="javascript:" onclick="nameImage' + frontUploadId + 'FinderOpen();" class="btn" id="limitAdd">添加</a>&nbsp;<a href="javascript:" onclick="nameImage' + frontUploadId + 'DelAll();" class="btn">清除</a>'
+                        + '<script type="text/javascript">'
+                        + 'function nameImage' + frontUploadId + 'FinderOpen(){\r\n'
+                        + 'var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);\r\n'
+                        + 'var url = "${ctxStatic}/ckfinder/ckfinder.html?type=images&start=images:/photo/hrmuser/bank/"+year+"/"+month+'
+                        + '"/&action=js&func=nameImage' + frontUploadId + 'SelectAction&thumbFunc=nameImage' + frontUploadId + 'ThumbSelectAction&cb=nameImage' + frontUploadId + 'Callback&dts=0&sm=1";\r\n'
+                        + 'windowOpen(url,"文件管理",1000,700);\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + frontUploadId + 'SelectAction(fileUrl, data, allFiles){\r\n'
+                        + 'var url="", files=ckfinderAPI.getSelectedFiles();\r\n'
+                        + 'for(var i=0; i<files.length; i++){\r\n'
+                        + 'url += files[i].getUrl();\r\n'
+                        + 'if (i<files.length-1) url+="|";\r\n'
+                        + '}\r\n'
+                        + '$("#nameImage' + frontUploadId + '").val($("#nameImage' + frontUploadId + '").val()+($("#nameImage' + frontUploadId + '").val(url)==""?url:"|"+url));\r\n'
+                        + 'nameImage' + frontUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + frontUploadId + 'ThumbSelectAction(fileUrl, data, allFiles){\r\n'
+                        + 'var url="", files=ckfinderAPI.getSelectedFiles();\r\n'
+                        + 'for(var i=0; i<files.length; i++){\r\n'
+                        + 'url += files[i].getThumbnailUrl();\r\n'
+                        + 'if (i<files.length-1) url+="|";\r\n'
+                        + '}\r\n'
+                        + '$("#nameImage' + frontUploadId + '").val($("#nameImage' + frontUploadId + '").val()+($("#nameImage' + frontUploadId + '").val(url)==""?url:"|"+url));\r\n'
+                        + 'nameImage' + frontUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + frontUploadId + 'Callback(api){\r\n'
+                        + 'ckfinderAPI = api;\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + frontUploadId + 'Del(obj){\r\n'
+                        + 'var url = $(obj).prev().attr("url");\r\n'
+                        + '$("#nameImage' + frontUploadId + '").val($("#nameImage' + frontUploadId + '").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));\r\n'
+                        + 'nameImage' + frontUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + frontUploadId + 'DelAll(){\r\n'
+                        + '$("#nameImage' + frontUploadId + '").val("");\r\n'
+                        + 'nameImage' + frontUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+
+                        + 'function nameImage' + frontUploadId + 'Preview(){\r\n'
+                        + 'var li, urls = $("#nameImage' + frontUploadId + '").val().split("|");\r\n'
+                        + '$("#nameImage' + frontUploadId + 'Preview").children().remove();\r\n'
+                        + 'for (var i=0; i<urls.length; i++){\r\n'
+                        + 'if (urls[i]!=""){\r\n'
+                        + 'li = "<li><a href="+urls[i]+" url=\"+urls[i]+\" target=\\"_blank\\"><img src=\"+urls[i]+\" url=\"+urls[i]+\" style=\\"max-width:200px;max-height:200px;_height:200px;border:0;padding:3px;width: 180px;height: 170px;\\">"+"</a>";\r\n'
+                        + 'li += "&nbsp;&nbsp;<a href=\\"javascript:\\" onclick=\\"nameImage' + frontUploadId + 'Del(this);\\">×</a></li>";\r\n'
+                        + '$("#nameImage' + frontUploadId + 'Preview").append(li);\r\n'
+                        + '}\r\n'
+                        + '}\r\n'
+                        + 'if ($("#nameImage' + frontUploadId + 'Preview").text() == ""){\r\n'
+                        + '$("#nameImage' + frontUploadId + 'Preview").html("<li style=\'list-style:none;padding-top:5px;\'>无</li>");\r\n'
+                        + '}\r\n'
+                        + '}\r\n'
+                        + 'nameImage' + frontUploadId + 'Preview();\r\n'
+                        + '<\/script>\r\n'
+                        + '</td>'
+                        + '<td>'
+                        + '<input id="nameImage' + backUploadId + '" name="hrmBanksList[' + newMaxId + '].backPhoto" type="hidden" >'
+                        + '<ol id="nameImage' + backUploadId + 'Preview"><li style="list-style:none;padding-top:5px;">无</li></ol>'
+
+                        + '<a href="javascript:" onclick="nameImage' + backUploadId + 'FinderOpen();" class="btn" id="limitAdd">添加</a>&nbsp;<a href="javascript:" onclick="nameImage' + backUploadId + 'DelAll();" class="btn">清除</a>'
+                        + '<script type="text/javascript">'
+                        + 'function nameImage' + backUploadId + 'FinderOpen(){\r\n'
+                        + 'var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);\r\n'
+                        + 'var url = "${ctxStatic}/ckfinder/ckfinder.html?type=images&start=images:/photo/hrmuser/bank/"+year+"/"+month+'
+                        + '"/&action=js&func=nameImage' + backUploadId + 'SelectAction&thumbFunc=nameImage' + backUploadId + 'ThumbSelectAction&cb=nameImage' + backUploadId + 'Callback&dts=0&sm=1";\r\n'
+                        + 'windowOpen(url,"文件管理",1000,700);\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + backUploadId + 'SelectAction(fileUrl, data, allFiles){\r\n'
+                        + 'var url="", files=ckfinderAPI.getSelectedFiles();\r\n'
+                        + 'for(var i=0; i<files.length; i++){\r\n'
+                        + 'url += files[i].getUrl();\r\n'
+                        + 'if (i<files.length-1) url+="|";\r\n'
+                        + '}\r\n'
+                        + '$("#nameImage' + backUploadId + '").val($("#nameImage' + backUploadId + '").val()+($("#nameImage' + backUploadId + '").val(url)==""?url:"|"+url));\r\n'
+                        + 'nameImage' + backUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + backUploadId + 'ThumbSelectAction(fileUrl, data, allFiles){\r\n'
+                        + 'var url="", files=ckfinderAPI.getSelectedFiles();\r\n'
+                        + 'for(var i=0; i<files.length; i++){\r\n'
+                        + 'url += files[i].getThumbnailUrl();\r\n'
+                        + 'if (i<files.length-1) url+="|";\r\n'
+                        + '}\r\n'
+                        + '$("#nameImage' + backUploadId + '").val($("#nameImage' + backUploadId + '").val()+($("#nameImage' + backUploadId + '").val(url)==""?url:"|"+url));\r\n'
+                        + 'nameImage' + backUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + backUploadId + 'Callback(api){\r\n'
+                        + 'ckfinderAPI = api;\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + backUploadId + 'Del(obj){\r\n'
+                        + 'var url = $(obj).prev().attr("url");\r\n'
+                        + '$("#nameImage' + backUploadId + '").val($("#nameImage' + backUploadId + '").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));\r\n'
+                        + 'nameImage' + backUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+                        + 'function nameImage' + backUploadId + 'DelAll(){\r\n'
+                        + '$("#nameImage' + backUploadId + '").val("");\r\n'
+                        + 'nameImage' + backUploadId + 'Preview();\r\n'
+                        + '}\r\n'
+
+                        + 'function nameImage' + backUploadId + 'Preview(){\r\n'
+                        + 'var li, urls = $("#nameImage' + backUploadId + '").val().split("|");\r\n'
+                        + '$("#nameImage' + backUploadId + 'Preview").children().remove();\r\n'
+                        + 'for (var i=0; i<urls.length; i++){\r\n'
+                        + 'if (urls[i]!=""){\r\n'
+                        + 'li = "<li><a href="+urls[i]+" url=\"+urls[i]+\" target=\\"_blank\\"><img src=\"+urls[i]+\" url=\"+urls[i]+\" style=\\"max-width:200px;max-height:200px;_height:200px;border:0;padding:3px;width: 180px;height: 170px;\\">"+"</a>";\r\n'
+                        + 'li += "&nbsp;&nbsp;<a href=\\"javascript:\\" onclick=\\"nameImage' + backUploadId + 'Del(this);\\">×</a></li>";\r\n'
+                        + '$("#nameImage' + backUploadId + 'Preview").append(li);\r\n'
+                        + '}\r\n'
+                        + '}\r\n'
+                        + 'if ($("#nameImage' + backUploadId + 'Preview").text() == ""){\r\n'
+                        + '$("#nameImage' + backUploadId + 'Preview").html("<li style=\'list-style:none;padding-top:5px;\'>无</li>");\r\n'
+                        + '}\r\n'
+                        + '}\r\n'
+                        + 'nameImage' + backUploadId + 'Preview();\r\n'
+                        + '<\/script>\r\n'
+
+                        + '</td>'
+                        + '<td>'
+                        + '<input type="text" class="table-form-control" name="hrmBanksList[' + newMaxId + '].remarks" value="" valid="text"/>'
+                        + '</td>'
+                        + '<td>'
+                        + '<a href="javascript:void(0)" class="btnDel" onclick="oper.bank.del(' + newMaxId + ');">删除</a>'
+                        + '</td>'
+                        + '</tr>';
+                    var html = trStr;
                     return html;
                 }
             }
@@ -172,7 +406,8 @@
         <li class="active"><a href="#baseInfo">基本信息</a></li>
         <li><a href="#eduInfo">教育经历</a></li>
         <li><a href="#workInfo">工作经历</a></li>
-        <li><a href="#workInfo">家庭成员</a></li>
+        <li><a href="#familyInfo">家庭成员</a></li>
+        <li><a href="#bankInfo">银行卡信息</a></li>
 
     </ul>
 
@@ -447,13 +682,13 @@
         <div class="tab-pane" id="workInfo">
             <%@include file="/WEB-INF/views/modules/hrmuser/hrmWorkExperForm.jsp" %>
         </div>
-        <%--<div class="tab-pane" id="familyInfo">--%>
-            <%--<%@include file="/WEB-INF/views/modules/hrmuser/hrmFamilyContactForm.jsp" %>--%>
-        <%--</div>--%>
+        <div class="tab-pane" id="familyInfo">
+            <%@include file="/WEB-INF/views/modules/hrmuser/hrmFamilyContactForm.jsp" %>
+        </div>
 
-        <%--<div class="tab-pane active" id="bankInfo">--%>
-            <%--<%@include file="/WEB-INF/views/modules/hrmuser/test.jsp" %>--%>
-        <%--</div>--%>
+        <div class="tab-pane active" id="bankInfo">
+            <%@include file="/WEB-INF/views/modules/hrmuser/hrmBankForm.jsp" %>
+        </div>
 
     </div>
 

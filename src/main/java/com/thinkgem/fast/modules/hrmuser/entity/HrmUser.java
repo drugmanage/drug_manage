@@ -60,6 +60,8 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private List<HrmFamilyContact> hrmFamilyList;
 	//对应的工作经历列表信息
 	private List<HrmWorkExper> hrmWorkExperList;
+	//银行卡信息列表
+	private List<HrmBank> hrmBanksList;
 
 	public List<HrmEducation> getHrmEduList() {
 		return hrmEduList;
@@ -83,6 +85,14 @@ public class HrmUser extends DataEntity<HrmUser> {
 
 	public void setHrmWorkExperList(List<HrmWorkExper> hrmWorkExperList) {
 		this.hrmWorkExperList = hrmWorkExperList;
+	}
+
+	public List<HrmBank> getHrmBanksList() {
+		return hrmBanksList;
+	}
+
+	public void setHrmBanksList(List<HrmBank> hrmBanksList) {
+		this.hrmBanksList = hrmBanksList;
 	}
 
 	public HrmUser() {
