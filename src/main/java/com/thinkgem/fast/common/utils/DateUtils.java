@@ -66,6 +66,13 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	/**
+	 * 得到当前年份字符串 格式（yy）
+	 */
+	public static String getLastYearYY() {
+		return formatDate(new Date(), "yy");
+	}
+
+	/**
 	 * 得到当前年份字符串 格式（yyyy）
 	 */
 	public static String getYear() {

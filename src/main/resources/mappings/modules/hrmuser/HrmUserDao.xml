@@ -125,6 +125,12 @@
 			</otherwise>
 		</choose>
 	</select>
+
+	<select id="findCount" resultType="int">
+		SELECT
+			count(1)
+		FROM hrm_user a
+	</select>
 	
 	<insert id="insert">
 		INSERT INTO hrm_user(

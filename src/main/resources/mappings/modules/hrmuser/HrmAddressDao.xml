@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.hrmuser.dao.HrmAddressDao">
+    
+	<sql id="hrmAddressColumns">
+		a.id AS "id",
+		a.hrm_user_id AS "hrmUserId",
+		a.receiving_name AS "receivingName",
+		a.area_id AS "area.id",
+		a.receiving_address AS "receivingAddress",
+		a.contact_phone AS "contactPhone",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a4.name AS "area.name"
+	</sql>
+	
+	<sql id="hrmAddressJoins">
+		LEFT JOIN sys_area a4 ON a4.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="HrmAddress">
+		SELECT 
+			<include refid="hrmAddressColumns"/>
+		FROM hrm_address a
+		<include refid="hrmAddressJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="HrmAddress">
+		SELECT 
+			<include refid="hrmAddressColumns"/>
+		FROM hrm_address a
+		<include refid="hrmAddressJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="HrmAddress">
+		SELECT 
+			<include refid="hrmAddressColumns"/>
+		FROM hrm_address a
+		<include refid="hrmAddressJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO hrm_address(
+			id,
+			hrm_user_id,
+			receiving_name,
+			area_id,
+			receiving_address,
+			contact_phone,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{hrmUserId},
+			#{receivingName},
+			#{area.id},
+			#{receivingAddress},
+			#{contactPhone},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE hrm_address SET 	
+			receiving_name = #{receivingName},
+			area_id = #{area.id},
+			receiving_address = #{receivingAddress},
+			contact_phone = #{contactPhone}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE hrm_address SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

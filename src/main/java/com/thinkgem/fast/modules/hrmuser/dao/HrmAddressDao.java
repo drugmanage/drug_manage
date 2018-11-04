@@ -2,16 +2,14 @@ package com.thinkgem.fast.modules.hrmuser.dao;
 
 import com.thinkgem.fast.common.persistence.CrudDao;
 import com.thinkgem.fast.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.fast.modules.hrmuser.entity.HrmUser;
+import com.thinkgem.fast.modules.hrmuser.entity.HrmAddress;
 
 /**
- * 内部员工信息操作DAO接口
+ * 第三方收货地址DAO接口
  * @author 任硕
- * @version 2018-11-02
+ * @version 2018-11-04
  */
 @MyBatisDao
-public interface HrmUserDao extends CrudDao<HrmUser> {
-
-    int findCount();
-
+public interface HrmAddressDao extends CrudDao<HrmAddress> {
+	
 }

@@ -2,6 +2,7 @@ package com.thinkgem.fast.modules.hrmuser.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,8 @@ import com.thinkgem.fast.modules.hrmuser.dao.HrmUserDao;
 @Transactional(readOnly = true)
 public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
 
+	@Autowired
+	private HrmUserDao hrmUserDao;
 	public HrmUser get(String id) {
 		return super.get(id);
 	}
@@ -40,5 +43,8 @@ public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
 	public void delete(HrmUser hrmUser) {
 		super.delete(hrmUser);
 	}
-	
+
+	public int findCount(){
+		return hrmUserDao.findCount();
+	}
 }

@@ -1,5 +1,6 @@
 package com.thinkgem.fast.modules.hrmuser.entity;
 
+import com.thinkgem.fast.modules.sys.entity.Area;
 import com.thinkgem.fast.modules.sys.entity.User;
 import org.hibernate.validator.constraints.Length;
 
@@ -37,6 +38,8 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private String proCode;		// 省代码
 	private String cityCode;		// 市代码
 	private String countyCode;		// 县代码
+	//省市县替换为地区id
+	private Area areaId;
 	private String contactAddress;		// 街道门牌号
 	private String schoolName;		// 毕业院校
 	private Date regTime;		// 应聘登记时间
@@ -54,6 +57,11 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private String companyType;		// 公司类型
 	private Date beginRegTime;		// 开始 应聘登记时间
 	private Date endRegTime;		// 结束 应聘登记时间
+
+	//用户照片
+	private String userPhoto;
+	//证件照路径
+	private String certPhoto;
 	//对应的教育信息列表信息
 	private List<HrmEducation> hrmEduList = new ArrayList<HrmEducation>();
 	//对应的家庭人员信息列表信息
@@ -62,6 +70,32 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private List<HrmWorkExper> hrmWorkExperList;
 	//银行卡信息列表
 	private List<HrmBank> hrmBanksList;
+
+	private List<HrmAddress> hrmAddressList;
+
+	public String getUserPhoto() {
+		return userPhoto;
+	}
+
+	public void setUserPhoto(String userPhoto) {
+		this.userPhoto = userPhoto;
+	}
+
+	public List<HrmAddress> getHrmAddressList() {
+		return hrmAddressList;
+	}
+
+	public void setHrmAddressList(List<HrmAddress> hrmAddressList) {
+		this.hrmAddressList = hrmAddressList;
+	}
+
+	public String getCertPhoto() {
+		return certPhoto;
+	}
+
+	public void setCertPhoto(String certPhoto) {
+		this.certPhoto = certPhoto;
+	}
 
 	public List<HrmEducation> getHrmEduList() {
 		return hrmEduList;
@@ -93,6 +127,14 @@ public class HrmUser extends DataEntity<HrmUser> {
 
 	public void setHrmBanksList(List<HrmBank> hrmBanksList) {
 		this.hrmBanksList = hrmBanksList;
+	}
+
+	public Area getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Area areaId) {
+		this.areaId = areaId;
 	}
 
 	public HrmUser() {
