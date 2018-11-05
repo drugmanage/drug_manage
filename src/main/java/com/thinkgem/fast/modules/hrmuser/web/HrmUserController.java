@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.thinkgem.fast.common.utils.DateUtils;
 import com.thinkgem.fast.modules.hrmuser.entity.*;
+import com.thinkgem.fast.modules.hrmuser.service.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.fast.common.config.Global;
 import com.thinkgem.fast.common.persistence.Page;
 import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.common.utils.StringUtils;
-import com.thinkgem.fast.modules.hrmuser.service.HrmUserService;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 内部员工信息操作Controller
@@ -37,6 +36,16 @@ public class HrmUserController extends BaseController {
 
     @Autowired
     private HrmUserService hrmUserService;
+    @Autowired
+    private HrmAddressService hrmAddressService;
+    @Autowired
+    private HrmFamilyContactService hrmFamilyContactService;
+    @Autowired
+    private HrmBankService hrmBankService;
+    @Autowired
+    private HrmEducationService hrmEducationService;
+    @Autowired
+    private HrmWorkExperService hrmWorkExperService;
 
     @ModelAttribute
     public HrmUser get(@RequestParam(required = false) String id) {
@@ -64,7 +73,7 @@ public class HrmUserController extends BaseController {
         if (StringUtils.isBlank(hrmUser.getId())) {
             String yy = DateUtils.getLastYearYY();
             int total = hrmUserService.findCount();
-            int emps = total+1;
+            int emps = total + 1;
             String ss = StringUtils.frontCompWithZore(emps, 4);
             String empNumber = yy + ss;
             hrmUser.setEmpNumber(empNumber);
@@ -81,7 +90,7 @@ public class HrmUserController extends BaseController {
         }
         //TODO 页面删除后下标还在原来位置映射后list中的下标对应所以需要判断改list集合中对象的属性是否不为空在进行保存
         this.filterParam(hrmUser);
-		hrmUserService.save(hrmUser);
+        hrmUserService.save(hrmUser);
         addMessage(redirectAttributes, "保存内部员工成功");
         return "redirect:" + Global.getAdminPath() + "/hrmuser/hrmUser/?repage";
     }
@@ -110,8 +119,8 @@ public class HrmUserController extends BaseController {
                     }
                 }
             }
-        }else{
-            if(CollectionUtils.isNotEmpty(addressList)){
+        } else {
+            if (CollectionUtils.isNotEmpty(addressList)) {
                 addressList.clear();
             }
         }
@@ -142,9 +151,9 @@ public class HrmUserController extends BaseController {
                     it.remove();
                 } else {
                     if (StringUtils.isBlank(hrmEducation.getMajor()) ||
-                            StringUtils.isBlank(hrmEducation.getSchoolName())||
-                            hrmEducation.getStartDate()==null ||
-                            hrmEducation.getEndDate()==null) {
+                            StringUtils.isBlank(hrmEducation.getSchoolName()) ||
+                            hrmEducation.getStartDate() == null ||
+                            hrmEducation.getEndDate() == null) {
                         it.remove();
                     }
                 }
@@ -190,5 +199,64 @@ public class HrmUserController extends BaseController {
         addMessage(redirectAttributes, "删除内部员工成功");
         return "redirect:" + Global.getAdminPath() + "/hrmuser/hrmUser/?repage";
     }
+
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "deleteBank")
+    public Map<String, Object> deleteBank(HrmBank bank) {
+        Map<String, Object> res= new HashMap<String, Object>();
+        hrmBankService.delete(bank);
+        res.put("code",200);
+        res.put("msg","删除成功");
+        return res;
+    }
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "deleteAddress")
+    public Map<String, Object> deleteAddress(HrmAddress Address) {
+        Map<String, Object> res= new HashMap<String, Object>();
+        hrmAddressService.delete(Address);
+        res.put("code",200);
+        res.put("msg","删除成功");
+        return res;
+    }
+
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "deleteFamily")
+    public Map<String, Object> deleteFamily(HrmFamilyContact  hrmFamilyContact) {
+        Map<String, Object> res= new HashMap<String, Object>();
+
+        hrmFamilyContactService.delete(hrmFamilyContact);
+        res.put("code",200);
+        res.put("msg","删除成功");
+        return res;
+    }
+
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "deleteEdu")
+    public Map<String, Object> deleteEdu(HrmEducation edu) {
+        Map<String, Object> res= new HashMap<String, Object>();
+
+        hrmEducationService.delete(edu);
+        res.put("code",200);
+        res.put("msg","删除成功");
+        return res;
+    }
+
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "deleteWork")
+    public Map<String, Object> deleteWork(HrmWorkExper work) {
+        Map<String, Object> res= new HashMap<String, Object>();
+
+        hrmWorkExperService.delete(work);
+        res.put("code",200);
+        res.put("msg","删除成功");
+        return res;
+    }
+
+
 
 }
