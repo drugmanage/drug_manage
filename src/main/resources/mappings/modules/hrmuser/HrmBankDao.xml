@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.fast.modules.hrmuser.dao.HrmBankDao">
-    
-	<sql id="hrmBankColumns">
+
+    <sql id="hrmBankColumns">
 		a.id AS "id",
 		a.hrm_user_id AS "hrmUserId",
 		a.bank AS "bank",
@@ -15,55 +15,58 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag"
 	</sql>
-	
-	<sql id="hrmBankJoins">
-	</sql>
-    
-	<select id="get" resultType="HrmBank">
-		SELECT 
-			<include refid="hrmBankColumns"/>
-		FROM hrm_bank a
-		<include refid="hrmBankJoins"/>
-		WHERE a.id = #{id}
-	</select>
-	
-	<select id="findList" resultType="HrmBank">
-		SELECT 
-			<include refid="hrmBankColumns"/>
-		FROM hrm_bank a
-		<include refid="hrmBankJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<select id="findAllList" resultType="HrmBank">
-		SELECT 
-			<include refid="hrmBankColumns"/>
-		FROM hrm_bank a
-		<include refid="hrmBankJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<insert id="insert">
+
+    <sql id="hrmBankJoins">
+    </sql>
+
+    <select id="get" resultType="HrmBank">
+        SELECT
+        <include refid="hrmBankColumns"/>
+        FROM hrm_bank a
+        <include refid="hrmBankJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="HrmBank">
+        SELECT
+        <include refid="hrmBankColumns"/>
+        FROM hrm_bank a
+        <include refid="hrmBankJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="hrmUserId != null and hrmUserId != ''">
+                and a.hrm_user_id = #{hrmUserId}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="HrmBank">
+        SELECT
+        <include refid="hrmBankColumns"/>
+        FROM hrm_bank a
+        <include refid="hrmBankJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
 		INSERT INTO hrm_bank(
 			id,
 			hrm_user_id,
@@ -90,8 +93,8 @@
 			#{delFlag}
 		)
 	</insert>
-	
-	<update id="update">
+
+    <update id="update">
 		UPDATE hrm_bank SET 	
 			bank = #{bank},
 			bank_number = #{bankNumber},
@@ -100,11 +103,17 @@
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
-	
-	<update id="delete">
-		UPDATE hrm_bank SET 
-			del_flag = #{DEL_FLAG_DELETE}
-		WHERE id = #{id}
-	</update>
-	
+
+    <update id="delete">
+        UPDATE hrm_bank SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE
+        <if test="id!=null and id!=''">
+            id = #{id}
+        </if>
+        <if test="hrmUserId!=null and hrmUserId!=''">
+            hrm_user_id = #{hrmUserId}
+        </if>
+    </update>
+
 </mapper>

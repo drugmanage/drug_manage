@@ -134,8 +134,11 @@ public class MeisAttachmentService extends
             // 有时候会出现第一个字符为"|"
             pathflag = parstr.substring(1);
         } else {
-            pathflag = "";
+            pathflag = parstr;
         }
+        //保存时先删除附件
+        deleteByMeis(bizid,biztype);
+
         String[] arrstr = pathflag.split("\\|");
         for (String s : arrstr) {
             if (!"".equals(s)) {
@@ -160,8 +163,16 @@ public class MeisAttachmentService extends
     }
 
     @Transactional(readOnly = false)
-    public void deleteByBizId(String bizId) {
+    public void deleteByBizId(String bizId,String bizType) {
         meisAttachmentDao.deleteByBizId(bizId);
+    }
+
+    @Transactional(readOnly = false)
+    public void deleteByMeis(String bizId,String bizType) {
+        MeisAttachment meis = new MeisAttachment();
+        meis.setBizId(bizId);
+        meis.setBizType(bizType);
+        meisAttachmentDao.deleteByMeis(meis);
     }
 
     public List<MeisAttachment> findAttchList(MeisAttachment meisAttachment) {

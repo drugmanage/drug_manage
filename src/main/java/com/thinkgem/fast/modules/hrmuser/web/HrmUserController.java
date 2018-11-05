@@ -64,7 +64,7 @@ public class HrmUserController extends BaseController {
         if (StringUtils.isBlank(hrmUser.getId())) {
             String yy = DateUtils.getLastYearYY();
             int total = hrmUserService.findCount();
-            int emps = total == 0 ? 1 : total;
+            int emps = total+1;
             String ss = StringUtils.frontCompWithZore(emps, 4);
             String empNumber = yy + ss;
             hrmUser.setEmpNumber(empNumber);

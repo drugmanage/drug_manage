@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.fast.modules.attachment.dao.MeisAttachmentDao">
-    
-	<sql id="meisAttachmentColumns">
+
+    <sql id="meisAttachmentColumns">
 		a.id AS "id",
 		a.office_id AS "office.id",
 		a.title AS "title",
@@ -23,62 +23,62 @@
 		o2.name AS "office.name",
 		a.size AS "size"
 	</sql>
-	
-	<sql id="meisAttachmentJoins">
+
+    <sql id="meisAttachmentJoins">
 		LEFT JOIN sys_office o2 ON o2.id = a.office_id
 	</sql>
-    
-	<select id="get" resultType="MeisAttachment">
-		SELECT 
-			<include refid="meisAttachmentColumns"/>
-		FROM meis_attachment a
-		<include refid="meisAttachmentJoins"/>
-		WHERE a.id = #{id}
-	</select>
-	
-	<select id="findList" resultType="MeisAttachment">
-		SELECT 
-			<include refid="meisAttachmentColumns"/>
-		FROM meis_attachment a
-		<include refid="meisAttachmentJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="title != null and title != ''">
-				AND a.title LIKE 
-					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
-			</if>
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<select id="findAllList" resultType="MeisAttachment">
-		SELECT 
-			<include refid="meisAttachmentColumns"/>
-		FROM meis_attachment a
-		<include refid="meisAttachmentJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<insert id="insert">
+
+    <select id="get" resultType="MeisAttachment">
+        SELECT
+        <include refid="meisAttachmentColumns"/>
+        FROM meis_attachment a
+        <include refid="meisAttachmentJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="MeisAttachment">
+        SELECT
+        <include refid="meisAttachmentColumns"/>
+        FROM meis_attachment a
+        <include refid="meisAttachmentJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="title != null and title != ''">
+                AND a.title LIKE
+                <if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="MeisAttachment">
+        SELECT
+        <include refid="meisAttachmentColumns"/>
+        FROM meis_attachment a
+        <include refid="meisAttachmentJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
 		INSERT INTO meis_attachment(
 			id,
 			office_id,
@@ -119,8 +119,8 @@
 			#{size}
 		)
 	</insert>
-	
-	<update id="update">
+
+    <update id="update">
 		UPDATE meis_attachment SET 	
 			office_id = #{office.id},
 			title = #{title},
@@ -139,15 +139,15 @@
 			size = #{size}
 		WHERE id = #{id}
 	</update>
-	
-	<update id="delete">
+
+    <update id="delete">
 		UPDATE meis_attachment SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
-	
-	<select id="findMeisAttachmentByBizId" resultType="MeisAttachment">
+
+
+    <select id="findMeisAttachmentByBizId" resultType="MeisAttachment">
 		SELECT 
 			a.id AS "id",
 			a.office_id AS "office.id",
@@ -171,32 +171,44 @@
 			and a.office_id = #{officeid,jdbcType=VARCHAR}
 			and a.biz_id = #{bizid,jdbcType=VARCHAR}
 	</select>
-	
-	<update id="deleteByBizId">
+
+    <update id="deleteByBizId">
 	delete from meis_attachment
 	where biz_id = #{bizId,jdbcType = VARCHAR}
 	</update>
-	
-	<!-- 查询附件列表 -->
-	<select id="findAttchList" resultType="MeisAttachment">
-  	SELECT
-		a.id AS "id",
-		a.create_date2 AS "createDate2",
-	  	a.type AS "type",
-		a.path AS "path",
-		a.title AS "title",
-		a.size AS "size",
-		a.biz_id AS "bizId"
-	FROM
-		meis_attachment a
-	<where>
-		a.del_flag = 0
-		<if test="bizId != null and bizId != ''">
-			AND a.biz_id = #{bizId}
-		</if>
-		<if test="type != null and type != ''">
-			AND a.type = #{type}
-		</if>
-	</where>
-  </select>
+
+    <update id="deleteByMeis">
+        delete from meis_attachment
+        where biz_id = #{bizId}
+        <if test="bizType != null and bizType != '' ">
+            and biz_type=#{bizType}
+        </if>
+    </update>
+
+    <!-- 查询附件列表 -->
+    <select id="findAttchList" resultType="MeisAttachment">
+        SELECT
+        a.id AS "id",
+        a.create_date2 AS "createDate2",
+        a.biz_type AS "bizType",
+        a.type AS "type",
+        a.path AS "path",
+        a.title AS "title",
+        a.size AS "size",
+        a.biz_id AS "bizId"
+        FROM
+        meis_attachment a
+        <where>
+            a.del_flag = 0
+            <if test="bizId != null and bizId != ''">
+                AND a.biz_id = #{bizId}
+            </if>
+            <if test="type != null and type != ''">
+                AND a.type = #{type}
+            </if>
+            <if test="bizType != null and bizType != ''">
+                AND a.biz_type = #{bizType}
+            </if>
+        </where>
+    </select>
 </mapper>

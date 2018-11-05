@@ -37,13 +37,16 @@
 		<include refid="hrmWorkExperJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="hrmUserId != null and hrmUserId != ''">
+				and a.hrm_user_id = #{hrmUserId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.start_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -115,7 +118,13 @@
 	<update id="delete">
 		UPDATE hrm_work_exper SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE id = #{id}
+		WHERE
+		<if test="id!=null and id!=''">
+			id = #{id}
+		</if>
+		<if test="hrmUserId!=null and hrmUserId!=''">
+			hrm_user_id = #{hrmUserId}
+		</if>
 	</update>
 	
 </mapper>

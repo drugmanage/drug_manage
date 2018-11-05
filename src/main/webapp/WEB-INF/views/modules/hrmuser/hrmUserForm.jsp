@@ -34,6 +34,13 @@
                 var py = Mtils.utils.makePy(empName);
                 $("#pinyin").val(py);
             })
+
+            $("#birth").change(function () {
+                alert("1");
+                var birth  = $(this).val();
+                var age = Mtils.utils.calcAge(birth,new Date());
+                $("#age").val(age);
+            })
         });
     </script>
     <%@include file="/WEB-INF/views/modules/hrmuser/hrmUserJs.jsp" %>
@@ -118,7 +125,7 @@
                 <div class="div-b">
                     <label class="control-label">年龄：</label>
                     <div class="controls">
-                        <form:input path="age" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+                        <form:input path="age" htmlEscape="false" readonly="readonly" maxlength="11" class="input-xlarge "/>
                     </div>
                 </div>
             </div>
@@ -220,8 +227,8 @@
                 <div class="div-a">
                     <label class="control-label">联系地址：</label>
                     <div class="controls">
-                        <sys:treeselect id="area" name="area.id" value="${hrmuser.area.id}" labelName="area.name"
-                                        labelValue="${hrmuser.area.name}"
+                        <sys:treeselect id="area" name="area.id" value="${hrmUser.area.id}" labelName="area.name"
+                                        labelValue="${hrmUser.area.name}"
                                         title="区域" url="/sys/area/treeData" cssClass="input-large" allowClear="true"/>
                         <form:input path="contactAddress" htmlEscape="false" maxlength="25" class="input-xlarge "/>
                     </div>
@@ -305,7 +312,7 @@
                 <div class="div-b">
                     <label class="control-label">证件号码：</label>
                     <div class="controls">
-                        <form:input path="certNumber" htmlEscape="false" maxlength="1" class="input-xlarge "/>
+                        <form:input path="certNumber" htmlEscape="false" maxlength="64" class="input-xlarge "/>
                     </div>
                 </div>
             </div>

@@ -39,7 +39,7 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private String cityCode;		// 市代码
 	private String countyCode;		// 县代码
 	//省市县替换为地区id
-	private Area areaId;
+	private Area area;
 	private String contactAddress;		// 街道门牌号
 	private String schoolName;		// 毕业院校
 	private Date regTime;		// 应聘登记时间
@@ -129,12 +129,12 @@ public class HrmUser extends DataEntity<HrmUser> {
 		this.hrmBanksList = hrmBanksList;
 	}
 
-	public Area getAreaId() {
-		return areaId;
+	public Area getArea() {
+		return area;
 	}
 
-	public void setAreaId(Area areaId) {
-		this.areaId = areaId;
+	public void setArea(Area area) {
+		this.area = area;
 	}
 
 	public HrmUser() {

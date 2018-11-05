@@ -22,4 +22,5 @@ public interface MeisAttachmentDao extends CrudDao<MeisAttachment> {
 
     List<MeisAttachment> findAttchList(MeisAttachment meisAttachment);
 
+    void deleteByMeis(MeisAttachment meis);
 }

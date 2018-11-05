@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.fast.modules.hrmuser.dao.HrmUserDao">
-    
+
 	<sql id="hrmUserColumns">
 		a.id AS "id",
 		a.sys_user_id AS "sysUser.id",
@@ -13,6 +13,8 @@
 		a.sex AS "sex",
 		a.age AS "age",
 		a.education AS "education",
+		a.area_id AS "area.id",
+		area.name AS "area.name",
 		a.native_place AS "nativePlace",
 		a.marital_status AS "maritalStatus",
 		a.nation AS "nation",
@@ -45,30 +47,24 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag"
 	</sql>
-	
-	<sql id="detailUserInfoColumns" >
 
 
-	</sql>
-	
 	<sql id="hrmUserJoins">
 		LEFT JOIN sys_user u2 ON u2.id = a.sys_user_id
+		left join sys_area area on area.id = a.area_id
 	</sql>
 
-	<sql id="hrmUserAreaBankWorkFamilyEduJoins">
-		LEFT JOIN sys_user u2 ON u2.id = a.sys_user_id
-	</sql>
 
 	<select id="get" resultType="HrmUser">
-		SELECT 
+		SELECT
 			<include refid="hrmUserColumns"/>
 		FROM hrm_user a
 		<include refid="hrmUserJoins"/>
 		WHERE a.id = #{id}
 	</select>
-	
+
 	<select id="findList" resultType="HrmUser">
-		SELECT 
+		SELECT
 			<include refid="hrmUserColumns"/>
 		FROM hrm_user a
 		<include refid="hrmUserJoins"/>
@@ -117,15 +113,15 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<select id="findAllList" resultType="HrmUser">
-		SELECT 
+		SELECT
 			<include refid="hrmUserColumns"/>
 		FROM hrm_user a
 		<include refid="hrmUserJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
+		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -141,7 +137,7 @@
 			count(1)
 		FROM hrm_user a
 	</select>
-	
+
 	<insert id="insert">
 		INSERT INTO hrm_user(
 			id,
@@ -153,6 +149,7 @@
 			sex,
 			age,
 			education,
+			area_id,
 			native_place,
 			marital_status,
 			nation,
@@ -194,6 +191,7 @@
 			#{sex},
 			#{age},
 			#{education},
+			#{area.id},
 			#{nativePlace},
 			#{maritalStatus},
 			#{nation},
@@ -227,7 +225,7 @@
 			#{delFlag}
 		)
 	</insert>
-	
+
 	<update id="update">
 		UPDATE hrm_user SET 	
 			sys_user_id = #{sysUser.id},
@@ -238,6 +236,7 @@
 			sex = #{sex},
 			age = #{age},
 			education = #{education},
+			area_id = #{area.id},
 			native_place = #{nativePlace},
 			marital_status = #{maritalStatus},
 			nation = #{nation},
@@ -266,11 +265,11 @@
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
-	
+
 	<update id="delete">
 		UPDATE hrm_user SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
 </mapper>

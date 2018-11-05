@@ -40,5 +40,8 @@ public class HrmAddressService extends CrudService<HrmAddressDao, HrmAddress> {
 	public void delete(HrmAddress hrmAddress) {
 		super.delete(hrmAddress);
 	}
-	
+
+	public void deleteByHrmUserId(String userId) {
+
+	}
 }

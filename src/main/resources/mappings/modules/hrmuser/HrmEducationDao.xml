@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.fast.modules.hrmuser.dao.HrmEducationDao">
-    
-	<sql id="hrmEducationColumns">
+
+    <sql id="hrmEducationColumns">
 		a.id AS "id",
 		a.hrm_user_id AS "hrmUser",
 		a.start_date AS "startDate",
@@ -19,55 +19,58 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag"
 	</sql>
-	
-	<sql id="hrmEducationJoins">
-	</sql>
-    
-	<select id="get" resultType="HrmEducation">
-		SELECT 
-			<include refid="hrmEducationColumns"/>
-		FROM hrm_education a
-		<include refid="hrmEducationJoins"/>
-		WHERE a.id = #{id}
-	</select>
-	
-	<select id="findList" resultType="HrmEducation">
-		SELECT 
-			<include refid="hrmEducationColumns"/>
-		FROM hrm_education a
-		<include refid="hrmEducationJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<select id="findAllList" resultType="HrmEducation">
-		SELECT 
-			<include refid="hrmEducationColumns"/>
-		FROM hrm_education a
-		<include refid="hrmEducationJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<insert id="insert">
+
+    <sql id="hrmEducationJoins">
+    </sql>
+
+    <select id="get" resultType="HrmEducation">
+        SELECT
+        <include refid="hrmEducationColumns"/>
+        FROM hrm_education a
+        <include refid="hrmEducationJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="HrmEducation">
+        SELECT
+        <include refid="hrmEducationColumns"/>
+        FROM hrm_education a
+        <include refid="hrmEducationJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="hrmUser != null and hrmUser != ''">
+                and a.hrm_user_id = #{hrmUser}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.start_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="HrmEducation">
+        SELECT
+        <include refid="hrmEducationColumns"/>
+        FROM hrm_education a
+        <include refid="hrmEducationJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
 		INSERT INTO hrm_education(
 			id,
 			hrm_user_id,
@@ -102,8 +105,8 @@
 			#{delFlag}
 		)
 	</insert>
-	
-	<update id="update">
+
+    <update id="update">
 		UPDATE hrm_education SET 	
 			start_date = #{startDate},
 			end_date = #{endDate},
@@ -115,11 +118,17 @@
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
-	
-	<update id="delete">
+
+    <update id="delete">
 		UPDATE hrm_education SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE id = #{id}
+		WHERE
+		<if test="id!=null and id!=''">
+			id = #{id}
+		</if>
+		<if test="hrmUser!=null and hrmUser!=''">
+			hrm_user_id = #{hrmUser}
+		</if>
 	</update>
-	
+
 </mapper>
