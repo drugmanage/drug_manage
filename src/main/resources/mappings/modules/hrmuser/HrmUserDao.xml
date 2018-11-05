@@ -46,10 +46,19 @@
 		a.del_flag AS "delFlag"
 	</sql>
 	
+	<sql id="detailUserInfoColumns" >
+
+
+	</sql>
+	
 	<sql id="hrmUserJoins">
 		LEFT JOIN sys_user u2 ON u2.id = a.sys_user_id
 	</sql>
-    
+
+	<sql id="hrmUserAreaBankWorkFamilyEduJoins">
+		LEFT JOIN sys_user u2 ON u2.id = a.sys_user_id
+	</sql>
+
 	<select id="get" resultType="HrmUser">
 		SELECT 
 			<include refid="hrmUserColumns"/>
