@@ -423,7 +423,7 @@ public class HrmUser extends DataEntity<HrmUser> {
 		this.certType = certType;
 	}
 	
-	@Length(min=0, max=1, message="证件号码长度必须介于 0 和 1 之间")
+	@Length(min=0, max=64, message="证件号码长度必须介于 0 和 64 之间")
 	public String getCertNumber() {
 		return certNumber;
 	}

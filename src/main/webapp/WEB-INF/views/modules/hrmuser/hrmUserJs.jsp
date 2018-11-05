@@ -38,6 +38,7 @@
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden"  name="itemEduId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden"  name="hrmEduList[' + newMaxId + '].id" value=""/>'
                     + '<input type="text" name="hrmEduList[' + newMaxId + '].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
                     + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
                     + '</td>'
@@ -47,7 +48,7 @@
                     + '</td>'
                     + '<td>'
                     + '<select class="table-form-control" id="selectOptId_' + newMaxId + '" onchange="changeDefault(' + newMaxId + ')" name="hrmEduList[' + newMaxId + '].stage">'
-                    <c:forEach items="${fns:getDictList('edu_stage')}" var="dict" varStatus="idx">
+                    <c:forEach items="${fns:getDictList('edu_type')}" var="dict" varStatus="idx">
                     + '<option value="${dict.value}">${dict.label}</option>'
                     </c:forEach>
                     + '</select>'
@@ -102,6 +103,7 @@
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden"  name="itemWorkId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden"  name="hrmWorkExperList[' + newMaxId + '].id" value=""/>'
                     + '<input type="text" name="hrmWorkExperList[' + newMaxId + '].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
                     + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
                     + '</td>'
@@ -161,6 +163,7 @@
 
                     + '<td>'
                     + '<input type="hidden" name="itemFamilyId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden" name="hrmFamilyList[' + newMaxId + '].id" value=""/>'
                     + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].name" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
@@ -215,6 +218,7 @@
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden" name="itemBankId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden" name="hrmBanksList[' + newMaxId + '].id" value=""/>'
                     + '<select class="table-form-control" name="hrmBanksList[' + newMaxId + '].bank">'
                     + '<c:forEach items="${fns:getDictList('bank')}" var="dict" varStatus="idx">'
                     + '<option value="${dict.value}"  >${dict.label}</option>'
@@ -397,6 +401,7 @@
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden" name="itemAddressId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden" name="hrmAddressList[' + newMaxId + '].id" value=""/>'
                     + '<input type="text" class="table-form-control" name="hrmAddressList[' + newMaxId + '].receivingName" value="" valid="vtext"/>'
                     + '</td>'
 
@@ -460,13 +465,21 @@
     $(function () {
         $("input[name='companyType']").click(function () {
             var com = $(this).val();
-            if (com == "02") {
+            if (com == "2") {
                 $("#addressTableDiv").show();
             } else {
                 $("#addressTableDiv").hide();
                 $("#address_contentField").html("");
             }
         })
+
+        var comType = $("input[name='companyType']").val();
+        if (comType == "2") {
+            $("#addressTableDiv").show();
+        } else {
+            $("#addressTableDiv").hide();
+            $("#address_contentField").html("");
+        }
     })
 
 </script>

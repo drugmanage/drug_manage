@@ -4,7 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.thinkgem.fast.common.utils.DateUtils;
-import com.thinkgem.fast.modules.hrmuser.entity.HrmEducation;
+import com.thinkgem.fast.modules.hrmuser.entity.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,10 @@ import com.thinkgem.fast.common.config.Global;
 import com.thinkgem.fast.common.persistence.Page;
 import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.common.utils.StringUtils;
-import com.thinkgem.fast.modules.hrmuser.entity.HrmUser;
 import com.thinkgem.fast.modules.hrmuser.service.HrmUserService;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -60,15 +61,14 @@ public class HrmUserController extends BaseController {
     @RequiresPermissions("hrmuser:hrmUser:view")
     @RequestMapping(value = "form")
     public String form(HrmUser hrmUser, Model model) {
-        String empNumber = "";
         if (StringUtils.isBlank(hrmUser.getId())) {
             String yy = DateUtils.getLastYearYY();
             int total = hrmUserService.findCount();
-            int emps =total == 0 ? 1 : total;
+            int emps = total == 0 ? 1 : total;
             String ss = StringUtils.frontCompWithZore(emps, 4);
-            empNumber = yy + ss;
+            String empNumber = yy + ss;
+            hrmUser.setEmpNumber(empNumber);
         }
-        hrmUser.setEmpNumber(empNumber);
         model.addAttribute("hrmUser", hrmUser);
         return "modules/hrmuser/hrmUserForm";
     }
@@ -80,11 +80,108 @@ public class HrmUserController extends BaseController {
             return form(hrmUser, model);
         }
         //TODO 页面删除后下标还在原来位置映射后list中的下标对应所以需要判断改list集合中对象的属性是否不为空在进行保存
-//		hrmUser.getHrmEduList()
-//		hrmUserService.save(hrmUser);
+        this.filterParam(hrmUser);
+		hrmUserService.save(hrmUser);
         addMessage(redirectAttributes, "保存内部员工成功");
         return "redirect:" + Global.getAdminPath() + "/hrmuser/hrmUser/?repage";
     }
+
+    /**
+     * 过滤user中的参数
+     *
+     * @param hrmUser
+     */
+    private void filterParam(HrmUser hrmUser) {
+
+        List<HrmAddress> addressList = hrmUser.getHrmAddressList();
+        if (CollectionUtils.isNotEmpty(addressList) && "2".equals(hrmUser.getCompanyType())) {
+            Iterator<HrmAddress> it = addressList.iterator();
+            while (it.hasNext()) {
+                HrmAddress hrmAddress = it.next();
+                if (hrmAddress == null) {
+                    it.remove();
+                } else {
+                    if (hrmAddress.getArea() == null ||
+                            StringUtils.isBlank(hrmAddress.getArea().getId()) ||
+                            StringUtils.isBlank(hrmAddress.getContactPhone()) ||
+                            StringUtils.isBlank(hrmAddress.getReceivingAddress()) ||
+                            StringUtils.isBlank(hrmAddress.getReceivingName())) {
+                        it.remove();
+                    }
+                }
+            }
+        }else{
+            if(CollectionUtils.isNotEmpty(addressList)){
+                addressList.clear();
+            }
+        }
+
+        List<HrmBank> hrmBanksList = hrmUser.getHrmBanksList();
+        if (CollectionUtils.isNotEmpty(hrmBanksList)) {
+            Iterator<HrmBank> it = hrmBanksList.iterator();
+            while (it.hasNext()) {
+                HrmBank hrmBank = it.next();
+                if (hrmBank == null) {
+                    it.remove();
+                } else {
+                    if (StringUtils.isBlank(hrmBank.getBank()) ||
+                            StringUtils.isBlank(hrmBank.getBankNumber()) ||
+                            //StringUtils.isBlank(hrmBank.getStatus()) ||
+                            StringUtils.isBlank(hrmBank.getPositivePhoto())) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+        List<HrmEducation> hrmEduList = hrmUser.getHrmEduList();
+        if (CollectionUtils.isNotEmpty(hrmEduList)) {
+            Iterator<HrmEducation> it = hrmEduList.iterator();
+            while (it.hasNext()) {
+                HrmEducation hrmEducation = it.next();
+                if (hrmEducation == null) {
+                    it.remove();
+                } else {
+                    if (StringUtils.isBlank(hrmEducation.getMajor()) ||
+                            StringUtils.isBlank(hrmEducation.getSchoolName())||
+                            hrmEducation.getStartDate()==null ||
+                            hrmEducation.getEndDate()==null) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+        List<HrmFamilyContact> hrmFamilyList = hrmUser.getHrmFamilyList();
+        if (CollectionUtils.isNotEmpty(hrmFamilyList)) {
+            Iterator<HrmFamilyContact> it = hrmFamilyList.iterator();
+            while (it.hasNext()) {
+                HrmFamilyContact hrmFamilyContact = it.next();
+                if (hrmFamilyContact == null) {
+                    it.remove();
+                } else {
+                    if (StringUtils.isBlank(hrmFamilyContact.getName()) ||
+                            StringUtils.isBlank(hrmFamilyContact.getRelationship())) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+        List<HrmWorkExper> hrmWorkExperList = hrmUser.getHrmWorkExperList();
+        if (CollectionUtils.isNotEmpty(hrmWorkExperList)) {
+            Iterator<HrmWorkExper> it = hrmWorkExperList.iterator();
+            while (it.hasNext()) {
+                HrmWorkExper hrmWorkExper = it.next();
+                if (hrmWorkExper == null) {
+                    it.remove();
+                } else {
+                    if (StringUtils.isBlank(hrmWorkExper.getCompanyName()) ||
+                            StringUtils.isBlank(hrmWorkExper.getCompanyAddress())) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+    }
+
 
     @RequiresPermissions("hrmuser:hrmUser:edit")
     @RequestMapping(value = "delete")

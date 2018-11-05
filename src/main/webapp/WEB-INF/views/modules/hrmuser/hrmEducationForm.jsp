@@ -18,6 +18,7 @@
             <tr id="edu_tr_${i.index}">
                 <td>
                     <input type="hidden" name="itemEduId" value="${i.index}"/>
+                    <input type="hidden" name="hrmEduList[${i.index }].id" value="${item.id}"/>
                     <input type="text" name="hrmEduList[${i.index }].startDate"  class="input-xlarge Wdate "
                            value="<fmt:formatDate value="${item.startDate}" pattern="yyyy-MM-dd"/>"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
@@ -29,7 +30,7 @@
                 </td>
                 <td>
                     <select class="table-form-control" name="hrmEduList[${i.index }].stage">
-                        <c:forEach items="${fns:getDictList('edu_stage')}" var="dict" varStatus="idx">
+                        <c:forEach items="${fns:getDictList('edu_type')}" var="dict" varStatus="idx">
                             <option value="${dict.value}"
                                     <c:if test="${dict.value == item.stage }">selected='true'</c:if> >${dict.label}</option>
                         </c:forEach>

@@ -15,6 +15,7 @@
 		<tr id="address_tr_${i.index}">
 			<td>
 				<input type="hidden" name="itemBankId" value="${i.index}"/>
+				<input type="hidden" name="hrmAddressList[${i.index }].id" value="${item.id }"/>
 				<input type="text" class="table-form-control" name="hrmAddressList[${i.index }].receivingName"
 					   value="${item.receivingName }" valid='vtext'/>
 			</td>

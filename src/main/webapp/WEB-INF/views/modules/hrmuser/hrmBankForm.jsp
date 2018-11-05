@@ -17,7 +17,8 @@
 		<tr id="bank_tr_${i.index}">
 			<td>
 				<input type="hidden" name="itemBankId" value="${i.index}"/>
-				
+				<input type="hidden" name="hrmBanksList[${i.index }].id" value="${item.id}"/>
+
 				<select class="table-form-control" name="hrmBanksList[${i.index }].bank">
 					<c:forEach items="${fns:getDictList('bank')}" var="dict" varStatus="idx">
 						<option value="${dict.value}"
@@ -32,19 +33,19 @@
 			</td>
 			<td>
 				<select class="table-form-control" name="hrmBanksList[${i.index }].status">
-					<c:forEach items="${fns:getDictList('edu_stage')}" var="dict" varStatus="idx">
+					<c:forEach items="${fns:getDictList('bank_status')}" var="dict" varStatus="idx">
 						<option value="${dict.value}"
 								<c:if test="${dict.value == item.status }">selected='true'</c:if> >${dict.label}</option>
 					</c:forEach>
 				</select>
 			</td>
 			<td>
-				<input type="hidden" name="hrmBanksList[${i.index }].positivePhoto" value="${item.positivePhoto}"/>
-				<sys:ckfinder input="hrmBanksList[${i.index }].positivePhoto" type="images" uploadPath="/photo/hrmuser/bank" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+				<input type="hidden" id="nameImagefront${i.index }" name="hrmBanksList[${i.index }].positivePhoto" value="${item.positivePhoto}"/>
+				<sys:ckfinder input="nameImagefront${i.index }" type="images" uploadPath="/photo/hrmuser/bank" selectMultiple="false" maxWidth="100" maxHeight="100"/>
 			</td>
 			<td>
-				<input type="hidden" name="hrmBanksList[${i.index }].backPhoto" value="${item.backPhoto}"/>
-				<sys:ckfinder input="hrmBanksList[${i.index }].backPhoto" type="images" uploadPath="/photo/hrmuser/bank" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+				<input type="hidden" id="nameImageback${i.index }" name="hrmBanksList[${i.index }].backPhoto" value="${item.backPhoto}"/>
+				<sys:ckfinder input="nameImageback${i.index }" type="images" uploadPath="/photo/hrmuser/bank" selectMultiple="false" maxWidth="100" maxHeight="100"/>
 			</td>
 			<td>
 				<input type="text" class="table-form-control" name="hrmBanksList[${i.index }].remarks"

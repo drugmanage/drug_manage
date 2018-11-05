@@ -17,6 +17,7 @@
         <tr id="work_tr_${i.index}">
             <td>
                 <input type="hidden" name="itemWorkId" value="${i.index}"/>
+                <input type="hidden" name="hrmWorkExperList[${i.index }].id" value="${item.id}"/>
                 <input type="text" name="hrmWorkExperList[${i.index }].startDate" class="input-xlarge Wdate "
                        value="<fmt:formatDate value="${item.startDate}" pattern="yyyy-MM-dd"/>"
                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>

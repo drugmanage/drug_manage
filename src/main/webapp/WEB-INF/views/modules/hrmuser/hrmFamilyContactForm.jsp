@@ -16,6 +16,7 @@
 		<tr id="family_tr_${i.index}">
 			<td>
 				<input type="hidden" name="itemFamilyId" value="${i.index}"/>
+				<input type="hidden" name="hrmFamilyList[${i.index }].id" value="${item.id}"/>
 				<input type="text" class="table-form-control" name="hrmFamilyList[${i.index }].name"
 					   value="${item.name }"
 					   valid='vtext'/>

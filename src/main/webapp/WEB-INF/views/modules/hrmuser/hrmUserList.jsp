@@ -77,7 +77,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>用户表id</th>
+				<th>登录用户名</th>
 				<th>职员编号</th>
 				<th>职员名称</th>
 				<th>助记码</th>
@@ -98,7 +98,7 @@
 		<c:forEach items="${page.list}" var="hrmUser">
 			<tr>
 				<td><a href="${ctx}/hrmuser/hrmUser/form?id=${hrmUser.id}">
-					${hrmUser.}
+					${hrmUser.sysUser.name}
 				</a></td>
 				<td>
 					${hrmUser.empNumber}

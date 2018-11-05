@@ -4,7 +4,8 @@
     
 	<sql id="hrmUserColumns">
 		a.id AS "id",
-		a.sys_user_id AS "sysUser",
+		a.sys_user_id AS "sysUser.id",
+		u2.name as "sysUser.name",
 		a.emp_number AS "empNumber",
 		a.emp_name AS "empName",
 		a.pinyin AS "pinyin",
@@ -176,7 +177,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{sysUser},
+			#{sysUser.id},
 			#{empNumber},
 			#{empName},
 			#{pinyin},
@@ -220,7 +221,7 @@
 	
 	<update id="update">
 		UPDATE hrm_user SET 	
-			sys_user_id = #{sysUser},
+			sys_user_id = #{sysUser.id},
 			emp_number = #{empNumber},
 			emp_name = #{empName},
 			pinyin = #{pinyin},
