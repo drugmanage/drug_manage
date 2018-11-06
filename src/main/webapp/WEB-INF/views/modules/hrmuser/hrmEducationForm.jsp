@@ -57,7 +57,7 @@
                            valid='vnum'/>
                 </td>
                 <td>
-                    <a href="javascript:void(0)" class="btnDel" onclick="oper.edu.del('${i.index}');">删除</a>
+                    <a href="javascript:void(0)" class="btnDel" onclick="oper.edu.del('${i.index}','${item.id }');">删除</a>
                 </td>
             </tr>
         </c:forEach>

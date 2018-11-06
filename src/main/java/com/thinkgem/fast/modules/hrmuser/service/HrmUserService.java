@@ -156,6 +156,7 @@ public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
         }
     }
 
+    @Override
     @Transactional(readOnly = false)
     public void delete(HrmUser hrmUser) {
         super.delete(hrmUser);

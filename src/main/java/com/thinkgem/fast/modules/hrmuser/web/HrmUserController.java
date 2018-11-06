@@ -36,16 +36,6 @@ public class HrmUserController extends BaseController {
 
     @Autowired
     private HrmUserService hrmUserService;
-    @Autowired
-    private HrmAddressService hrmAddressService;
-    @Autowired
-    private HrmFamilyContactService hrmFamilyContactService;
-    @Autowired
-    private HrmBankService hrmBankService;
-    @Autowired
-    private HrmEducationService hrmEducationService;
-    @Autowired
-    private HrmWorkExperService hrmWorkExperService;
 
     @ModelAttribute
     public HrmUser get(@RequestParam(required = false) String id) {
@@ -199,64 +189,4 @@ public class HrmUserController extends BaseController {
         addMessage(redirectAttributes, "删除内部员工成功");
         return "redirect:" + Global.getAdminPath() + "/hrmuser/hrmUser/?repage";
     }
-
-    @RequiresPermissions("hrmuser:hrmUser:edit")
-    @ResponseBody
-    @RequestMapping(value = "deleteBank")
-    public Map<String, Object> deleteBank(HrmBank bank) {
-        Map<String, Object> res= new HashMap<String, Object>();
-        hrmBankService.delete(bank);
-        res.put("code",200);
-        res.put("msg","删除成功");
-        return res;
-    }
-    @RequiresPermissions("hrmuser:hrmUser:edit")
-    @ResponseBody
-    @RequestMapping(value = "deleteAddress")
-    public Map<String, Object> deleteAddress(HrmAddress Address) {
-        Map<String, Object> res= new HashMap<String, Object>();
-        hrmAddressService.delete(Address);
-        res.put("code",200);
-        res.put("msg","删除成功");
-        return res;
-    }
-
-    @RequiresPermissions("hrmuser:hrmUser:edit")
-    @ResponseBody
-    @RequestMapping(value = "deleteFamily")
-    public Map<String, Object> deleteFamily(HrmFamilyContact  hrmFamilyContact) {
-        Map<String, Object> res= new HashMap<String, Object>();
-
-        hrmFamilyContactService.delete(hrmFamilyContact);
-        res.put("code",200);
-        res.put("msg","删除成功");
-        return res;
-    }
-
-    @RequiresPermissions("hrmuser:hrmUser:edit")
-    @ResponseBody
-    @RequestMapping(value = "deleteEdu")
-    public Map<String, Object> deleteEdu(HrmEducation edu) {
-        Map<String, Object> res= new HashMap<String, Object>();
-
-        hrmEducationService.delete(edu);
-        res.put("code",200);
-        res.put("msg","删除成功");
-        return res;
-    }
-
-    @RequiresPermissions("hrmuser:hrmUser:edit")
-    @ResponseBody
-    @RequestMapping(value = "deleteWork")
-    public Map<String, Object> deleteWork(HrmWorkExper work) {
-        Map<String, Object> res= new HashMap<String, Object>();
-
-        hrmWorkExperService.delete(work);
-        res.put("code",200);
-        res.put("msg","删除成功");
-        return res;
-    }
-
-
-
 }

@@ -118,13 +118,7 @@
 	<update id="delete">
 		UPDATE hrm_work_exper SET 
 			del_flag = #{DEL_FLAG_DELETE}
-		WHERE
-		<if test="id!=null and id!=''">
-			id = #{id}
-		</if>
-		<if test="hrmUserId!=null and hrmUserId!=''">
-			hrm_user_id = #{hrmUserId}
-		</if>
+		WHERE id = #{id}
 	</update>
 	
 </mapper>

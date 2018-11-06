@@ -28,11 +28,33 @@
                 } else {
                     var newMaxId = 0;
                     var html = this.appendHtml(newMaxId);
-                    $("#" + this.socpName + "contentField").html(html);
+                    $("#" + oper.edu.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemEduId) {
-                $("#" + this.socpName + "tr_" + itemEduId).remove();
+            del: function (itemEduId,entityId) {
+                if(entityId){
+                    var url = "${ctx}/hrmuser/hrmEdu/delete";
+                    tips="确定删除教育信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function(v){
+                        if(v=="ok") {
+                            $.ajax({
+                                url: url,
+                                data: {id: entityId},
+                                type: 'post',
+                                dataType: 'json',
+                                async: false,
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        alertx(data.msg);
+                                        $("#" + oper.edu.socpName + "tr_" + itemEduId).remove();
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }else{
+                    $("#" + this.socpName + "tr_" + itemEduId).remove();
+                }
             },
             appendHtml: function (newMaxId) {
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
@@ -96,8 +118,30 @@
                     $("#" + this.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemWorkId) {
-                $("#" + this.socpName + "tr_" + itemWorkId).remove();
+            del: function (itemWorkId,entityId) {
+                if(entityId){
+                    var url = "${ctx}/hrmuser/hrmWork/delete";
+                    tips="确定删除工作经历信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function(v){
+                        if(v=="ok") {
+                            $.ajax({
+                                url: url,
+                                data: {id: entityId},
+                                type: 'post',
+                                dataType: 'json',
+                                async: false,
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        alertx(data.msg);
+                                        $("#" + oper.work.socpName + "tr_" + itemWorkId).remove();
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }else{
+                    $("#" + this.socpName + "tr_" + itemWorkId).remove();
+                }
             },
             appendHtml: function (newMaxId) {
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
@@ -155,8 +199,30 @@
                     $("#" + this.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemWorkId) {
-                $("#" + this.socpName + "tr_" + itemWorkId).remove();
+            del: function (itemWorkId,entityId) {
+                if(entityId){
+                    var url = "${ctx}/hrmuser/hrmFamilyContact/delete";
+                    tips="确定删除家庭联系人信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function(v){
+                        if(v=="ok") {
+                            $.ajax({
+                                url: url,
+                                data: {id: entityId},
+                                type: 'post',
+                                dataType: 'json',
+                                async: false,
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        alertx(data.msg);
+                                        $("#" + oper.family.socpName + "tr_" + itemWorkId).remove();
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }else{
+                    $("#" + this.socpName + "tr_" + itemWorkId).remove();
+                }
             },
             appendHtml: function (newMaxId) {
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
@@ -200,7 +266,7 @@
                         if (maxId != undefined) {
                             var newMaxId = maxId + 1;
                             var html = this.appendHtml(newMaxId);
-                            $("#" + this.socpName + "tr_" + maxId).after(html);
+                            $("#" + oper.bank.socpName + "tr_" + maxId).after(html);
                         }
                     }
                 } else {
@@ -209,8 +275,30 @@
                     $("#" + this.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemBankId) {
-                $("#" + this.socpName + "tr_" + itemBankId).remove();
+            del: function (itemBankId,entityId) {
+                if(entityId){
+                    var url = "${ctx}/hrmuser/hrmBank/delete";
+                    tips="确定删除家庭联系人信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function(v){
+                        if(v=="ok") {
+                            $.ajax({
+                                url: url,
+                                data: {id: entityId},
+                                type: 'post',
+                                dataType: 'json',
+                                async: false,
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        alertx(data.msg);
+                                        $("#" + this.socpName + "tr_" + itemBankId).remove();
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }else{
+                    $("#" + this.socpName + "tr_" + itemBankId).remove();
+                }
             },
             appendHtml: function (newMaxId) {
                 var frontUploadId = "front" + newMaxId;
@@ -389,11 +477,33 @@
                 } else {
                     var newMaxId = 0;
                     var html = this.appendHtml(newMaxId);
-                    $("#" + this.socpName + "contentField").html(html);
+                    $("#" + oper.address.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemAddressId) {
-                $("#" + this.socpName + "tr_" + itemAddressId).remove();
+            del: function (itemAddressId,entityId) {
+                if(entityId){
+                    var url = "${ctx}/hrmuser/hrmAddress/delete";
+                    tips="确定删除家庭联系人信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function(v){
+                        if(v=="ok") {
+                            $.ajax({
+                                url: url,
+                                data: {id: entityId},
+                                type: 'post',
+                                dataType: 'json',
+                                async: false,
+                                success: function (data) {
+                                    if (data.code == 200) {
+                                        alertx(data.msg);
+                                        $("#" + this.socpName + "tr_" + itemAddressId).remove();
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }else{
+                    $("#" + this.socpName + "tr_" + itemAddressId).remove();
+                }
             },
             appendHtml: function (newMaxId) {
                 var frontUploadId = "front" + newMaxId;
