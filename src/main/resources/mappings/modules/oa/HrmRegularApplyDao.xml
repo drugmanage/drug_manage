@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.oa.dao.HrmRegularApplyDao">
+    
+	<sql id="hrmRegularApplyColumns">
+		a.id AS "id",
+		a.proc_ins_id AS "procInsId",
+		a.hrm_user_id AS "hrmUser.id",
+		a.apply_time AS "applyTime",
+		a.estimate_time AS "estimateTime",
+		a.estimate_post AS "estimatePost",
+		a.hr_manage_view AS "hrManageView",
+		a.hr_minister_view AS "hrMinisterView",
+		a.ceo_view AS "ceoView",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="hrmRegularApplyJoins">
+		LEFT JOIN sys_user u3 ON u3.id = a.hrm_user_id
+	</sql>
+    
+	<select id="get" resultType="HrmRegularApply">
+		SELECT 
+			<include refid="hrmRegularApplyColumns"/>
+		FROM hrm_regular_apply a
+		<include refid="hrmRegularApplyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="HrmRegularApply">
+		SELECT 
+			<include refid="hrmRegularApplyColumns"/>
+		FROM hrm_regular_apply a
+		<include refid="hrmRegularApplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="HrmRegularApply">
+		SELECT 
+			<include refid="hrmRegularApplyColumns"/>
+		FROM hrm_regular_apply a
+		<include refid="hrmRegularApplyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO hrm_regular_apply(
+			id,
+			proc_ins_id,
+			hrm_user_id,
+			apply_time,
+			estimate_time,
+			estimate_post,
+			hr_manage_view,
+			hr_minister_view,
+			ceo_view,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{procInsId},
+			#{hrmUser.id},
+			#{applyTime},
+			#{estimateTime},
+			#{estimatePost},
+			#{hrManageView},
+			#{hrMinisterView},
+			#{ceoView},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE hrm_regular_apply SET 	
+			hrm_user_id = #{hrmUser.id},
+			apply_time = #{applyTime},
+			estimate_time = #{estimateTime},
+			estimate_post = #{estimatePost},
+			hr_manage_view = #{hrManageView},
+			hr_minister_view = #{hrMinisterView},
+			ceo_view = #{ceoView},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateInsId">
+		UPDATE hrm_regular_apply SET
+		proc_ins_id = #{procInsId},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateHrManageView">
+		UPDATE hrm_regular_apply SET
+		hr_manage_view = #{hrManageView},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateHrMinisterView">
+		UPDATE hrm_regular_apply SET
+		hr_minister_view = #{hrMinisterView},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateCeoView">
+		UPDATE hrm_regular_apply SET
+		ceo_view = #{ceoView},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE hrm_regular_apply SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
