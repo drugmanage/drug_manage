@@ -19,12 +19,12 @@
                 <td>
                     <input type="hidden" name="itemEduId" value="${i.index}"/>
                     <input type="hidden" name="hrmEduList[${i.index }].id" value="${item.id}"/>
-                    <input type="text" name="hrmEduList[${i.index }].startDate"  class="input-xlarge Wdate "
+                    <input type="text" name="hrmEduList[${i.index }].startDate"  class="input-medium Wdate "
                            value="<fmt:formatDate value="${item.startDate}" pattern="yyyy-MM-dd"/>"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                 </td>
                 <td>
-                    <input type="text" name="hrmEduList[${i.index }].endDate" class="input-xlarge Wdate "
+                    <input type="text" name="hrmEduList[${i.index }].endDate" class="input-medium Wdate "
                            value="<fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd"/>"
                            onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
                 </td>
