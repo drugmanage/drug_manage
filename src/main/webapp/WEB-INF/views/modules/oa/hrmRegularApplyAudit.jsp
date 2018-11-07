@@ -69,15 +69,21 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">转正理由：</label>
+			<div class="controls">
+				<form:input path="content" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">人事部主管意见：</label>
 			<div class="controls">
-				<form:input path="hrManageView" htmlEscape="false" maxlength="500" class="input-xlarge "/>
+				<form:input path="hrManageView" htmlEscape="false" readonly="true"  maxlength="500" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">人事部部长意见：</label>
 			<div class="controls">
-				<form:input path="hrMinisterView" htmlEscape="false" maxlength="500" class="input-xlarge "/>
+				<form:input path="hrMinisterView" htmlEscape="false" readonly="true" maxlength="500" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -93,8 +99,18 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="oa:hrmRegularApply:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+
+			<shiro:hasPermission name="oa:hrmRegularApply:edit">
+				<c:if test="${hrmRegularApply.act.taskDefKey eq 'apply_end'}">
+					<input id="btnSubmit" class="btn btn-primary" type="submit" value="转 正" onclick="$('#flag').val('yes')"/>&nbsp;
+				</c:if>
+				<c:if test="${hrmRegularApply.act.taskDefKey ne 'apply_end'}">
+					<input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('yes')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#flag').val('no')"/>&nbsp;
+				</c:if>
+			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
+
 		</div>
 	</form:form>
 </body>
