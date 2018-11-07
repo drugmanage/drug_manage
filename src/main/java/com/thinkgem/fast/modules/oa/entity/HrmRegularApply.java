@@ -16,11 +16,11 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 public class HrmRegularApply extends ActEntity<HrmRegularApply> {
 	
 	private static final long serialVersionUID = 1L;
-	private String procInsId;		// 流程实例id
 	private User hrmUser;		// 员工表ID
 	private Date applyTime;		// 申请时间
 	private Date estimateTime;		// 预计转正时间
 	private String estimatePost;		// 预计转正岗位
+	private String content;				//转正原因
 	private String hrManageView;		// 人事部主管意见
 	private String hrMinisterView;		// 人事部部长意见
 	private String ceoView;		// 总经理意见
@@ -33,15 +33,14 @@ public class HrmRegularApply extends ActEntity<HrmRegularApply> {
 		super(id);
 	}
 
-	@Length(min=0, max=64, message="流程实例id长度必须介于 0 和 64 之间")
-	public String getProcInsId() {
-		return procInsId;
+	public String getContent() {
+		return content;
 	}
 
-	public void setProcInsId(String procInsId) {
-		this.procInsId = procInsId;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	
+
 	public User getHrmUser() {
 		return hrmUser;
 	}

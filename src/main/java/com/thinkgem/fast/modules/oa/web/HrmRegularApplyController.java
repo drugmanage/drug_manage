@@ -54,8 +54,45 @@ public class HrmRegularApplyController extends BaseController {
 	@RequiresPermissions("oa:hrmRegularApply:view")
 	@RequestMapping(value = "form")
 	public String form(HrmRegularApply hrmRegularApply, Model model) {
+
+
+		String view = "hrmRegularApplyForm";
+
+		// 查看转正申请信息
+		if (StringUtils.isNotBlank(hrmRegularApply.getId())){//.getAct().getProcInsId())){
+
+			// 环节编号
+			String taskDefKey = hrmRegularApply.getAct().getTaskDefKey();
+
+			// 查看工单
+			if(hrmRegularApply.getAct().isFinishTask()){
+				view = "hrmRegularApplyView";
+			}
+			// 修改环节
+			else if ("modify".equals(taskDefKey)){
+				view = "hrmRegularApplyForm";
+			}
+			// 审核环节
+			else if ("audit".equals(taskDefKey)){
+				view = "hrmRegularApplyAudit1";
+//				String formKey = "/oa/testAudit";
+//				return "redirect:" + ActUtils.getFormUrl(formKey, testAudit.getAct());
+			}
+			// 审核环节2
+			else if ("audit2".equals(taskDefKey)){
+				view = "hrmRegularApplyAudit2";
+			}
+			// 审核环节3
+			else if ("audit3".equals(taskDefKey)){
+				view = "hrmRegularApplyAudit";
+			}
+			// 兑现环节
+			else if ("apply_end".equals(taskDefKey)){
+				view = "hrmRegularApplyAudit";
+			}
+		}
 		model.addAttribute("hrmRegularApply", hrmRegularApply);
-		return "modules/oa/hrmRegularApplyForm";
+		return "modules/oa/"+view;
 	}
 
 	@RequiresPermissions("oa:hrmRegularApply:edit")
