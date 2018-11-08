@@ -86,6 +86,7 @@
 				<th>QQ号</th>
 				<th>手机号</th>
 				<th>邮箱</th>
+				<th>用户状态</th>
 				<th>应聘登记时间</th>
 				<th>应聘职务</th>
 				<th>紧急联系人电话</th>
@@ -123,6 +124,9 @@
 				</td>
 				<td>
 					${hrmUser.email}
+				</td>
+				<td>
+					${fns:getDictLabel(hrmUser.userStatus, 'user_status', '')}
 				</td>
 				<td>
 					<fmt:formatDate value="${hrmUser.regTime}" pattern="yyyy-MM-dd HH:mm:ss"/>

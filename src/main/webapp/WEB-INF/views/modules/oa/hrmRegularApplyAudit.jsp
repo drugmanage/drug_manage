@@ -105,8 +105,10 @@
 					<input id="btnSubmit" class="btn btn-primary" type="submit" value="转 正" onclick="$('#flag').val('yes')"/>&nbsp;
 				</c:if>
 				<c:if test="${hrmRegularApply.act.taskDefKey ne 'apply_end'}">
-					<input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('yes')"/>&nbsp;
-					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#flag').val('no')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('1')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#flag').val('0')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳回到人事部部长" onclick="$('#flag').val('2')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳回到人事部主管" onclick="$('#flag').val('3')"/>&nbsp;
 				</c:if>
 			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

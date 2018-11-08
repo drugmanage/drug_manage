@@ -14,4 +14,5 @@ public interface HrmUserDao extends CrudDao<HrmUser> {
 
     int findCount();
 
+    void updateUserUpdate(HrmUser hrmUser);
 }

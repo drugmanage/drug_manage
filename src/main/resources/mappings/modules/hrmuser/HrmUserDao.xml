@@ -40,6 +40,7 @@
 		a.cert_type AS "certType",
 		a.cert_number AS "certNumber",
 		a.company_type AS "companyType",
+		a.user_status AS "userStatus",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -269,6 +270,12 @@
 	<update id="delete">
 		UPDATE hrm_user SET 
 			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<update id="updateUserUpdate">
+		UPDATE hrm_user SET
+		user_status = #{userStatus}
 		WHERE id = #{id}
 	</update>
 

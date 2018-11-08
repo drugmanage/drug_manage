@@ -88,7 +88,7 @@ public class HrmRegularApplyController extends BaseController {
 			}
 			// 兑现环节
 			else if ("apply_end".equals(taskDefKey)){
-				view = "hrmRegularApplyAudit";
+				view = "hrmRegularApplyView";
 			}
 		}
 		model.addAttribute("hrmRegularApply", hrmRegularApply);

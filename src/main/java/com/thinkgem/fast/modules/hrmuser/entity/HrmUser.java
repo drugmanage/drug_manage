@@ -58,6 +58,10 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private Date beginRegTime;		// 开始 应聘登记时间
 	private Date endRegTime;		// 结束 应聘登记时间
 
+	private String userStatus;		// 用户类型
+
+	private String isSettlement;		//是否为结算对象
+
 	//用户照片
 	private String userPhoto;
 	//证件照路径
@@ -127,6 +131,22 @@ public class HrmUser extends DataEntity<HrmUser> {
 
 	public void setHrmBanksList(List<HrmBank> hrmBanksList) {
 		this.hrmBanksList = hrmBanksList;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+
+	public String getIsSettlement() {
+		return isSettlement;
+	}
+
+	public void setIsSettlement(String isSettlement) {
+		this.isSettlement = isSettlement;
 	}
 
 	public Area getArea() {

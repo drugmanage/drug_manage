@@ -335,6 +335,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="control-group">
+                <div class="div-a">
+                    <label class="control-label">用户状态：</label>
+                    <div class="controls">
+                            ${fns:getDictLabel(hrmUser.userStatus, 'user_status', '')}
+                    </div>
+                </div>
+                <div class="div-b">
+                    <label class="control-label">是否为结算对象：</label>
+                    <div class="controls">
+                        <form:select path="isSettlement" class="input-xlselect ">
+                            <form:option value="" label=""/>
+                            <form:options items="${fns:getDictList('is_settlement')}" itemLabel="label" itemValue="value"
+                                          htmlEscape="false"/>
+                        </form:select>
+                    </div>
+                </div>
+            </div>
+
             <div class="control-group">
                 <div class="div-a">
                     <label class="control-label">个人描述：</label>

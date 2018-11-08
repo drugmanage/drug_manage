@@ -165,4 +165,8 @@ public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
     public int findCount() {
         return hrmUserDao.findCount();
     }
+
+    public void updateUserUpdate(HrmUser hrmUser) {
+        hrmUserDao.updateUserUpdate(hrmUser);
+    }
 }

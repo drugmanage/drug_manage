@@ -81,6 +81,18 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<label class="control-label">人事部部长意见：</label>
+			<div class="controls">
+				<form:input path="hrMinisterView" htmlEscape="false" readonly="true" maxlength="500" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">总经理意见：</label>
+			<div class="controls">
+				<form:input path="ceoView" htmlEscape="false" readonly="true" maxlength="500" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
 				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
@@ -90,11 +102,11 @@
 
 			<shiro:hasPermission name="oa:hrmRegularApply:edit">
 				<c:if test="${hrmRegularApply.act.taskDefKey eq 'apply_end'}">
-					<input id="btnSubmit" class="btn btn-primary" type="submit" value="转 正" onclick="$('#flag').val('yes')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-primary" type="submit" value="转 正" onclick="$('#flag').val('1')"/>&nbsp;
 				</c:if>
 				<c:if test="${hrmRegularApply.act.taskDefKey ne 'apply_end'}">
-					<input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('yes')"/>&nbsp;
-					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#flag').val('no')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-primary" type="submit" value="同 意" onclick="$('#flag').val('1')"/>&nbsp;
+					<input id="btnSubmit" class="btn btn-inverse" type="submit" value="驳 回" onclick="$('#flag').val('0')"/>&nbsp;
 				</c:if>
 			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
