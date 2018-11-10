@@ -346,9 +346,9 @@
                 <div class="div-b">
                     <label class="control-label">是否为结算对象：</label>
                     <div class="controls">
-                        <form:select path="isSettlement" class="input-xlselect ">
+                        <form:select path="settlementFlag" class="input-xlselect ">
                             <form:option value="" label=""/>
-                            <form:options items="${fns:getDictList('is_settlement')}" itemLabel="label" itemValue="value"
+                            <form:options items="${fns:getDictList('settlement_flag')}" itemLabel="label" itemValue="value"
                                           htmlEscape="false"/>
                         </form:select>
                     </div>

@@ -41,6 +41,7 @@
 		a.cert_number AS "certNumber",
 		a.company_type AS "companyType",
 		a.user_status AS "userStatus",
+		a.settlement_flag AS "settlementFlag",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -176,6 +177,7 @@
 			cert_type,
 			cert_number,
 			company_type,
+			settlement_flag,
 			create_by,
 			create_date,
 			update_by,
@@ -218,6 +220,7 @@
 			#{certType},
 			#{certNumber},
 			#{companyType},
+			#{settlementFlag}
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -263,6 +266,7 @@
 			cert_type = #{certType},
 			cert_number = #{certNumber},
 			company_type = #{companyType},
+			settlement_flag = #{settlementFlag},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>

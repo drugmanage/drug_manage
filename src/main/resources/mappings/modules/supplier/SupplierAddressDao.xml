@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.supplier.dao.SupplierAddressDao">
+    
+	<sql id="supplierAddressColumns">
+		a.id AS "id",
+		a.supplier_id AS "supplierId",
+		a.receiving_name AS "receivingName",
+		a.area_id AS "area.id",
+		a.receiving_address AS "receivingAddress",
+		a.contact_phone AS "contactPhone",
+		a.stop_flag AS "stopFlag",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a4.name AS "area.name"
+	</sql>
+	
+	<sql id="supplierAddressJoins">
+		LEFT JOIN sys_area a4 ON a4.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="SupplierAddress">
+		SELECT 
+			<include refid="supplierAddressColumns"/>
+		FROM supplier_address a
+		<include refid="supplierAddressJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SupplierAddress">
+		SELECT 
+			<include refid="supplierAddressColumns"/>
+		FROM supplier_address a
+		<include refid="supplierAddressJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SupplierAddress">
+		SELECT 
+			<include refid="supplierAddressColumns"/>
+		FROM supplier_address a
+		<include refid="supplierAddressJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO supplier_address(
+			id,
+			supplier_id,
+			receiving_name,
+			area_id,
+			receiving_address,
+			contact_phone,
+			stop_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{supplierId},
+			#{receivingName},
+			#{area.id},
+			#{receivingAddress},
+			#{contactPhone},
+			#{stopFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE supplier_address SET 	
+			supplier_id = #{supplierId},
+			receiving_name = #{receivingName},
+			area_id = #{area.id},
+			receiving_address = #{receivingAddress},
+			contact_phone = #{contactPhone},
+			stop_flag = #{stopFlag},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE supplier_address SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

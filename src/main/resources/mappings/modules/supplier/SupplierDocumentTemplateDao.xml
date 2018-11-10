@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.supplier.dao.SupplierDocumentTemplateDao">
+    
+	<sql id="supplierDocumentTemplateColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.cert_code AS "certCode",
+		a.issuing_organ AS "issuingOrgan",
+		a.date_issue AS "dateIssue",
+		a.validity_date AS "validityDate",
+		a.img_path AS "imgPath",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="supplierDocumentTemplateJoins">
+	</sql>
+    
+	<select id="get" resultType="SupplierDocumentTemplate">
+		SELECT 
+			<include refid="supplierDocumentTemplateColumns"/>
+		FROM supplier_document_template a
+		<include refid="supplierDocumentTemplateJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SupplierDocumentTemplate">
+		SELECT 
+			<include refid="supplierDocumentTemplateColumns"/>
+		FROM supplier_document_template a
+		<include refid="supplierDocumentTemplateJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SupplierDocumentTemplate">
+		SELECT 
+			<include refid="supplierDocumentTemplateColumns"/>
+		FROM supplier_document_template a
+		<include refid="supplierDocumentTemplateJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO supplier_document_template(
+			id,
+			name,
+			cert_code,
+			issuing_organ,
+			date_issue,
+			validity_date,
+			img_path,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{certCode},
+			#{issuingOrgan},
+			#{dateIssue},
+			#{validityDate},
+			#{imgPath},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE supplier_document_template SET 	
+			name = #{name},
+			cert_code = #{certCode},
+			issuing_organ = #{issuingOrgan},
+			date_issue = #{dateIssue},
+			validity_date = #{validityDate},
+			img_path = #{imgPath},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE supplier_document_template SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

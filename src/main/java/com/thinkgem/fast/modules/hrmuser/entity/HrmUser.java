@@ -60,7 +60,7 @@ public class HrmUser extends DataEntity<HrmUser> {
 
 	private String userStatus;		// 用户类型
 
-	private String isSettlement;		//是否为结算对象
+	private String settlementFlag;		//是否为结算对象
 
 	//用户照片
 	private String userPhoto;
@@ -141,12 +141,12 @@ public class HrmUser extends DataEntity<HrmUser> {
 		this.userStatus = userStatus;
 	}
 
-	public String getIsSettlement() {
-		return isSettlement;
+	public String getSettlementFlag() {
+		return settlementFlag;
 	}
 
-	public void setIsSettlement(String isSettlement) {
-		this.isSettlement = isSettlement;
+	public void setSettlementFlag(String settlementFlag) {
+		this.settlementFlag = settlementFlag;
 	}
 
 	public Area getArea() {
