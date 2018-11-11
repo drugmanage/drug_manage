@@ -3,6 +3,7 @@ package com.thinkgem.fast.modules.supplier.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.fast.common.utils.DateUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,14 @@ public class SupplierController extends BaseController {
 	@RequiresPermissions("supplier:supplier:view")
 	@RequestMapping(value = "form")
 	public String form(Supplier supplier, Model model) {
+		if (StringUtils.isBlank(supplier.getId())) {
+			String yy = DateUtils.getLastYearYY();
+			int total = supplierService.findCount();
+			int sup = total + 1;
+			String ss = StringUtils.frontCompWithZore(sup, 4);
+			String supNumber = yy + ss;
+			supplier.setSupplierNumber(supNumber);
+		}
 		model.addAttribute("supplier", supplier);
 		return "modules/supplier/supplierForm";
 	}

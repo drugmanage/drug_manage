@@ -2,6 +2,7 @@ package com.thinkgem.fast.modules.supplier.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,9 @@ import com.thinkgem.fast.modules.supplier.dao.SupplierDao;
 @Service
 @Transactional(readOnly = true)
 public class SupplierService extends CrudService<SupplierDao, Supplier> {
+
+	@Autowired
+	private SupplierDao supplierDao;
 
 	public Supplier get(String id) {
 		return super.get(id);
@@ -40,5 +44,8 @@ public class SupplierService extends CrudService<SupplierDao, Supplier> {
 	public void delete(Supplier supplier) {
 		super.delete(supplier);
 	}
-	
+
+	public int findCount() {
+		return supplierDao.findCount();
+	}
 }

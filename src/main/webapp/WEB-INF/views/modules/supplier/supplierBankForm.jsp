@@ -1,87 +1,66 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<html>
-<head>
-	<title>供应商银行信息管理</title>
-	<meta name="decorator" content="default"/>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
-		});
-	</script>
-</head>
-<body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/supplier/supplierBank/">供应商银行信息列表</a></li>
-		<li class="active"><a href="${ctx}/supplier/supplierBank/form?id=${supplierBank.id}">供应商银行信息<shiro:hasPermission name="supplier:supplierBank:edit">${not empty supplierBank.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="supplier:supplierBank:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
-	<form:form id="inputForm" modelAttribute="supplierBank" action="${ctx}/supplier/supplierBank/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">供应商：</label>
-				<div class="controls">
-					<form:input path="supplierId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">开户银行：</label>
-				<div class="controls">
-					<form:select path="bank" class="input-xlselect ">
-						<form:option value="" label=""/>
-						<form:options items="${fns:getDictList('bank')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-					</form:select>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">银行账号：</label>
-				<div class="controls">
-					<form:input path="bankNumber" htmlEscape="false" maxlength="128" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">开户户名：</label>
-				<div class="controls">
-					<form:input path="openAccountName" htmlEscape="false" maxlength="128" class="input-xlarge "/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">是否停用：</label>
-				<div class="controls">
-					<form:radiobuttons path="stopFlag" items="${fns:getDictList('stop_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">备注信息：</label>
-				<div class="controls">
-					<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
-				</div>
-			</div>
-		</div>
-		<div class="form-actions">
-			<shiro:hasPermission name="supplier:supplierBank:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
-			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
-		</div>
-	</form:form>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/include/taglib.jsp" %>
+<table class="table table-striped table-bordered table-hover" width="100%">
+	<thead>
+	<tr>
+		<th style="width:15%;">开户银行</th>
+		<th style="width:15%;">银行账号</th>
+		<th style="width:15%;">状态</th>
+		<th style="width:15%;">正面照片</th>
+		<th style="width:15%;">背面照片</th>
+		<th style="width:15%;">说明</th>
+		<th width="60">操作</th>
+	</tr>
+	</thead>
+	<tbody id="bank_contentField">
+	<c:forEach items="${hrmUser.hrmBanksList }" var="item" varStatus="i">
+		<tr id="bank_tr_${i.index}">
+			<td>
+				<input type="hidden" name="itemBankId" value="${i.index}"/>
+				<input type="hidden" name="hrmBanksList[${i.index }].id" value="${item.id}"/>
+
+				<select class="table-form-control" name="hrmBanksList[${i.index }].bank">
+					<c:forEach items="${fns:getDictList('bank')}" var="dict" varStatus="idx">
+						<option value="${dict.value}"
+								<c:if test="${dict.value == item.bank }">selected='true'</c:if> >${dict.label}</option>
+					</c:forEach>
+
+				</select>
+			</td>
+			<td>
+				<input type="text" class="table-form-control" name="hrmBanksList[${i.index }].bankNumber"
+					   value="${item.bankNumber }" valid='vtext'/>
+			</td>
+			<td>
+				<select class="table-form-control" name="hrmBanksList[${i.index }].status">
+					<c:forEach items="${fns:getDictList('bank_status')}" var="dict" varStatus="idx">
+						<option value="${dict.value}"
+								<c:if test="${dict.value == item.status }">selected='true'</c:if> >${dict.label}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td>
+				<input type="hidden" id="nameImagefront${i.index }" name="hrmBanksList[${i.index }].positivePhoto" value="${item.positivePhoto}"/>
+				<sys:ckfinder input="nameImagefront${i.index }" type="images" uploadPath="/photo/hrmuser/bank" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+			</td>
+			<td>
+				<input type="hidden" id="nameImageback${i.index }" name="hrmBanksList[${i.index }].backPhoto" value="${item.backPhoto}"/>
+				<sys:ckfinder input="nameImageback${i.index }" type="images" uploadPath="/photo/hrmuser/bank" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+			</td>
+			<td>
+				<input type="text" class="table-form-control" name="hrmBanksList[${i.index }].remarks"
+					   value="${item.remarks }"
+					   valid='vtext'/>
+			</td>
+			<td>
+				<a href="javascript:void(0)" class="btnDel" onclick="oper.bank.del('${i.index}','${item.id }');">删除</a>
+			</td>
+		</tr>
+	</c:forEach>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="10"><a href="javascript:" onclick="oper.bank.add();" class="btn">新增</a></td>
+	</tr>
+	</tfoot>
+</table>

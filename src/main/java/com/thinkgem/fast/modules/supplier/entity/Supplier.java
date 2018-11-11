@@ -3,6 +3,8 @@ package com.thinkgem.fast.modules.supplier.entity;
 import org.hibernate.validator.constraints.Length;
 import com.thinkgem.fast.modules.sys.entity.User;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
@@ -36,7 +38,57 @@ public class Supplier extends DataEntity<Supplier> {
 	private User stopUser;		// 停用人
 	private Date stopTime;		// 停用时间
 	private String settlementFlag;		// 是否设置为结算对象
-	
+
+	private List<SupplierAddress> supplierAddressList;
+
+	private List<SupplierBank> supplierBankList;
+
+	private List<SupplierConsigner> supplierConsignerList;
+
+	private List<SupplierDocumentTemplate> supplierDocumentTemplateList;
+
+	private List<SupplierInvoiceInfo> supplierInvoiceInfoList;
+
+	public List<SupplierAddress> getSupplierAddressList() {
+		return supplierAddressList;
+	}
+
+	public void setSupplierAddressList(List<SupplierAddress> supplierAddressList) {
+		this.supplierAddressList = supplierAddressList;
+	}
+
+	public List<SupplierBank> getSupplierBankList() {
+		return supplierBankList;
+	}
+
+	public void setSupplierBankList(List<SupplierBank> supplierBankList) {
+		this.supplierBankList = supplierBankList;
+	}
+
+	public List<SupplierConsigner> getSupplierConsignerList() {
+		return supplierConsignerList;
+	}
+
+	public void setSupplierConsignerList(List<SupplierConsigner> supplierConsignerList) {
+		this.supplierConsignerList = supplierConsignerList;
+	}
+
+	public List<SupplierDocumentTemplate> getSupplierDocumentTemplateList() {
+		return supplierDocumentTemplateList;
+	}
+
+	public void setSupplierDocumentTemplateList(List<SupplierDocumentTemplate> supplierDocumentTemplateList) {
+		this.supplierDocumentTemplateList = supplierDocumentTemplateList;
+	}
+
+	public List<SupplierInvoiceInfo> getSupplierInvoiceInfoList() {
+		return supplierInvoiceInfoList;
+	}
+
+	public void setSupplierInvoiceInfoList(List<SupplierInvoiceInfo> supplierInvoiceInfoList) {
+		this.supplierInvoiceInfoList = supplierInvoiceInfoList;
+	}
+
 	public Supplier() {
 		super();
 	}

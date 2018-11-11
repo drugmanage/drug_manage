@@ -63,7 +63,7 @@ public class HrmRegularApplyService extends CrudService<HrmRegularApplyDao, HrmR
             hrmRegularApply.preUpdate();
             dao.update(hrmRegularApply);
 
-            hrmRegularApply.getAct().setComment(("1".equals(hrmRegularApply.getAct().getFlag()) ? "[重申] " : "[辞退] ") + hrmRegularApply.getAct().getComment());
+            hrmRegularApply.getAct().setComment(("1".equals(hrmRegularApply.getAct().getFlag()) ? "[重申] " : "[驳回] ") + hrmRegularApply.getAct().getComment());
 
             //TODO 根据审核节点结束后并且是通过yes 修改员工状态
             if ("apply_end".equals(taskDefKey) && "1".equals(hrmRegularApply.getAct().getFlag())) {

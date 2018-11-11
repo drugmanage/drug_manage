@@ -11,5 +11,6 @@ import com.thinkgem.fast.modules.supplier.entity.Supplier;
  */
 @MyBatisDao
 public interface SupplierDao extends CrudDao<Supplier> {
-	
+
+    int findCount();
 }
