@@ -8,6 +8,7 @@
 		a.bank AS "bank",
 		a.bank_number AS "bankNumber",
 		a.open_account_name AS "openAccountName",
+		a.id_card AS "idCard",
 		a.stop_flag AS "stopFlag",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -71,6 +72,7 @@
 			bank,
 			bank_number,
 			open_account_name,
+			id_card,
 			stop_flag,
 			create_by,
 			create_date,
@@ -84,6 +86,7 @@
 			#{bank},
 			#{bankNumber},
 			#{openAccountName},
+			#{idCard},
 			#{stopFlag},
 			#{createBy.id},
 			#{createDate},
@@ -100,6 +103,7 @@
 			bank = #{bank},
 			bank_number = #{bankNumber},
 			open_account_name = #{openAccountName},
+			id_card = #{idCard},
 			stop_flag = #{stopFlag},
 			remarks = #{remarks}
 		WHERE id = #{id}

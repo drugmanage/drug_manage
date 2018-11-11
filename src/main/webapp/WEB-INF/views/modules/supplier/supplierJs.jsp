@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <script type="application/javascript">
-    var oper = {
+    var supOper = {
         edu: {
             socpName: "edu_",
             add: function () {
@@ -28,7 +28,7 @@
                 } else {
                     var newMaxId = 0;
                     var html = this.appendHtml(newMaxId);
-                    $("#" + oper.edu.socpName + "contentField").html(html);
+                    $("#" + supOper.edu.socpName + "contentField").html(html);
                 }
             },
             del: function (itemEduId,entityId) {
@@ -46,7 +46,7 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + oper.edu.socpName + "tr_" + itemEduId).remove();
+                                        $("#" + supOper.edu.socpName + "tr_" + itemEduId).remove();
                                     }
                                 }
                             })
@@ -88,7 +88,7 @@
                     + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].phone" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="oper.edu.del(' + newMaxId + ');">删除</a>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.edu.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;
@@ -133,7 +133,7 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + oper.work.socpName + "tr_" + itemWorkId).remove();
+                                        $("#" + supOper.work.socpName + "tr_" + itemWorkId).remove();
                                     }
                                 }
                             })
@@ -169,7 +169,7 @@
                     + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].phone" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="oper.work.del(' + newMaxId + ');">删除</a>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.work.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;
@@ -214,7 +214,7 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + oper.family.socpName + "tr_" + itemWorkId).remove();
+                                        $("#" + supOper.family.socpName + "tr_" + itemWorkId).remove();
                                     }
                                 }
                             })
@@ -245,7 +245,7 @@
                     + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].phone" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="oper.family.del(' + newMaxId + ');">删除</a>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.family.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;
@@ -254,7 +254,7 @@
         },
         bank: {
             socpName: "bank_",
-            //工作经历页面
+            //银行信息页面
             add: function () {
                 if ($("input[name='itemBankId']") && $("input[name='itemBankId']").length != 0) {
                     var itemBankId = [];
@@ -266,7 +266,7 @@
                         if (maxId != undefined) {
                             var newMaxId = maxId + 1;
                             var html = this.appendHtml(newMaxId);
-                            $("#" + oper.bank.socpName + "tr_" + maxId).after(html);
+                            $("#" + supOper.bank.socpName + "tr_" + maxId).after(html);
                         }
                     }
                 } else {
@@ -277,8 +277,8 @@
             },
             del: function (itemBankId,entityId) {
                 if(entityId){
-                    var url = "${ctx}/hrmuser/hrmBank/delete";
-                    tips="确定删除家庭联系人信息？";
+                    var url = "${ctx}/supplier/supplierBank/delete";
+                    tips="确定删除银行信息吗？";
                     top.$.jBox.confirm(tips, "清除确认", function(v){
                         if(v=="ok") {
                             $.ajax({
@@ -306,34 +306,36 @@
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden" name="itemBankId" value="' + newMaxId + '"/>'
-                    + '<input type="hidden" name="hrmBanksList[' + newMaxId + '].id" value=""/>'
-                    + '<select class="table-form-control" name="hrmBanksList[' + newMaxId + '].bank">'
+                    + '<input type="hidden" name="supplierBankList[' + newMaxId + '].id" value=""/>'
+                    + '<input type="text" class="table-form-control" name="supplierBankList[' + newMaxId + '].openAccountName" value="" valid="vtext"/>'
+                    + '</td>'
+                    + '<td>'
+                    + '<select class="table-form-control" name="supplierBankList[' + newMaxId + '].bank">'
                     + '<c:forEach items="${fns:getDictList('bank')}" var="dict" varStatus="idx">'
                     + '<option value="${dict.value}"  >${dict.label}</option>'
                     + '</c:forEach>'
                     + '</select>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmBanksList[' + newMaxId + '].bankNumber" value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierBankList[' + newMaxId + '].bankNumber" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                    + '<select class="table-form-control" name="hrmBanksList[' + newMaxId + '].status">'
-                    + '<c:forEach items="${fns:getDictList('bank_status')}" var="dict" varStatus="idx">'
-                    + '<option value="${dict.value}">${dict.label}</option>'
-                    + '</c:forEach>'
-                    + '</select>'
-
+                    + '<input type="text" class="table-form-control" name="supplierBankList[' + newMaxId + '].idCard" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
+                        + '<input type="checkbox" class="table-form-control" name="supplierBankList[' + newMaxId + '].stopFlag" value="0" />'
+                    + '</td>'
 
-                    + '<input id="nameImage' + frontUploadId + '" name="hrmBanksList[' + newMaxId + '].positivePhoto" type="hidden" >'
+                    + '<td>'
+
+                    + '<input id="nameImage' + frontUploadId + '" name="supplierBankList[' + newMaxId + '].positivePhoto" type="hidden" >'
                     + '<ol id="nameImage' + frontUploadId + 'Preview"><li style="list-style:none;padding-top:5px;">无</li></ol>'
 
                     + '<a href="javascript:" onclick="nameImage' + frontUploadId + 'FinderOpen();" class="btn" id="limitAdd">添加</a>&nbsp;<a href="javascript:" onclick="nameImage' + frontUploadId + 'DelAll();" class="btn">清除</a>'
                     + '<script type="text/javascript">'
                     + 'function nameImage' + frontUploadId + 'FinderOpen(){\r\n'
                     + 'var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);\r\n'
-                    + 'var url = "${ctxStatic}/ckfinder/ckfinder.html?type=images&start=images:/photo/hrmuser/bank/"+year+"/"+month+'
+                    + 'var url = "${ctxStatic}/ckfinder/ckfinder.html?type=images&start=images:/photo/supplier/bank/"+year+"/"+month+'
                     + '"/&action=js&func=nameImage' + frontUploadId + 'SelectAction&thumbFunc=nameImage' + frontUploadId + 'ThumbSelectAction&cb=nameImage' + frontUploadId + 'Callback&dts=0&sm=1";\r\n'
                     + 'windowOpen(url,"文件管理",1000,700);\r\n'
                     + '}\r\n'
@@ -386,14 +388,14 @@
                     + '<\/script>\r\n'
                     + '</td>'
                     + '<td>'
-                    + '<input id="nameImage' + backUploadId + '" name="hrmBanksList[' + newMaxId + '].backPhoto" type="hidden" >'
+                    + '<input id="nameImage' + backUploadId + '" name="supplierBankList[' + newMaxId + '].backPhoto" type="hidden" >'
                     + '<ol id="nameImage' + backUploadId + 'Preview"><li style="list-style:none;padding-top:5px;">无</li></ol>'
 
                     + '<a href="javascript:" onclick="nameImage' + backUploadId + 'FinderOpen();" class="btn" id="limitAdd">添加</a>&nbsp;<a href="javascript:" onclick="nameImage' + backUploadId + 'DelAll();" class="btn">清除</a>'
                     + '<script type="text/javascript">'
                     + 'function nameImage' + backUploadId + 'FinderOpen(){\r\n'
                     + 'var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);\r\n'
-                    + 'var url = "${ctxStatic}/ckfinder/ckfinder.html?type=images&start=images:/photo/hrmuser/bank/"+year+"/"+month+'
+                    + 'var url = "${ctxStatic}/ckfinder/ckfinder.html?type=images&start=images:/photo/supplier/bank/"+year+"/"+month+'
                     + '"/&action=js&func=nameImage' + backUploadId + 'SelectAction&thumbFunc=nameImage' + backUploadId + 'ThumbSelectAction&cb=nameImage' + backUploadId + 'Callback&dts=0&sm=1";\r\n'
                     + 'windowOpen(url,"文件管理",1000,700);\r\n'
                     + '}\r\n'
@@ -447,10 +449,7 @@
 
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmBanksList[' + newMaxId + '].remarks" value="" valid="text"/>'
-                    + '</td>'
-                    + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="oper.bank.del(' + newMaxId + ');">删除</a>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.bank.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;
@@ -477,13 +476,13 @@
                 } else {
                     var newMaxId = 0;
                     var html = this.appendHtml(newMaxId);
-                    $("#" + oper.address.socpName + "contentField").html(html);
+                    $("#" + supOper.address.socpName + "contentField").html(html);
                 }
             },
             del: function (itemAddressId,entityId) {
                 if(entityId){
-                    var url = "${ctx}/hrmuser/hrmAddress/delete";
-                    tips="确定删除家庭联系人信息？";
+                    var url = "${ctx}/supplier/supplierAddress/delete";
+                    tips="确定删除收货信息吗？";
                     top.$.jBox.confirm(tips, "清除确认", function(v){
                         if(v=="ok") {
                             $.ajax({
@@ -511,13 +510,13 @@
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden" name="itemAddressId" value="' + newMaxId + '"/>'
-                    + '<input type="hidden" name="hrmAddressList[' + newMaxId + '].id" value=""/>'
-                    + '<input type="text" class="table-form-control" name="hrmAddressList[' + newMaxId + '].receivingName" value="" valid="vtext"/>'
+                    + '<input type="hidden" name="supplierAddressList[' + newMaxId + '].id" value=""/>'
+                    + '<input type="text" class="table-form-control" name="supplierAddressList[' + newMaxId + '].receivingName" value="" valid="vtext"/>'
                     + '</td>'
 
                     + '<td>'
-                    + '<input id="area' + newMaxId + 'Id" name="hrmAddressList[' + newMaxId + '].area.id" class="required" type="hidden" value="">'
-                    + '<input id="area' + newMaxId + 'Name" name="hrmAddressList[' + newMaxId + '].area.name" readonly="readonly" type="text" value="" data-msg-required="" class="required" style="">'
+                    + '<input id="area' + newMaxId + 'Id" name="supplierAddressList[' + newMaxId + '].area.id" class="" type="hidden" value="">'
+                    + '<input id="area' + newMaxId + 'Name" name="supplierAddressList[' + newMaxId + '].area.name" readonly="readonly" type="text" value="" data-msg-required="" class="input-medium" style="">'
                     + '<a id="area' + newMaxId + 'Button" href="javascript:" class="btn  " style="">&nbsp;<i class="icon-search"></i>&nbsp;</a>&nbsp;&nbsp;'
                     + '<script type="text/javascript">\r\n'
                     + '$("#area' + newMaxId + 'Button, #area' + newMaxId + 'Name").click(function(){ \r\n'
@@ -556,14 +555,17 @@
                     + '</td>'
 
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmAddressList[' + newMaxId + '].receivingAddress" value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierAddressList[' + newMaxId + '].receivingAddress" value="" valid="vtext"/>'
                     + '</td>'
 
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmAddressList[' + newMaxId + '].contactPhone" value="" valid="vnum"/>'
+                    + '<input type="text" class="table-form-control" name="supplierAddressList[' + newMaxId + '].contactPhone" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="oper.address.del(' + newMaxId + ');">删除</a>'
+                    + '<input type="checkbox" class="table-form-control" name="supplierAddressList[' + newMaxId + '].stopFlag" value="0" />'
+                    + '</td>'
+                    + '<td>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.address.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;

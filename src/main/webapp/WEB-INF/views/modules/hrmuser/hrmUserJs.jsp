@@ -483,7 +483,7 @@
             del: function (itemAddressId,entityId) {
                 if(entityId){
                     var url = "${ctx}/hrmuser/hrmAddress/delete";
-                    tips="确定删除家庭联系人信息？";
+                    tips="确定删除第三方收货地址信息吗？";
                     top.$.jBox.confirm(tips, "清除确认", function(v){
                         if(v=="ok") {
                             $.ajax({
