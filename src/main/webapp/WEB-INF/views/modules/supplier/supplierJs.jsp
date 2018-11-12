@@ -209,16 +209,16 @@
             }
         },
         docTemp: {
-            socpName: "family_",
+            socpName: "docTemp_",
             //工作经历页面
             add: function () {
-                if ($("input[name='itemFamilyId']") && $("input[name='itemFamilyId']").length != 0) {
-                    var itemFamilyId = [];
-                    $("input[name='itemFamilyId']").each(function () {
-                        itemFamilyId.push(parseInt($(this).val()));
+                if ($("input[name='itemDocTempId']") && $("input[name='itemDocTempId']").length != 0) {
+                    var itemDocTempId = [];
+                    $("input[name='itemDocTempId']").each(function () {
+                        itemDocTempId.push(parseInt($(this).val()));
                     });
-                    if (itemFamilyId.length != 0) {
-                        var maxId = Math.max.apply(null, itemFamilyId);
+                    if (itemDocTempId.length != 0) {
+                        var maxId = Math.max.apply(null, itemDocTempId);
                         if (maxId != undefined) {
                             var newMaxId = maxId + 1;
                             var html = this.appendHtml(newMaxId);
@@ -233,8 +233,8 @@
             },
             del: function (itemWorkId, entityId) {
                 if (entityId) {
-                    var url = "${ctx}/hrmuser/hrmFamilyContact/delete";
-                    tips = "确定删除家庭联系人信息？";
+                    var url = "${ctx}/supplier/supplierDocumentTemplate/delete";
+                    tips = "确定删除供应商证件模板信息？";
                     top.$.jBox.confirm(tips, "清除确认", function (v) {
                         if (v == "ok") {
                             $.ajax({
@@ -246,7 +246,7 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + supOper.family.socpName + "tr_" + itemWorkId).remove();
+                                        $("#" + supOper.docTemp.socpName + "tr_" + itemWorkId).remove();
                                     }
                                 }
                             })
@@ -257,27 +257,34 @@
                 }
             },
             appendHtml: function (newMaxId) {
+                var imgPath="imgPath"+newMaxId;
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
 
                     + '<td>'
-                    + '<input type="hidden" name="itemFamilyId" value="' + newMaxId + '"/>'
-                    + '<input type="hidden" name="hrmFamilyList[' + newMaxId + '].id" value=""/>'
-                    + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].name" value="" valid="vtext"/>'
+                    + '<input type="hidden" name="itemDocTempId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden" name="supplierDocumentTemplateList[' + newMaxId + '].id" value=""/>'
+                    + '<input type="text" class="table-form-control" name="supplierDocumentTemplateList[' + newMaxId + '].name" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].relationship" value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierDocumentTemplateList[' + newMaxId + '].certCode" value="" valid="vtext">'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].workUnit"  value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierDocumentTemplateList[' + newMaxId + '].issuingOrgan"  value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].post" value="" valid="vtext"/>'
+                    + '<input type="text" name="supplierDocumentTemplateList[' + newMaxId + '].dateIssue" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
+                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmFamilyList[' + newMaxId + '].phone" value="" valid="vnum"/>'
+                    + '<input type="text" name="supplierDocumentTemplateList[' + newMaxId + '].validityDate" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
+                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
                     + '</td>'
                     + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.family.del(' + newMaxId + ');">删除</a>'
+                    + '<input id="nameImage' + imgPath + '" name="supplierDocumentTemplateList[' + newMaxId + '].imgPath" type="hidden" >'
+                    + getCKFinderHtml(imgPath, "supplier/documentTemplate")
+                    + '</td>'
+                    + '<td>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.docTemp.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;
