@@ -9,16 +9,16 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <script type="application/javascript">
     var supOper = {
-        edu: {
-            socpName: "edu_",
+        consigner: {
+            socpName: "consigner_",
             add: function () {
-                if ($("input[name='itemEduId']") && $("input[name='itemEduId']").length != 0) {
-                    var itemEduId = [];
-                    $("input[name='itemEduId']").each(function () {
-                        itemEduId.push(parseInt($(this).val()));
+                if ($("input[name='itemConsignerId']") && $("input[name='itemConsignerId']").length != 0) {
+                    var itemConsignerId = [];
+                    $("input[name='itemConsignerId']").each(function () {
+                        itemConsignerId.push(parseInt($(this).val()));
                     });
-                    if (itemEduId.length != 0) {
-                        var maxId = Math.max.apply(null, itemEduId);
+                    if (itemConsignerId.length != 0) {
+                        var maxId = Math.max.apply(null, itemConsignerId);
                         if (maxId != undefined) {
                             var newMaxId = maxId + 1;
                             var html = this.appendHtml(newMaxId);
@@ -28,15 +28,15 @@
                 } else {
                     var newMaxId = 0;
                     var html = this.appendHtml(newMaxId);
-                    $("#" + supOper.edu.socpName + "contentField").html(html);
+                    $("#" + supOper.consigner.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemEduId,entityId) {
-                if(entityId){
-                    var url = "${ctx}/hrmuser/hrmEdu/delete";
-                    tips="确定删除教育信息？";
-                    top.$.jBox.confirm(tips, "清除确认", function(v){
-                        if(v=="ok") {
+            del: function (itemEduId, entityId) {
+                if (entityId) {
+                    var url = "${ctx}/supplier/supplierConsigner/delete";
+                    tips = "确定删除供应商委托人信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function (v) {
+                        if (v == "ok") {
                             $.ajax({
                                 url: url,
                                 data: {id: entityId},
@@ -46,66 +46,78 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + supOper.edu.socpName + "tr_" + itemEduId).remove();
+                                        $("#" + supOper.consigner.socpName + "tr_" + itemEduId).remove();
                                     }
                                 }
                             })
                         }
                     });
-                }else{
+                } else {
                     $("#" + this.socpName + "tr_" + itemEduId).remove();
                 }
             },
             appendHtml: function (newMaxId) {
+                var proxyBookImgPath = "proxyBookImgPath" + newMaxId;
+                var idCardImgPath = "idCardImgPath" + newMaxId;
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
-                    + '<input type="hidden"  name="itemEduId" value="' + newMaxId + '"/>'
-                    + '<input type="hidden"  name="hrmEduList[' + newMaxId + '].id" value=""/>'
-                    + '<input type="text" name="hrmEduList[' + newMaxId + '].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
+                    + '<input type="hidden"  name="itemConsignerId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden"  name="supplierConsignerList[' + newMaxId + '].id" value=""/>'
+                    + '<input type="text" class="table-form-control" name="supplierConsignerList[' + newMaxId + '].contactsName" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" name="hrmEduList[' + newMaxId + '].endDate" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
-                    + '</td>'
-                    + '<td>'
-                    + '<select class="table-form-control" id="selectOptId_' + newMaxId + '" onchange="changeDefault(' + newMaxId + ')" name="hrmEduList[' + newMaxId + '].stage">'
-                    <c:forEach items="${fns:getDictList('edu_type')}" var="dict" varStatus="idx">
-                    + '<option value="${dict.value}">${dict.label}</option>'
-                    </c:forEach>
+                    + '<select class="table-form-control" name="supplierConsignerList[' + newMaxId + '].sex">'
+                    + '<c:forEach items="${fns:getDictList('sex')}" var="dict" varStatus="idx">'
+                    + '<option value="${dict.value}"  >${dict.label}</option>'
+                    + '</c:forEach>'
                     + '</select>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].schoolName" value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierConsignerList[' + newMaxId + '].phone" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].major"  value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierConsignerList[' + newMaxId + '].certNumber" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].witness" value="" valid="vtext"/>'
+                    + '<input type="text" name="supplierConsignerList[' + newMaxId + '].consignerVali" value="" valid="vtext" readonly="readonly" maxlength="20" class="table-form-control Wdate"  '
+                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmEduList[' + newMaxId + '].phone" value="" valid="vnum"/>'
+                    + '<input type="text" class="table-form-control" name="supplierConsignerList[' + newMaxId + '].proxyBook" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.edu.del(' + newMaxId + ');">删除</a>'
+                    + '<input type="text" name="supplierConsignerList[' + newMaxId + '].proxyBookVali" value="" valid="vtext" readonly="readonly" maxlength="20" class="table-form-control Wdate"  '
+                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
+                    + '</td>'
+                    + '<td>'
+                    + '<input type="checkbox" class="table-form-control" name="supplierConsignerList[${i.index }].stopFlag" value="0" />'
+                    + '<td>'
+                    + '<input id="nameImage' + proxyBookImgPath + '" name="supplierConsignerList[' + newMaxId + '].proxyBookImgPath" type="hidden" >'
+                    + getCKFinderHtml(proxyBookImgPath, "supplier/consigner")
+                    + '</td>'
+                    + '<td>'
+                    + '<input id="nameImage' + idCardImgPath + '" name="supplierConsignerList[' + newMaxId + '].idCardImgPath" type="hidden" >'
+                    + getCKFinderHtml(idCardImgPath, "supplier/consigner")
+                    + '</td>'
+                    + '<td>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.consigner.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;
                 return html;
             }
         },
-        work: {
-            socpName: "work_",
-            //工作经历页面
+        invoice: {
+            socpName: "invoice_",
+            //供应商开票信息页面
             add: function () {
-                if ($("input[name='itemWorkId']") && $("input[name='itemWorkId']").length != 0) {
-                    var itemWorkId = [];
-                    $("input[name='itemWorkId']").each(function () {
-                        itemWorkId.push(parseInt($(this).val()));
+                if ($("input[name='itemInvoiceId']") && $("input[name='itemInvoiceId']").length != 0) {
+                    var itemInvoiceId = [];
+                    $("input[name='itemInvoiceId']").each(function () {
+                        itemInvoiceId.push(parseInt($(this).val()));
                     });
-                    if (itemWorkId.length != 0) {
-                        var maxId = Math.max.apply(null, itemWorkId);
+                    if (itemInvoiceId.length != 0) {
+                        var maxId = Math.max.apply(null, itemInvoiceId);
                         if (maxId != undefined) {
                             var newMaxId = maxId + 1;
                             var html = this.appendHtml(newMaxId);
@@ -118,12 +130,12 @@
                     $("#" + this.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemWorkId,entityId) {
-                if(entityId){
-                    var url = "${ctx}/hrmuser/hrmWork/delete";
-                    tips="确定删除工作经历信息？";
-                    top.$.jBox.confirm(tips, "清除确认", function(v){
-                        if(v=="ok") {
+            del: function (itemWorkId, entityId) {
+                if (entityId) {
+                    var url = "${ctx}/supplier/supplierInvoiceInfo/delete";
+                    tips = "确定删除供应商开票信息信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function (v) {
+                        if (v == "ok") {
                             $.ajax({
                                 url: url,
                                 data: {id: entityId},
@@ -133,50 +145,70 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + supOper.work.socpName + "tr_" + itemWorkId).remove();
+                                        $("#" + supOper.invoice.socpName + "tr_" + itemWorkId).remove();
                                     }
                                 }
                             })
                         }
                     });
-                }else{
+                } else {
                     $("#" + this.socpName + "tr_" + itemWorkId).remove();
                 }
             },
             appendHtml: function (newMaxId) {
+                var invoicePath = "invoicePath" + newMaxId;
+                var areaName ="invoiceArea"+newMaxId;
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
-                    + '<input type="hidden"  name="itemWorkId" value="' + newMaxId + '"/>'
-                    + '<input type="hidden"  name="hrmWorkExperList[' + newMaxId + '].id" value=""/>'
-                    + '<input type="text" name="hrmWorkExperList[' + newMaxId + '].startDate" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
-                    + '</td>'
-                    + '<td>'
-                    + '<input type="text" name="hrmWorkExperList[' + newMaxId + '].endDate" value="" value="" valid="vtext" readonly="readonly" maxlength="20" class="input-medium Wdate"  '
-                    + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
+                    + '<input type="hidden" name="itemInvoiceId" value="' + newMaxId + '"/>'
+                    + '<input type="hidden" name="supplierInvoiceInfoList[' + newMaxId + '].id" value=""/>'
+                    + '<input type="text" class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].accountName" value="" valid="vtext"/>'
                     + '</td>'
 
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].companyName" value="" valid="vtext"/>'
+                    + '<select class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].bankDeposit">'
+                    + '<c:forEach items="${fns:getDictList('bank')}" var="dict" varStatus="idx">'
+                    + '<option value="${dict.value}"  >${dict.label}</option>'
+                    + '</c:forEach>'
+                    + '</select>'
+                    + '</td>'
+
+                    + '<td>'
+                    + '<input id="' + areaName + 'Id" name="supplierInvoiceInfoList[' + newMaxId + '].area.id" class="table-form-control" type="hidden" value="">'
+                    + '<input id="' + areaName + 'Name" name="supplierInvoiceInfoList[' + newMaxId + '].area.name" readonly="readonly" type="text" value="" data-msg-required="" class="input-medium" style="">'
+                    + getAreaHtml(areaName)
+                    + '</td>'
+
+                    + '<td>'
+                    + ' <input type="text" class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].detailAddress" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].companyAddress"  value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].phone" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].post" value="" valid="vtext"/>'
+                    + '<input type="text" class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].accountNumber" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="hrmWorkExperList[' + newMaxId + '].phone" value="" valid="vnum"/>'
+                    + '<input type="text" class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].dutyParagraph" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.work.del(' + newMaxId + ');">删除</a>'
+                    + '<input type="checkbox" class="table-form-control" name="supplierInvoiceInfoList[${i.index }].stopFlag" value="0" />'
+                    + '</td>'
+
+                    + '<td>'
+                    + '<input id="nameImage' + invoicePath + '" name="supplierInvoiceInfoList[' + newMaxId + '].invoicePath" type="hidden" >'
+                    + getCKFinderHtml(invoicePath, "supplier/invoice")
+                    + '</td>'
+
+                    + '<td>'
+                    + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.invoice.del(' + newMaxId + ');">删除</a>'
                     + '</td>'
                     + '</tr>';
                 var html = trStr;
                 return html;
             }
         },
-        family: {
+        docTemp: {
             socpName: "family_",
             //工作经历页面
             add: function () {
@@ -199,12 +231,12 @@
                     $("#" + this.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemWorkId,entityId) {
-                if(entityId){
+            del: function (itemWorkId, entityId) {
+                if (entityId) {
                     var url = "${ctx}/hrmuser/hrmFamilyContact/delete";
-                    tips="确定删除家庭联系人信息？";
-                    top.$.jBox.confirm(tips, "清除确认", function(v){
-                        if(v=="ok") {
+                    tips = "确定删除家庭联系人信息？";
+                    top.$.jBox.confirm(tips, "清除确认", function (v) {
+                        if (v == "ok") {
                             $.ajax({
                                 url: url,
                                 data: {id: entityId},
@@ -220,7 +252,7 @@
                             })
                         }
                     });
-                }else{
+                } else {
                     $("#" + this.socpName + "tr_" + itemWorkId).remove();
                 }
             },
@@ -275,12 +307,12 @@
                     $("#" + this.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemBankId,entityId) {
-                if(entityId){
+            del: function (itemBankId, entityId) {
+                if (entityId) {
                     var url = "${ctx}/supplier/supplierBank/delete";
-                    tips="确定删除银行信息吗？";
-                    top.$.jBox.confirm(tips, "清除确认", function(v){
-                        if(v=="ok") {
+                    tips = "确定删除银行信息吗？";
+                    top.$.jBox.confirm(tips, "清除确认", function (v) {
+                        if (v == "ok") {
                             $.ajax({
                                 url: url,
                                 data: {id: entityId},
@@ -296,7 +328,7 @@
                             })
                         }
                     });
-                }else{
+                } else {
                     $("#" + this.socpName + "tr_" + itemBankId).remove();
                 }
             },
@@ -323,7 +355,7 @@
                     + '<input type="text" class="table-form-control" name="supplierBankList[' + newMaxId + '].idCard" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                        + '<input type="checkbox" class="table-form-control" name="supplierBankList[' + newMaxId + '].stopFlag" value="0" />'
+                    + '<input type="checkbox" class="table-form-control" name="supplierBankList[' + newMaxId + '].stopFlag" value="0" />'
                     + '</td>'
 
                     + '<td>'
@@ -479,12 +511,12 @@
                     $("#" + supOper.address.socpName + "contentField").html(html);
                 }
             },
-            del: function (itemAddressId,entityId) {
-                if(entityId){
+            del: function (itemAddressId, entityId) {
+                if (entityId) {
                     var url = "${ctx}/supplier/supplierAddress/delete";
-                    tips="确定删除收货信息吗？";
-                    top.$.jBox.confirm(tips, "清除确认", function(v){
-                        if(v=="ok") {
+                    tips = "确定删除收货信息吗？";
+                    top.$.jBox.confirm(tips, "清除确认", function (v) {
+                        if (v == "ok") {
                             $.ajax({
                                 url: url,
                                 data: {id: entityId},
@@ -500,13 +532,12 @@
                             })
                         }
                     });
-                }else{
+                } else {
                     $("#" + this.socpName + "tr_" + itemAddressId).remove();
                 }
             },
             appendHtml: function (newMaxId) {
-                var frontUploadId = "front" + newMaxId;
-                var backUploadId = "back" + newMaxId;
+                var areaName ="area"+newMaxId;
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden" name="itemAddressId" value="' + newMaxId + '"/>'
@@ -515,43 +546,9 @@
                     + '</td>'
 
                     + '<td>'
-                    + '<input id="area' + newMaxId + 'Id" name="supplierAddressList[' + newMaxId + '].area.id" class="" type="hidden" value="">'
-                    + '<input id="area' + newMaxId + 'Name" name="supplierAddressList[' + newMaxId + '].area.name" readonly="readonly" type="text" value="" data-msg-required="" class="input-medium" style="">'
-                    + '<a id="area' + newMaxId + 'Button" href="javascript:" class="btn  " style="">&nbsp;<i class="icon-search"></i>&nbsp;</a>&nbsp;&nbsp;'
-                    + '<script type="text/javascript">\r\n'
-                    + '$("#area' + newMaxId + 'Button, #area' + newMaxId + 'Name").click(function(){ \r\n'
-                    + 'if ($("#area' + newMaxId + 'Button").hasClass("disabled")){ return true; }\r\n'
-                    + 'top.$.jBox.open("iframe:/a/tag/treeselect?url="+encodeURIComponent("/sys/area/treeData")+"&module=&checked=&extId=&isAll=", "选择区域", 300, 420, {'
-                    + ' ajaxData:{selectIds: $("#area' + newMaxId + 'Id").val()},buttons:{"确定":"ok", "关闭":true}, submit:function(v, h, f){ \r\n'
-                    + 'if (v=="ok"){\r\n'
-                    + 'var tree = h.find("iframe")[0].contentWindow.tree;\r\n'
-                    + 'var ids = [], names = [], nodes = [];\r\n'
-                    + 'if ("" == "true"){\r\n'
-                    + 'nodes = tree.getCheckedNodes(true);\r\n'
-                    + '}else{\r\n'
-                    + 'nodes = tree.getSelectedNodes();\r\n'
-                    + '}\r\n'
-                    + 'for(var i=0; i<nodes.length; i++) {//\r\n'
-                    + 'ids.push(nodes[i].id);\r\n'
-                    + 'names.push(nodes[i].name);//\r\n'
-                    + 'break; // 如果为非复选框选择，则返回第一个选择  \r\n'
-                    + '}\r\n'
-                    + '$("#area' + newMaxId + 'Id").val(ids.join(",").replace(/u_/ig,""));\r\n'
-                    + '$("#area' + newMaxId + 'Name").val(names.join(","));\r\n'
-                    + '}\r\n'
-                    + 'else if (v=="clear"){\r\n'
-                    + '$("#area' + newMaxId + 'Id").val("");\r\n'
-                    + '$("#area' + newMaxId + 'Name").val("");\r\n'
-                    + '}\r\n'
-                    + 'if(typeof areaTreeselectCallBack == \'function\'){\r\n'
-                    + 'areaTreeselectCallBack(v, h, f);\r\n'
-                    + '}\r\n'
-                    + '}, loaded:function(h){\r\n'
-                    + '$(".jbox-content", top.document).css("overflow-y","hidden");\r\n'
-                    + '}\r\n'
-                    + '});\r\n'
-                    + '});\r\n'
-                    + '<\/script>'
+                    + '<input id="' + areaName + 'Id" name="supplierAddressList[' + newMaxId + '].area.id" class="" type="hidden" value="">'
+                    + '<input id="' + areaName + 'Name" name="supplierAddressList[' + newMaxId + '].area.name" readonly="readonly" type="text" value="" data-msg-required="" class="input-medium" style="">'
+                        + getAreaHtml(areaName)
                     + '</td>'
 
                     + '<td>'
@@ -573,6 +570,113 @@
             }
         }
     };
+
+    function getAreaHtml(areaName) {
+        var html = ''
+
+            + '<a id="' + areaName + 'Button" href="javascript:" class="btn  " style="">&nbsp;<i class="icon-search"></i>&nbsp;</a>&nbsp;&nbsp;'
+
+            + '<script type="text/javascript">\r\n'
+            + '$("#' + areaName + 'Button, #' + areaName + 'Name").click(function(){ \r\n'
+            + 'if ($("#' + areaName + 'Button").hasClass("disabled")){ return true; }\r\n'
+            + 'top.$.jBox.open("iframe:/a/tag/treeselect?url="+encodeURIComponent("/sys/area/treeData")+"&module=&checked=&extId=&isAll=", "选择区域", 300, 420, {'
+            + ' ajaxData:{selectIds: $("#' + areaName + 'Id").val()},buttons:{"确定":"ok", "关闭":true}, submit:function(v, h, f){ \r\n'
+            + 'if (v=="ok"){\r\n'
+            + 'var tree = h.find("iframe")[0].contentWindow.tree;\r\n'
+            + 'var ids = [], names = [], nodes = [];\r\n'
+            + 'if ("" == "true"){\r\n'
+            + 'nodes = tree.getCheckedNodes(true);\r\n'
+            + '}else{\r\n'
+            + 'nodes = tree.getSelectedNodes();\r\n'
+            + '}\r\n'
+            + 'for(var i=0; i<nodes.length; i++) {//\r\n'
+            + 'ids.push(nodes[i].id);\r\n'
+            + 'names.push(nodes[i].name);//\r\n'
+            + 'break; // 如果为非复选框选择，则返回第一个选择  \r\n'
+            + '}\r\n'
+            + '$("#' + areaName + 'Id").val(ids.join(",").replace(/u_/ig,""));\r\n'
+            + '$("#' + areaName + 'Name").val(names.join(","));\r\n'
+            + '}\r\n'
+            + 'else if (v=="clear"){\r\n'
+            + '$("#' + areaName + 'Id").val("");\r\n'
+            + '$("#' + areaName + 'Name").val("");\r\n'
+            + '}\r\n'
+            + 'if(typeof areaTreeselectCallBack == \'function\'){\r\n'
+            + 'areaTreeselectCallBack(v, h, f);\r\n'
+            + '}\r\n'
+            + '}, loaded:function(h){\r\n'
+            + '$(".jbox-content", top.document).css("overflow-y","hidden");\r\n'
+            + '}\r\n'
+            + '});\r\n'
+            + '});\r\n'
+            + '<\/script>';
+        return html;
+    }
+    /**
+     * 根据隐藏域中的id名称来进行生成脚本信息
+     * @param name
+     */
+    function getCKFinderHtml(name, path) {
+        var html = ""
+            + '<ol id="nameImage' + name + 'Preview"><li style="list-style:none;padding-top:5px;">无</li></ol>'
+
+            + '<a href="javascript:" onclick="nameImage' + name + 'FinderOpen();" class="btn" id="limitAdd">添加</a>&nbsp;<a href="javascript:" onclick="nameImage' + name + 'DelAll();" class="btn">清除</a>'
+            + '<script type="text/javascript">'
+            + 'function nameImage' + name + 'FinderOpen(){\r\n'
+            + 'var date = new Date(), year = date.getFullYear(), month = (date.getMonth()+1)>9?date.getMonth()+1:"0"+(date.getMonth()+1);\r\n'
+            + 'var url = "${ctxStatic}/ckfinder/ckfinder.html?type=images&start=images:/photo/' + path + '/"+year+"/"+month+'
+            + '"/&action=js&func=nameImage' + name + 'SelectAction&thumbFunc=nameImage' + name + 'ThumbSelectAction&cb=nameImage' + name + 'Callback&dts=0&sm=1";\r\n'
+            + 'windowOpen(url,"文件管理",1000,700);\r\n'
+            + '}\r\n'
+            + 'function nameImage' + name + 'SelectAction(fileUrl, data, allFiles){\r\n'
+            + 'var url="", files=ckfinderAPI.getSelectedFiles();\r\n'
+            + 'for(var i=0; i<files.length; i++){\r\n'
+            + 'url += files[i].getUrl();\r\n'
+            + 'if (i<files.length-1) url+="|";\r\n'
+            + '}\r\n'
+            + '$("#nameImage' + name + '").val($("#nameImage' + name + '").val()+($("#nameImage' + name + '").val(url)==""?url:"|"+url));\r\n'
+            + 'nameImage' + name + 'Preview();\r\n'
+            + '}\r\n'
+            + 'function nameImage' + name + 'ThumbSelectAction(fileUrl, data, allFiles){\r\n'
+            + 'var url="", files=ckfinderAPI.getSelectedFiles();\r\n'
+            + 'for(var i=0; i<files.length; i++){\r\n'
+            + 'url += files[i].getThumbnailUrl();\r\n'
+            + 'if (i<files.length-1) url+="|";\r\n'
+            + '}\r\n'
+            + '$("#nameImage' + name + '").val($("#nameImage' + name + '").val()+($("#nameImage' + name + '").val(url)==""?url:"|"+url));\r\n'
+            + 'nameImage' + name + 'Preview();\r\n'
+            + '}\r\n'
+            + 'function nameImage' + name + 'Callback(api){\r\n'
+            + 'ckfinderAPI = api;\r\n'
+            + '}\r\n'
+            + 'function nameImage' + name + 'Del(obj){\r\n'
+            + 'var url = $(obj).prev().attr("url");\r\n'
+            + '$("#nameImage' + name + '").val($("#nameImage' + name + '").val().replace("|"+url,"","").replace(url+"|","","").replace(url,"",""));\r\n'
+            + 'nameImage' + name + 'Preview();\r\n'
+            + '}\r\n'
+            + 'function nameImage' + name + 'DelAll(){\r\n'
+            + '$("#nameImage' + name + '").val("");\r\n'
+            + 'nameImage' + name + 'Preview();\r\n'
+            + '}\r\n'
+
+            + 'function nameImage' + name + 'Preview(){\r\n'
+            + 'var li, urls = $("#nameImage' + name + '").val().split("|");\r\n'
+            + '$("#nameImage' + name + 'Preview").children().remove();\r\n'
+            + 'for (var i=0; i<urls.length; i++){\r\n'
+            + 'if (urls[i]!=""){\r\n'
+            + 'li = "<li><a href="+urls[i]+" url=\"+urls[i]+\" target=\\"_blank\\"><img src=\"+urls[i]+\" url=\"+urls[i]+\" style=\\"max-width:200px;max-height:200px;_height:200px;border:0;padding:3px;width: 180px;height: 170px;\\">"+"</a>";\r\n'
+            + 'li += "&nbsp;&nbsp;<a href=\\"javascript:\\" onclick=\\"nameImage' + name + 'Del(this);\\">×</a></li>";\r\n'
+            + '$("#nameImage' + name + 'Preview").append(li);\r\n'
+            + '}\r\n'
+            + '}\r\n'
+            + 'if ($("#nameImage' + name + 'Preview").text() == ""){\r\n'
+            + '$("#nameImage' + name + 'Preview").html("<li style=\'list-style:none;padding-top:5px;\'>无</li>");\r\n'
+            + '}\r\n'
+            + '}\r\n'
+            + 'nameImage' + name + 'Preview();\r\n'
+            + '<\/script>\r\n';
+        return html;
+    }
 
     $(function () {
         $("input[name='companyType']").click(function () {

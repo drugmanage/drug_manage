@@ -31,7 +31,7 @@
     .div-c{ margin:150px 180px; width:400px;  vertical-align:middel; border:0px solid #F00}
     .textarea-xlarge {width: 915px;}
     .table-form-control{
-        width:80%;
+        width:90%;
     }
 
 </style>

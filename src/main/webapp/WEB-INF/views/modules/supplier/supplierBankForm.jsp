@@ -17,13 +17,12 @@
 	<c:forEach items="${supplier.supplierBankList }" var="item" varStatus="i">
 		<tr id="bank_tr_${i.index}">
 			<td>
+				<input type="hidden" name="itemBankId" value="${i.index}"/>
+				<input type="hidden" name="supplierBankList[${i.index }].id" value="${item.id}"/>
 				<input type="text" class="table-form-control" name="supplierBankList[${i.index }].openAccountName"
 					   value="${item.openAccountName }" valid='vtext'/>
 			</td>
 			<td>
-				<input type="hidden" name="itemBankId" value="${i.index}"/>
-				<input type="hidden" name="supplierBankList[${i.index }].id" value="${item.id}"/>
-
 				<select class="table-form-control" name="supplierBankList[${i.index }].bank">
 					<c:forEach items="${fns:getDictList('bank')}" var="dict" varStatus="idx">
 						<option value="${dict.value}"

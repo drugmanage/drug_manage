@@ -249,19 +249,19 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane active" id="consignerInfo">
+        <div class="tab-pane" id="consignerInfo">
             <%@include file="supplierConsignerForm.jsp" %>
         </div>
-        <div class="tab-pane active" id="invoiceInfo">
+        <div class="tab-pane" id="invoiceInfo">
             <%@include file="supplierInvoiceInfoForm.jsp" %>
         </div>
-        <div class="tab-pane active" id="addressInfo">
+        <div class="tab-pane" id="addressInfo">
             <%@include file="supplierAddressForm.jsp" %>
         </div>
-        <div class="tab-pane active" id="bankInfo">
+        <div class="tab-pane" id="bankInfo">
             <%@include file="supplierBankForm.jsp" %>
         </div>
-        <div class="tab-pane active" id="certInfo">
+        <div class="tab-pane" id="certInfo">
             <%@include file="supplierDocumentTemplateForm.jsp" %>
         </div>
     </div>
