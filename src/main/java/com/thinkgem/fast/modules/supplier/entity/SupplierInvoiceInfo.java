@@ -8,20 +8,31 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 供应商开票信息Entity
  * @author 任硕
- * @version 2018-11-10
+ * @version 2018-11-13
  */
 public class SupplierInvoiceInfo extends DataEntity<SupplierInvoiceInfo> {
 	
 	private static final long serialVersionUID = 1L;
 	private String accountName;		// 开户名称
+	private String supplierId;		// 供应商id
 	private String bankDeposit;		// 开户行
 	private Area area;		// 区域id
 	private String detailAddress;		// 详细地址
 	private String phone;		// 联系电话
 	private String accountNumber;		// 账号
 	private String dutyParagraph;		// 税号
-	private String invoicePath;		// 开票图片路径
 	private String stopFlag;		// 是否停用            0、未停用            1、停用
+
+	private String invoicePath;		// 开票图片路径
+
+	@Length(min=0, max=128, message="开票图片路径长度必须介于 0 和 128 之间")
+	public String getInvoicePath() {
+		return invoicePath;
+	}
+
+	public void setInvoicePath(String invoicePath) {
+		this.invoicePath = invoicePath;
+	}
 	
 	public SupplierInvoiceInfo() {
 		super();
@@ -38,6 +49,15 @@ public class SupplierInvoiceInfo extends DataEntity<SupplierInvoiceInfo> {
 
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
+	}
+	
+	@Length(min=0, max=64, message="供应商id长度必须介于 0 和 64 之间")
+	public String getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
 	}
 	
 	@Length(min=0, max=128, message="开户行长度必须介于 0 和 128 之间")
@@ -91,15 +111,6 @@ public class SupplierInvoiceInfo extends DataEntity<SupplierInvoiceInfo> {
 
 	public void setDutyParagraph(String dutyParagraph) {
 		this.dutyParagraph = dutyParagraph;
-	}
-	
-	@Length(min=0, max=128, message="开票图片路径长度必须介于 0 和 128 之间")
-	public String getInvoicePath() {
-		return invoicePath;
-	}
-
-	public void setInvoicePath(String invoicePath) {
-		this.invoicePath = invoicePath;
 	}
 	
 	@Length(min=0, max=1, message="是否停用            0、未停用            1、停用长度必须介于 0 和 1 之间")

@@ -7,22 +7,40 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 供应商委托人Entity
  * @author 任硕
- * @version 2018-11-10
+ * @version 2018-11-13
  */
 public class SupplierConsigner extends DataEntity<SupplierConsigner> {
 	
 	private static final long serialVersionUID = 1L;
 	private String contactsName;		// 联系人
+	private String supplierId;		// 供应商id
 	private String sex;		// 性别
 	private String phone;		// 电话
 	private String certNumber;		// 证件号
 	private Integer consignerVali;		// 委托人有效期
 	private String proxyBook;		// 委托书
 	private Integer proxyBookVali;		// 委托书有效期
+	private String stopFlag;		// 是否停用            0、未停用            1、停用
+
 	private String proxyBookImgPath;		// 委托书图片路径
 	private String idCardImgPath;		// 身份证图片路径
-	private String stopFlag;		// 是否停用            0、未停用            1、停用
-	
+
+	public String getProxyBookImgPath() {
+		return proxyBookImgPath;
+	}
+
+	public void setProxyBookImgPath(String proxyBookImgPath) {
+		this.proxyBookImgPath = proxyBookImgPath;
+	}
+
+	public String getIdCardImgPath() {
+		return idCardImgPath;
+	}
+
+	public void setIdCardImgPath(String idCardImgPath) {
+		this.idCardImgPath = idCardImgPath;
+	}
+
 	public SupplierConsigner() {
 		super();
 	}
@@ -38,6 +56,15 @@ public class SupplierConsigner extends DataEntity<SupplierConsigner> {
 
 	public void setContactsName(String contactsName) {
 		this.contactsName = contactsName;
+	}
+	
+	@Length(min=0, max=64, message="供应商id长度必须介于 0 和 64 之间")
+	public String getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
 	}
 	
 	@Length(min=0, max=1, message="性别长度必须介于 0 和 1 之间")
@@ -90,24 +117,6 @@ public class SupplierConsigner extends DataEntity<SupplierConsigner> {
 
 	public void setProxyBookVali(Integer proxyBookVali) {
 		this.proxyBookVali = proxyBookVali;
-	}
-	
-	@Length(min=0, max=128, message="委托书图片路径长度必须介于 0 和 128 之间")
-	public String getProxyBookImgPath() {
-		return proxyBookImgPath;
-	}
-
-	public void setProxyBookImgPath(String proxyBookImgPath) {
-		this.proxyBookImgPath = proxyBookImgPath;
-	}
-	
-	@Length(min=0, max=128, message="身份证图片路径长度必须介于 0 和 128 之间")
-	public String getIdCardImgPath() {
-		return idCardImgPath;
-	}
-
-	public void setIdCardImgPath(String idCardImgPath) {
-		this.idCardImgPath = idCardImgPath;
 	}
 	
 	@Length(min=0, max=1, message="是否停用            0、未停用            1、停用长度必须介于 0 和 1 之间")

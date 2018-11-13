@@ -5,13 +5,13 @@
 	<sql id="supplierInvoiceInfoColumns">
 		a.id AS "id",
 		a.account_name AS "accountName",
+		a.supplier_id AS "supplierId",
 		a.bank_deposit AS "bankDeposit",
 		a.area_id AS "area.id",
 		a.detail_address AS "detailAddress",
 		a.phone AS "phone",
 		a.account_number AS "accountNumber",
 		a.duty_paragraph AS "dutyParagraph",
-		a.invoice_path AS "invoicePath",
 		a.stop_flag AS "stopFlag",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -19,11 +19,11 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		a4.name AS "area.name"
+		a5.name AS "area.name"
 	</sql>
 	
 	<sql id="supplierInvoiceInfoJoins">
-		LEFT JOIN sys_area a4 ON a4.id = a.area_id
+		LEFT JOIN sys_area a5 ON a5.id = a.area_id
 	</sql>
     
 	<select id="get" resultType="SupplierInvoiceInfo">
@@ -74,13 +74,13 @@
 		INSERT INTO supplier_invoice_info(
 			id,
 			account_name,
+			supplier_id,
 			bank_deposit,
 			area_id,
 			detail_address,
 			phone,
 			account_number,
 			duty_paragraph,
-			invoice_path,
 			stop_flag,
 			create_by,
 			create_date,
@@ -91,13 +91,13 @@
 		) VALUES (
 			#{id},
 			#{accountName},
+			#{supplierId},
 			#{bankDeposit},
 			#{area.id},
 			#{detailAddress},
 			#{phone},
 			#{accountNumber},
 			#{dutyParagraph},
-			#{invoicePath},
 			#{stopFlag},
 			#{createBy.id},
 			#{createDate},
@@ -111,13 +111,13 @@
 	<update id="update">
 		UPDATE supplier_invoice_info SET 	
 			account_name = #{accountName},
+			supplier_id = #{supplierId},
 			bank_deposit = #{bankDeposit},
 			area_id = #{area.id},
 			detail_address = #{detailAddress},
 			phone = #{phone},
 			account_number = #{accountNumber},
 			duty_paragraph = #{dutyParagraph},
-			invoice_path = #{invoicePath},
 			stop_flag = #{stopFlag},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
