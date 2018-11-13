@@ -41,7 +41,7 @@
 			</td>
 			<td>
 				<input type="checkbox" class="table-form-control" name="supplierBankList[${i.index }].stopFlag"
-					   value="0" />
+					   value="1" <c:if test="${item.stopFlag==1}">checked=true</c:if>/>
 			</td>
 			<td>
 				<input type="hidden" id="nameImagefront${i.index }" name="supplierBankList[${i.index }].positivePhoto" value="${item.positivePhoto}"/>

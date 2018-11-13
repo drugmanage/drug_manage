@@ -12,12 +12,12 @@
 	</tr>
 	</thead>
 	<tbody id="address_contentField">
-	<c:forEach items="${supplier.supplierAddressList }" var="item" varStatus="i">
+	<c:forEach items="${supplier.supplierAddressList}" var="item" varStatus="i">
 		<tr id="address_tr_${i.index}">
 			<td>
 				<input type="hidden" name="itemAddressId" value="${i.index}"/>
 				<input type="hidden" name="supplierAddressList[${i.index }].id" value="${item.id }"/>
-				<input type="text" class="table-form-control" name="hrmAddressList[${i.index }].receivingName"
+				<input type="text" class="table-form-control" name="supplierAddressList[${i.index }].receivingName"
 					   value="${item.receivingName }" valid='vtext'/>
 			</td>
 			<td>
@@ -38,7 +38,7 @@
 			</td>
 			<td>
 				<input type="checkbox" class="table-form-control" name="supplierAddressList[${i.index }].stopFlag"
-					   value="0" />
+					   value="1" <c:if test="${item.stopFlag==1}">checked=true</c:if>/>
 			</td>
 			<td>
 				<a href="javascript:void(0)" class="btnDel" onclick="supOper.address.del('${i.index}','${item.id }');">删除</a>

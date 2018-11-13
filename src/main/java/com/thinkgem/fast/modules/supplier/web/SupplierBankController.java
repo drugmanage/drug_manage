@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.fast.common.config.Global;
@@ -18,6 +19,9 @@ import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.modules.supplier.entity.SupplierBank;
 import com.thinkgem.fast.modules.supplier.service.SupplierBankService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 供应商银行信息Controller
@@ -68,13 +72,16 @@ public class SupplierBankController extends BaseController {
 		addMessage(redirectAttributes, "保存供应商银行信息成功");
 		return "redirect:"+Global.getAdminPath()+"/supplier/supplierBank/?repage";
 	}
-	
-	@RequiresPermissions("supplier:supplierBank:edit")
+
+	@RequiresPermissions("supplier:supplier:edit")
+	@ResponseBody
 	@RequestMapping(value = "delete")
-	public String delete(SupplierBank supplierBank, RedirectAttributes redirectAttributes) {
+	public Map<String, Object> delete(SupplierBank supplierBank) {
 		supplierBankService.delete(supplierBank);
-		addMessage(redirectAttributes, "删除供应商银行信息成功");
-		return "redirect:"+Global.getAdminPath()+"/supplier/supplierBank/?repage";
+		Map<String, Object> res = new HashMap<String, Object>();
+		res.put("code", 200);
+		res.put("msg", "删除成功");
+		return res;
 	}
 
 }

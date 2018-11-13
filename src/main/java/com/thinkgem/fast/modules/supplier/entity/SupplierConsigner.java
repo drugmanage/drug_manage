@@ -4,6 +4,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
 
+import java.util.Date;
+
 /**
  * 供应商委托人Entity
  * @author 任硕
@@ -17,9 +19,9 @@ public class SupplierConsigner extends DataEntity<SupplierConsigner> {
 	private String sex;		// 性别
 	private String phone;		// 电话
 	private String certNumber;		// 证件号
-	private Integer consignerVali;		// 委托人有效期
+	private Date consignerVali;		// 委托人有效期
 	private String proxyBook;		// 委托书
-	private Integer proxyBookVali;		// 委托书有效期
+	private Date proxyBookVali;		// 委托书有效期
 	private String stopFlag;		// 是否停用            0、未停用            1、停用
 
 	private String proxyBookImgPath;		// 委托书图片路径
@@ -94,11 +96,11 @@ public class SupplierConsigner extends DataEntity<SupplierConsigner> {
 		this.certNumber = certNumber;
 	}
 	
-	public Integer getConsignerVali() {
+	public Date getConsignerVali() {
 		return consignerVali;
 	}
 
-	public void setConsignerVali(Integer consignerVali) {
+	public void setConsignerVali(Date consignerVali) {
 		this.consignerVali = consignerVali;
 	}
 	
@@ -111,11 +113,11 @@ public class SupplierConsigner extends DataEntity<SupplierConsigner> {
 		this.proxyBook = proxyBook;
 	}
 	
-	public Integer getProxyBookVali() {
+	public Date getProxyBookVali() {
 		return proxyBookVali;
 	}
 
-	public void setProxyBookVali(Integer proxyBookVali) {
+	public void setProxyBookVali(Date proxyBookVali) {
 		this.proxyBookVali = proxyBookVali;
 	}
 	

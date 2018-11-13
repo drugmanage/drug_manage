@@ -90,7 +90,7 @@
                     + 'pattern="yyyy-MM-dd" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd\',isShowClear:false});"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="checkbox" class="table-form-control" name="supplierConsignerList[${i.index }].stopFlag" value="0" />'
+                    + '<input type="checkbox" class="table-form-control" name="supplierConsignerList[' + newMaxId + '].stopFlag" value="1" />'
                     + '<td>'
                     + '<input id="nameImage' + proxyBookImgPath + '" name="supplierConsignerList[' + newMaxId + '].proxyBookImgPath" type="hidden" >'
                     + getCKFinderHtml(proxyBookImgPath, "supplier/consigner")
@@ -192,7 +192,7 @@
                     + '<input type="text" class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].dutyParagraph" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="checkbox" class="table-form-control" name="supplierInvoiceInfoList[${i.index }].stopFlag" value="0" />'
+                    + '<input type="checkbox" class="table-form-control" name="supplierInvoiceInfoList[' + newMaxId + '].stopFlag" value="1" />'
                     + '</td>'
 
                     + '<td>'
@@ -329,7 +329,7 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + this.socpName + "tr_" + itemBankId).remove();
+                                        $("#" + supOper.bank.socpName + "tr_" + itemBankId).remove();
                                     }
                                 }
                             })
@@ -362,7 +362,7 @@
                     + '<input type="text" class="table-form-control" name="supplierBankList[' + newMaxId + '].idCard" value="" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="checkbox" class="table-form-control" name="supplierBankList[' + newMaxId + '].stopFlag" value="0" />'
+                    + '<input type="checkbox" class="table-form-control" name="supplierBankList[' + newMaxId + '].stopFlag" value="1" />'
                     + '</td>'
 
                     + '<td>'
@@ -533,7 +533,7 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + this.socpName + "tr_" + itemAddressId).remove();
+                                        $("#" + supOper.address.socpName + "tr_" + itemAddressId).remove();
                                     }
                                 }
                             })
@@ -566,7 +566,7 @@
                     + '<input type="text" class="table-form-control" name="supplierAddressList[' + newMaxId + '].contactPhone" value="" valid="vnum"/>'
                     + '</td>'
                     + '<td>'
-                    + '<input type="checkbox" class="table-form-control" name="supplierAddressList[' + newMaxId + '].stopFlag" value="0" />'
+                    + '<input type="checkbox" class="table-form-control" name="supplierAddressList[' + newMaxId + '].stopFlag" value="1" />'
                     + '</td>'
                     + '<td>'
                     + '<a href="javascript:void(0)" class="btnDel" onclick="supOper.address.del(' + newMaxId + ');">删除</a>'
@@ -684,25 +684,4 @@
             + '<\/script>\r\n';
         return html;
     }
-
-    $(function () {
-        $("input[name='companyType']").click(function () {
-            var com = $(this).val();
-            if (com == "2") {
-                $("#addressTableDiv").show();
-            } else {
-                $("#addressTableDiv").hide();
-                $("#address_contentField").html("");
-            }
-        })
-
-        var comType = $("input[name='companyType']").val();
-        if (comType == "2") {
-            $("#addressTableDiv").show();
-        } else {
-            $("#addressTableDiv").hide();
-            $("#address_contentField").html("");
-        }
-    })
-
 </script>

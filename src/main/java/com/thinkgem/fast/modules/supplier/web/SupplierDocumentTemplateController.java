@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.fast.common.config.Global;
@@ -18,6 +19,9 @@ import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.modules.supplier.entity.SupplierDocumentTemplate;
 import com.thinkgem.fast.modules.supplier.service.SupplierDocumentTemplateService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 供应商证件模板Controller
@@ -68,13 +72,16 @@ public class SupplierDocumentTemplateController extends BaseController {
 		addMessage(redirectAttributes, "保存供应商证件模板成功");
 		return "redirect:"+Global.getAdminPath()+"/supplier/supplierDocumentTemplate/?repage";
 	}
-	
-	@RequiresPermissions("supplier:supplierDocumentTemplate:edit")
+
+	@RequiresPermissions("supplier:supplier:edit")
+	@ResponseBody
 	@RequestMapping(value = "delete")
-	public String delete(SupplierDocumentTemplate supplierDocumentTemplate, RedirectAttributes redirectAttributes) {
+	public Map<String, Object> delete(SupplierDocumentTemplate supplierDocumentTemplate, RedirectAttributes redirectAttributes) {
 		supplierDocumentTemplateService.delete(supplierDocumentTemplate);
-		addMessage(redirectAttributes, "删除供应商证件模板成功");
-		return "redirect:"+Global.getAdminPath()+"/supplier/supplierDocumentTemplate/?repage";
+		Map<String, Object> res = new HashMap<String, Object>();
+		res.put("code", 200);
+		res.put("msg", "删除成功");
+		return res;
 	}
 
 }

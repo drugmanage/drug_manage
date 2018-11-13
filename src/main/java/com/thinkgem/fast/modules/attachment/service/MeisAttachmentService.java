@@ -127,6 +127,10 @@ public class MeisAttachmentService extends
     @Transactional(readOnly = false)
     public void saveAttachment(String parstr, String bizid, String biztype,
                                String type) {
+
+        //保存时先删除附件
+        deleteByMeis(bizid,biztype);
+
         String pathflag;
         if (StringUtils.isBlank(parstr))
             return;
@@ -136,9 +140,6 @@ public class MeisAttachmentService extends
         } else {
             pathflag = parstr;
         }
-        //保存时先删除附件
-        deleteByMeis(bizid,biztype);
-
         String[] arrstr = pathflag.split("\\|");
         for (String s : arrstr) {
             if (!"".equals(s)) {

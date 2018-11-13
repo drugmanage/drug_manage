@@ -18,7 +18,28 @@ public class SupplierBank extends DataEntity<SupplierBank> {
 	private String openAccountName;		// 开户户名
 	private String idCard;		// 身份证号
 	private String stopFlag;		// 是否停用
-	
+
+	//正面照片
+	private String positivePhoto;
+	//反面照片
+	private String backPhoto;
+
+	public String getPositivePhoto() {
+		return positivePhoto;
+	}
+
+	public void setPositivePhoto(String positivePhoto) {
+		this.positivePhoto = positivePhoto;
+	}
+
+	public String getBackPhoto() {
+		return backPhoto;
+	}
+
+	public void setBackPhoto(String backPhoto) {
+		this.backPhoto = backPhoto;
+	}
+
 	public SupplierBank() {
 		super();
 	}

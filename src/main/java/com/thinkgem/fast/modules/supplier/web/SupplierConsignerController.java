@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.fast.common.config.Global;
@@ -18,6 +19,9 @@ import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.modules.supplier.entity.SupplierConsigner;
 import com.thinkgem.fast.modules.supplier.service.SupplierConsignerService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 供应商委托人Controller
@@ -68,13 +72,16 @@ public class SupplierConsignerController extends BaseController {
 		addMessage(redirectAttributes, "保存供应商委托人成功");
 		return "redirect:"+Global.getAdminPath()+"/supplier/supplierConsigner/?repage";
 	}
-	
-	@RequiresPermissions("supplier:supplierConsigner:edit")
+
+	@RequiresPermissions("supplier:supplier:edit")
+	@ResponseBody
 	@RequestMapping(value = "delete")
-	public String delete(SupplierConsigner supplierConsigner, RedirectAttributes redirectAttributes) {
+	public Map<String, Object> delete(SupplierConsigner supplierConsigner) {
 		supplierConsignerService.delete(supplierConsigner);
-		addMessage(redirectAttributes, "删除供应商委托人成功");
-		return "redirect:"+Global.getAdminPath()+"/supplier/supplierConsigner/?repage";
+		Map<String, Object> res = new HashMap<String, Object>();
+		res.put("code", 200);
+		res.put("msg", "删除成功");
+		return res;
 	}
 
 }

@@ -45,7 +45,7 @@
 					   valid='vnum'/>
 			</td>
             <td>
-                <input type="text" name="supplierConsignerList[${i.index }].consignerVali" class="table-form-control Wdate "
+                <input type="text" name="supplierConsignerList[${i.index }].consignerVali" readonly="readonly" class="table-form-control Wdate "
                        value="<fmt:formatDate value="${item.consignerVali}" pattern="yyyy-MM-dd"/>"
                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
             </td>
@@ -55,13 +55,13 @@
                        valid='vnum'/>
             </td>
             <td>
-                <input type="text" name="supplierConsignerList[${i.index }].proxyBookVali" class="table-form-control Wdate "
+                <input type="text" name="supplierConsignerList[${i.index }].proxyBookVali" readonly="readonly" class="table-form-control Wdate "
                        value="<fmt:formatDate value="${item.proxyBookVali}" pattern="yyyy-MM-dd"/>"
                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
             </td>
             <td>
                 <input type="checkbox" class="table-form-control" name="supplierConsignerList[${i.index }].stopFlag"
-                       value="0" />
+					   value="1" <c:if test="${item.stopFlag==1}">checked=true</c:if> />
             </td>
             <td>
                 <input type="hidden" id="nameImageproxyBookImgPath${i.index }" name="supplierConsignerList[${i.index }].proxyBookImgPath" value="${item.proxyBookImgPath}"/>

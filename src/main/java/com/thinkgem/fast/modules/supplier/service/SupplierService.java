@@ -51,7 +51,22 @@ public class SupplierService extends CrudService<SupplierDao, Supplier> {
 		SupplierBank sb=new SupplierBank();
 		sb.setSupplierId(supplierId);
 		List<SupplierBank> supplierBankList = supplierBankService.findList(sb);
+		for (SupplierBank supplierBank : supplierBankList) {
+			MeisAttachment bankAttachment = new MeisAttachment();
+			bankAttachment.setBizId(supplierBank.getId());
+			List<MeisAttachment> bankAttchList = meisAttachmentService.findAttchList(bankAttachment);
+			for (MeisAttachment attachment : bankAttchList) {
+				String path = attachment.getPath();
+				if ("positivePhoto".equals(attachment.getBizType())) {
+					supplierBank.setPositivePhoto(path);
+				}
+				if ("backPhoto".equals(attachment.getBizType())) {
+					supplierBank.setBackPhoto(path);
+				}
+			}
+		}
 		supplier.setSupplierBankList(supplierBankList);
+
 		SupplierConsigner sc =new SupplierConsigner();
 		sc.setSupplierId(supplierId);
 		List<SupplierConsigner> supplierConsignerList = supplierConsignerService.findList(sc);
@@ -140,6 +155,8 @@ public class SupplierService extends CrudService<SupplierDao, Supplier> {
 			for (SupplierBank sb : supplierBankList) {
 				sb.setSupplierId(sId);
 				supplierBankService.save(sb);
+				meisAttachmentService.saveAttachment(sb.getPositivePhoto(), sb.getId(), "positivePhoto", "img");
+				meisAttachmentService.saveAttachment(sb.getBackPhoto(), sb.getId(), "backPhoto", "img");
 			}
 		}
 
