@@ -107,8 +107,10 @@ $(document).ready(function(){
   };
   
   var baseUrl = window.document.location.protocol + "//" + window.document.location.host + "/";
+  console.log(baseUrl);
   var shortenedUrl = window.document.location.href.replace(baseUrl, "");
-  baseUrl = baseUrl + shortenedUrl.substring(0, shortenedUrl.indexOf("/"));
+  //去掉此行，不然会多加一个路径，会报错
+  //baseUrl = baseUrl + shortenedUrl.substring(0, shortenedUrl.indexOf("/"));
   
   ActivitiRest.options = {
     processInstanceHighLightsUrl: baseUrl + "/act/service/process-instance/{processInstanceId}/highlights?callback=?",
