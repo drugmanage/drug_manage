@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.goods.dao.GoodsDao">
+    
+	<sql id="goodsColumns">
+		a.id AS "id",
+		a.office_id AS "office.id",
+		a.goods_category AS "goodsCategory",
+		a.file_number AS "fileNumber",
+		a.goods_code AS "goodsCode",
+		a.goods_name AS "goodsName",
+		a.logogram AS "logogram",
+		a.goods_type AS "goodsType",
+		a.tax_control_code AS "taxControlCode",
+		a.common_name_one AS "commonNameOne",
+		a.common_logogram_one AS "commonLogogramOne",
+		a.common_name_two AS "commonNameTwo",
+		a.common_logogram_two AS "commonLogogramTwo",
+		a.unit AS "unit",
+		a.goods_spec AS "goodsSpec",
+		a.goods_desc AS "goodsDesc",
+		a.entry_tax_rate AS "entryTaxRate",
+		a.sales_rate AS "salesRate",
+		a.approval_number AS "approvalNumber",
+		a.approval_number_date AS "approvalNumberDate",
+		a.approval_validity AS "approvalValidity",
+		a.manufacturer AS "manufacturer",
+		a.storage_conditions AS "storageConditions",
+		a.certificate_no AS "certificateNo",
+		a.maintenance_cycle AS "maintenanceCycle",
+		a.maintenance_type AS "maintenanceType",
+		a.quality_standard AS "qualityStandard",
+		a.core_type AS "coreType",
+		a.retail_type AS "retailType",
+		a.validity AS "validity",
+		a.valid_unit AS "validUnit",
+		a.default_repo_id AS "defaultRepoId",
+		a.default_position_id AS "defaultPositionId",
+		a.retail_price AS "retailPrice",
+		a.tax_retail_price AS "taxRetailPrice",
+		a.bar_code AS "barCode",
+		a.supervision_code AS "supervisionCode",
+		a.is_purchase AS "isPurchase",
+		a.is_sale AS "isSale",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o2.name AS "office.name"
+	</sql>
+	
+	<sql id="goodsJoins">
+		LEFT JOIN sys_office o2 ON o2.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="Goods">
+		SELECT 
+			<include refid="goodsColumns"/>
+		FROM goods a
+		<include refid="goodsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Goods">
+		SELECT 
+			<include refid="goodsColumns"/>
+		FROM goods a
+		<include refid="goodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Goods">
+		SELECT 
+			<include refid="goodsColumns"/>
+		FROM goods a
+		<include refid="goodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO goods(
+			id,
+			office_id,
+			goods_category,
+			file_number,
+			goods_code,
+			goods_name,
+			logogram,
+			goods_type,
+			tax_control_code,
+			common_name_one,
+			common_logogram_one,
+			common_name_two,
+			common_logogram_two,
+			unit,
+			goods_spec,
+			goods_desc,
+			entry_tax_rate,
+			sales_rate,
+			approval_number,
+			approval_number_date,
+			approval_validity,
+			manufacturer,
+			storage_conditions,
+			certificate_no,
+			maintenance_cycle,
+			maintenance_type,
+			quality_standard,
+			core_type,
+			retail_type,
+			validity,
+			valid_unit,
+			default_repo_id,
+			default_position_id,
+			retail_price,
+			tax_retail_price,
+			bar_code,
+			supervision_code,
+			is_purchase,
+			is_sale,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{office.id},
+			#{goodsCategory},
+			#{fileNumber},
+			#{goodsCode},
+			#{goodsName},
+			#{logogram},
+			#{goodsType},
+			#{taxControlCode},
+			#{commonNameOne},
+			#{commonLogogramOne},
+			#{commonNameTwo},
+			#{commonLogogramTwo},
+			#{unit},
+			#{goodsSpec},
+			#{goodsDesc},
+			#{entryTaxRate},
+			#{salesRate},
+			#{approvalNumber},
+			#{approvalNumberDate},
+			#{approvalValidity},
+			#{manufacturer},
+			#{storageConditions},
+			#{certificateNo},
+			#{maintenanceCycle},
+			#{maintenanceType},
+			#{qualityStandard},
+			#{coreType},
+			#{retailType},
+			#{validity},
+			#{validUnit},
+			#{defaultRepoId},
+			#{defaultPositionId},
+			#{retailPrice},
+			#{taxRetailPrice},
+			#{barCode},
+			#{supervisionCode},
+			#{isPurchase},
+			#{isSale},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE goods SET 	
+			office_id = #{office.id},
+			goods_category = #{goodsCategory},
+			file_number = #{fileNumber},
+			goods_code = #{goodsCode},
+			goods_name = #{goodsName},
+			logogram = #{logogram},
+			goods_type = #{goodsType},
+			tax_control_code = #{taxControlCode},
+			common_name_one = #{commonNameOne},
+			common_logogram_one = #{commonLogogramOne},
+			common_name_two = #{commonNameTwo},
+			common_logogram_two = #{commonLogogramTwo},
+			unit = #{unit},
+			goods_spec = #{goodsSpec},
+			goods_desc = #{goodsDesc},
+			entry_tax_rate = #{entryTaxRate},
+			sales_rate = #{salesRate},
+			approval_number = #{approvalNumber},
+			approval_number_date = #{approvalNumberDate},
+			approval_validity = #{approvalValidity},
+			manufacturer = #{manufacturer},
+			storage_conditions = #{storageConditions},
+			certificate_no = #{certificateNo},
+			maintenance_cycle = #{maintenanceCycle},
+			maintenance_type = #{maintenanceType},
+			quality_standard = #{qualityStandard},
+			core_type = #{coreType},
+			retail_type = #{retailType},
+			validity = #{validity},
+			valid_unit = #{validUnit},
+			default_repo_id = #{defaultRepoId},
+			default_position_id = #{defaultPositionId},
+			retail_price = #{retailPrice},
+			tax_retail_price = #{taxRetailPrice},
+			bar_code = #{barCode},
+			supervision_code = #{supervisionCode},
+			is_purchase = #{isPurchase},
+			is_sale = #{isSale},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE goods SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
