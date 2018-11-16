@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.customer.dao.CustomerDao">
+    
+	<sql id="customerColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.office_id AS "office.id",
+		a.pinyin AS "pinyin",
+		a.customer_number AS "customerNumber",
+		a.legal_representative AS "legalRepresentative",
+		a.enterprise_address AS "enterpriseAddress",
+		a.enterprise_manage AS "enterpriseManage",
+		a.credit_code AS "creditCode",
+		a.customer_type AS "customerType",
+		a.fax AS "fax",
+		a.zipcode AS "zipcode",
+		a.taxable_category AS "taxableCategory",
+		a.provide_home AS "provideHome",
+		a.biz_scope AS "bizScope",
+		a.stop_flag AS "stopFlag",
+		a.stop_reason AS "stopReason",
+		a.stop_user_id AS "stopUser.id",
+		a.stop_time AS "stopTime",
+		a.distribution_route AS "distributionRoute",
+		a.internal_serial_number AS "internalSerialNumber",
+		a.unit_flag AS "unitFlag",
+		a.settlement_flag AS "settlementFlag",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o3.name AS "office.name"
+	</sql>
+	
+	<sql id="customerJoins">
+		LEFT JOIN sys_office o3 ON o3.id = a.office_id
+		LEFT JOIN sys_user u18 ON u18.id = a.stop_user_id
+	</sql>
+    
+	<select id="get" resultType="Customer">
+		SELECT 
+			<include refid="customerColumns"/>
+		FROM customer a
+		<include refid="customerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Customer">
+		SELECT 
+			<include refid="customerColumns"/>
+		FROM customer a
+		<include refid="customerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="pinyin != null and pinyin != ''">
+				AND a.pinyin LIKE 
+					<if test="dbName == 'oracle'">'%'||#{pinyin}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{pinyin}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{pinyin},'%')</if>
+			</if>
+			<if test="customerNumber != null and customerNumber != ''">
+				AND a.customer_number LIKE 
+					<if test="dbName == 'oracle'">'%'||#{customerNumber}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{customerNumber}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{customerNumber},'%')</if>
+			</if>
+			<if test="legalRepresentative != null and legalRepresentative != ''">
+				AND a.legal_representative LIKE 
+					<if test="dbName == 'oracle'">'%'||#{legalRepresentative}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{legalRepresentative}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{legalRepresentative},'%')</if>
+			</if>
+			<if test="customerType != null and customerType != ''">
+				AND a.customer_type = #{customerType}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Customer">
+		SELECT 
+			<include refid="customerColumns"/>
+		FROM customer a
+		<include refid="customerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO customer(
+			id,
+			name,
+			office_id,
+			pinyin,
+			customer_number,
+			legal_representative,
+			enterprise_address,
+			enterprise_manage,
+			credit_code,
+			customer_type,
+			fax,
+			zipcode,
+			taxable_category,
+			provide_home,
+			biz_scope,
+			stop_flag,
+			stop_reason,
+			stop_user_id,
+			stop_time,
+			distribution_route,
+			internal_serial_number,
+			unit_flag,
+			settlement_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{name},
+			#{office.id},
+			#{pinyin},
+			#{customerNumber},
+			#{legalRepresentative},
+			#{enterpriseAddress},
+			#{enterpriseManage},
+			#{creditCode},
+			#{customerType},
+			#{fax},
+			#{zipcode},
+			#{taxableCategory},
+			#{provideHome},
+			#{bizScope},
+			#{stopFlag},
+			#{stopReason},
+			#{stopUser.id},
+			#{stopTime},
+			#{distributionRoute},
+			#{internalSerialNumber},
+			#{unitFlag},
+			#{settlementFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE customer SET 	
+			name = #{name},
+			office_id = #{office.id},
+			pinyin = #{pinyin},
+			customer_number = #{customerNumber},
+			legal_representative = #{legalRepresentative},
+			enterprise_address = #{enterpriseAddress},
+			enterprise_manage = #{enterpriseManage},
+			credit_code = #{creditCode},
+			customer_type = #{customerType},
+			fax = #{fax},
+			zipcode = #{zipcode},
+			taxable_category = #{taxableCategory},
+			provide_home = #{provideHome},
+			biz_scope = #{bizScope},
+			stop_flag = #{stopFlag},
+			stop_reason = #{stopReason},
+			stop_user_id = #{stopUser.id},
+			stop_time = #{stopTime},
+			distribution_route = #{distributionRoute},
+			internal_serial_number = #{internalSerialNumber},
+			unit_flag = #{unitFlag},
+			settlement_flag = #{settlementFlag},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE customer SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+
+	<!--查询客户条数-->
+	<select id="findCount" resultType="int">
+		SELECT
+		count(1)
+		FROM customer a
+	</select>
+</mapper>
