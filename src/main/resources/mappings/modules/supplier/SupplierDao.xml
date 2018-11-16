@@ -4,6 +4,8 @@
 
     <sql id="supplierColumns">
 		a.id AS "id",
+		a.office_id AS "office.id",
+		o2.name AS "office.name",
 		a.name AS "name",
 		a.pinyin AS "pinyin",
 		a.supplier_number AS "supplierNumber",
@@ -36,6 +38,7 @@
 
     <sql id="supplierJoins">
 		LEFT JOIN sys_user u20 ON u20.id = a.stop_user_id
+		left join sys_office o2 on o2.id = a.office_id
 	</sql>
 
     <select id="get" resultType="Supplier">
@@ -100,6 +103,7 @@
     <insert id="insert">
 		INSERT INTO supplier(
 			id,
+			office_id,
 			name,
 			pinyin,
 			supplier_number,
@@ -129,6 +133,7 @@
 			del_flag
 		) VALUES (
 			#{id},
+			#{office.id},
 			#{name},
 			#{pinyin},
 			#{supplierNumber},
@@ -160,7 +165,8 @@
 	</insert>
 
     <update id="update">
-		UPDATE supplier SET 	
+		UPDATE supplier SET
+			office_id=#{office.id}
 			name = #{name},
 			pinyin = #{pinyin},
 			supplier_number = #{supplierNumber},

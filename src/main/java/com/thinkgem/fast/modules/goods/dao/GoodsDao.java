@@ -11,5 +11,6 @@ import com.thinkgem.fast.modules.goods.entity.Goods;
  */
 @MyBatisDao
 public interface GoodsDao extends CrudDao<Goods> {
-	
+
+    int findCount();
 }

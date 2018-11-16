@@ -48,6 +48,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>商品所属机构</th>
 				<th>商品分类</th>
 				<th>档案号</th>
 				<th>商品编码</th>
@@ -73,8 +74,11 @@
 		<c:forEach items="${page.list}" var="goods">
 			<tr>
 				<td><a href="${ctx}/goods/goods/form?id=${goods.id}">
-					${fns:getDictLabel(goods.goodsCategory, 'goods_category', '')}
+					${goods.office.name}
 				</a></td>
+				<td>
+					${fns:getDictLabel(goods.goodsCategory, 'goods_category', '')}
+				</td>
 				<td>
 					${goods.fileNumber}
 				</td>

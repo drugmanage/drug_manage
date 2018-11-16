@@ -3,6 +3,7 @@ package com.thinkgem.fast.modules.goods.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.fast.common.utils.DateUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,14 @@ public class GoodsController extends BaseController {
 	@RequiresPermissions("goods:goods:view")
 	@RequestMapping(value = "form")
 	public String form(Goods goods, Model model) {
+		if (StringUtils.isBlank(goods.getId())) {
+			String yy = DateUtils.getLastYearYY();
+			int total = goodsService.findCount();
+			int sup = total + 1;
+			String ss = StringUtils.frontCompWithZore(sup, 4);
+			String supNumber = yy + ss;
+			goods.setFileNumber(supNumber);
+		}
 		model.addAttribute("goods", goods);
 		return "modules/goods/goodsForm";
 	}

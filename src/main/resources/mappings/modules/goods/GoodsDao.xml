@@ -212,6 +212,7 @@
 	
 	<update id="update">
 		UPDATE goods SET 	
+			office_id = #{office.id},
 			goods_category = #{goodsCategory},
 			file_number = #{fileNumber},
 			goods_code = #{goodsCode},
@@ -258,5 +259,12 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+	<!--查询商品条数-->
+	<select id="findCount" resultType="int">
+		SELECT
+		count(1)
+		FROM goods a
+	</select>
 	
 </mapper>

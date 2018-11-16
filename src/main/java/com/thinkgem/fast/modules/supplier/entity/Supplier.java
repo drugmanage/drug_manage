@@ -1,5 +1,6 @@
 package com.thinkgem.fast.modules.supplier.entity;
 
+import com.thinkgem.fast.modules.sys.entity.Office;
 import org.hibernate.validator.constraints.Length;
 import com.thinkgem.fast.modules.sys.entity.User;
 import java.util.Date;
@@ -17,6 +18,7 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 public class Supplier extends DataEntity<Supplier> {
 	
 	private static final long serialVersionUID = 1L;
+	private Office office;
 	private String name;		// 姓名
 	private String pinyin;		// 助记码
 	private String supplierNumber;		// 供应商档案号
@@ -55,6 +57,14 @@ public class Supplier extends DataEntity<Supplier> {
 
 	public void setSupplierAddressList(List<SupplierAddress> supplierAddressList) {
 		this.supplierAddressList = supplierAddressList;
+	}
+
+	public Office getOffice() {
+		return office;
+	}
+
+	public void setOffice(Office office) {
+		this.office = office;
 	}
 
 	public List<SupplierBank> getSupplierBankList() {
