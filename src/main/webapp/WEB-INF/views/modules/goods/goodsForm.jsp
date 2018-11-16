@@ -35,133 +35,133 @@
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">商品所属机构：</label>
+				<label class="control-label">商品分类：</label>
 				<div class="controls">
-					<sys:treeselect id="office" name="office.id" value="${goods.office.id}" labelName="office.name" labelValue="${goods.office.name}"
-						title="部门" url="/sys/office/treeData?type=2" cssClass="input-large " allowClear="true" notAllowSelectParent="true"/>
+					<form:select path="goodsCategory" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('goods_category')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
 				</div>
 			</div>
 			<div class="div-b">
-				<label class="control-label">商品分类：</label>
-				<div class="controls">
-					<form:input path="goodsCategory" htmlEscape="false" maxlength="2" class="input-xlarge "/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
 				<label class="control-label">档案号：</label>
 				<div class="controls">
 					<form:input path="fileNumber" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">商品编码：</label>
 				<div class="controls">
 					<form:input path="goodsCode" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">商品名：</label>
 				<div class="controls">
 					<form:input path="goodsName" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">拼音简码：</label>
 				<div class="controls">
 					<form:input path="logogram" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
+			<div class="div-b">
+				<label class="control-label">商品剂型：</label>
+				<div class="controls">
+					<form:select path="goodsType" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('goods_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
+				</div>
+			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">商品剂型：</label>
-				<div class="controls">
-					<form:input path="goodsType" htmlEscape="false" maxlength="5" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
 				<label class="control-label">商品税控编码：</label>
 				<div class="controls">
 					<form:input path="taxControlCode" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">俗名一：</label>
 				<div class="controls">
 					<form:input path="commonNameOne" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">俗名一拼音简码：</label>
 				<div class="controls">
 					<form:input path="commonLogogramOne" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">俗名二：</label>
 				<div class="controls">
 					<form:input path="commonNameTwo" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">俗名二拼音简码：</label>
 				<div class="controls">
 					<form:input path="commonLogogramTwo" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 				</div>
 			</div>
+			<div class="div-b">
+				<label class="control-label">基本包装单位：</label>
+				<div class="controls">
+					<form:select path="unit" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('unit')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
+				</div>
+			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">基本包装单位：</label>
-				<div class="controls">
-					<form:input path="unit" htmlEscape="false" maxlength="20" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
 				<label class="control-label">规格：</label>
 				<div class="controls">
 					<form:input path="goodsSpec" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
+			<div class="div-b">
+				<label class="control-label">商品描述：</label>
+				<div class="controls">
+					<form:textarea path="goodsDesc" htmlEscape="false" rows="4" maxlength="500" class="input-xlarge "/>
+				</div>
+			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">商品描述：</label>
-				<div class="controls">
-					<form:input path="goodsDesc" htmlEscape="false" maxlength="500" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
 				<label class="control-label">进项税率：</label>
 				<div class="controls">
 					<form:input path="entryTaxRate" htmlEscape="false" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">销项税率：</label>
 				<div class="controls">
 					<form:input path="salesRate" htmlEscape="false" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">批准文号：</label>
 				<div class="controls">
 					<form:input path="approvalNumber" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">批文批准日期：</label>
 				<div class="controls">
 					<input name="approvalNumberDate" type="text" readonly="readonly" maxlength="20" class="input-xlarge Wdate "
@@ -169,66 +169,83 @@
 						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">批文有效期：</label>
 				<div class="controls">
 					<form:input path="approvalValidity" htmlEscape="false" maxlength="11" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">生产厂家：</label>
 				<div class="controls">
 					<form:input path="manufacturer" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
-				<label class="control-label">存储条件：</label>
-				<div class="controls">
-					<form:input path="storageConditions" htmlEscape="false" maxlength="2" class="input-xlarge "/>
-				</div>
-			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
+				<label class="control-label">存储条件：</label>
+				<div class="controls">
+					<form:select path="storageConditions" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('storage_conditions')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
+				</div>
+			</div>
+			<div class="div-b">
 				<label class="control-label">批件号：</label>
 				<div class="controls">
 					<form:input path="certificateNo" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">养护周期：</label>
 				<div class="controls">
 					<form:input path="maintenanceCycle" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 				</div>
 			</div>
+			<div class="div-b">
+				<label class="control-label">养护类别：</label>
+				<div class="controls">
+					<form:select path="maintenanceType" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('maintenance_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
+				</div>
+			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">养护类别：</label>
-				<div class="controls">
-					<form:input path="maintenanceType" htmlEscape="false" maxlength="2" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
 				<label class="control-label">质量标准：</label>
 				<div class="controls">
 					<form:input path="qualityStandard" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
+			<div class="div-b">
+				<label class="control-label">核心属性：</label>
+				<div class="controls">
+					<form:select path="coreType" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('core_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
+				</div>
+			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">核心属性：</label>
-				<div class="controls">
-					<form:input path="coreType" htmlEscape="false" maxlength="2" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
 				<label class="control-label">零售属性：</label>
 				<div class="controls">
 					<form:input path="retailType" htmlEscape="false" maxlength="2" class="input-xlarge "/>
+				</div>
+			</div>
+			<div class="div-b">
+				<label class="control-label">零售属性数量：</label>
+				<div class="controls">
+					<form:input path="retailNum" htmlEscape="false" maxlength="11" class="input-xlarge "/>
 				</div>
 			</div>
 		</div>
@@ -242,7 +259,10 @@
 			<div class="div-b">
 				<label class="control-label">有效期单位：</label>
 				<div class="controls">
-					<form:input path="validUnit" htmlEscape="false" maxlength="2" class="input-xlarge "/>
+					<form:select path="validUnit" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('valid_unit')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
 				</div>
 			</div>
 		</div>
@@ -292,23 +312,16 @@
 			<div class="div-a">
 				<label class="control-label">是否停止采购：</label>
 				<div class="controls">
-					<form:input path="isPurchase" htmlEscape="false" maxlength="1" class="input-xlarge "/>
+					<form:radiobuttons path="purchaseFlag" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
 				</div>
 			</div>
 			<div class="div-b">
 				<label class="control-label">是否停止销售：</label>
 				<div class="controls">
-					<form:input path="isSale" htmlEscape="false" maxlength="1" class="input-xlarge "/>
+					<form:radiobuttons path="saleFlag" items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
 				</div>
 			</div>
 		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">备注信息：</label>
-				<div class="controls">
-					<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
-				</div>
-			</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="goods:goods:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

@@ -25,6 +25,21 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>商品分类：</label>
+				<form:select path="goodsCategory" class="input-medium">
+					<form:option value="" label=""/>
+					<form:options items="${fns:getDictList('goods_category')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+			</li>
+			<li><label>档案号：</label>
+				<form:input path="fileNumber" htmlEscape="false" maxlength="20" class="input-medium"/>
+			</li>
+			<li><label>商品编码：</label>
+				<form:input path="goodsCode" htmlEscape="false" maxlength="32" class="input-medium"/>
+			</li>
+			<li><label>商品名：</label>
+				<form:input path="goodsName" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -33,8 +48,24 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>更新时间</th>
-				<th>备注信息</th>
+				<th>商品分类</th>
+				<th>档案号</th>
+				<th>商品编码</th>
+				<th>商品名</th>
+				<th>拼音简码</th>
+				<th>商品剂型</th>
+				<th>进项税率</th>
+				<th>销项税率</th>
+				<th>生产厂家</th>
+				<th>批件号</th>
+				<th>核心属性</th>
+				<th>零售属性</th>
+				<th>零售价</th>
+				<th>含税零售价</th>
+				<th>商品条形码编码</th>
+				<th>商品电子监管码</th>
+				<th>是否停止采购</th>
+				<th>是否停止销售</th>
 				<shiro:hasPermission name="goods:goods:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -42,10 +73,58 @@
 		<c:forEach items="${page.list}" var="goods">
 			<tr>
 				<td><a href="${ctx}/goods/goods/form?id=${goods.id}">
-					<fmt:formatDate value="${goods.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					${fns:getDictLabel(goods.goodsCategory, 'goods_category', '')}
 				</a></td>
 				<td>
-					${goods.remarks}
+					${goods.fileNumber}
+				</td>
+				<td>
+					${goods.goodsCode}
+				</td>
+				<td>
+					${goods.goodsName}
+				</td>
+				<td>
+					${goods.logogram}
+				</td>
+				<td>
+					${fns:getDictLabel(goods.goodsType, 'goods_type', '')}
+				</td>
+				<td>
+					${goods.entryTaxRate}
+				</td>
+				<td>
+					${goods.salesRate}
+				</td>
+				<td>
+					${goods.manufacturer}
+				</td>
+				<td>
+					${goods.certificateNo}
+				</td>
+				<td>
+					${fns:getDictLabel(goods.coreType, 'core_type', '')}
+				</td>
+				<td>
+					${goods.retailType}
+				</td>
+				<td>
+					${goods.retailPrice}
+				</td>
+				<td>
+					${goods.taxRetailPrice}
+				</td>
+				<td>
+					${goods.barCode}
+				</td>
+				<td>
+					${goods.supervisionCode}
+				</td>
+				<td>
+					${fns:getDictLabel(goods.purchaseFlag, 'yes_no', '')}
+				</td>
+				<td>
+					${fns:getDictLabel(goods.saleFlag, 'yes_no', '')}
 				</td>
 				<shiro:hasPermission name="goods:goods:edit"><td>
     				<a href="${ctx}/goods/goods/form?id=${goods.id}">修改</a>

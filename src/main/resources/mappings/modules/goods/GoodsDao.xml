@@ -32,6 +32,7 @@
 		a.quality_standard AS "qualityStandard",
 		a.core_type AS "coreType",
 		a.retail_type AS "retailType",
+		a.retail_num AS "retailNum",
 		a.validity AS "validity",
 		a.valid_unit AS "validUnit",
 		a.default_repo_id AS "defaultRepoId",
@@ -40,9 +41,9 @@
 		a.tax_retail_price AS "taxRetailPrice",
 		a.bar_code AS "barCode",
 		a.supervision_code AS "supervisionCode",
-		a.is_purchase AS "isPurchase",
-		a.is_sale AS "isSale",
+		a.purchase_flag AS "purchaseFlag",
 		a.create_by AS "createBy.id",
+		a.sale_flag AS "saleFlag",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
@@ -70,6 +71,18 @@
 		<include refid="goodsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="goodsCategory != null and goodsCategory != ''">
+				AND a.goods_category = #{goodsCategory}
+			</if>
+			<if test="fileNumber != null and fileNumber != ''">
+				AND a.file_number = #{fileNumber}
+			</if>
+			<if test="goodsCode != null and goodsCode != ''">
+				AND a.goods_code = #{goodsCode}
+			</if>
+			<if test="goodsName != null and goodsName != ''">
+				AND a.goods_name = #{goodsName}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -130,6 +143,7 @@
 			quality_standard,
 			core_type,
 			retail_type,
+			retail_num,
 			validity,
 			valid_unit,
 			default_repo_id,
@@ -138,9 +152,9 @@
 			tax_retail_price,
 			bar_code,
 			supervision_code,
-			is_purchase,
-			is_sale,
+			purchase_flag,
 			create_by,
+			sale_flag,
 			create_date,
 			update_by,
 			update_date,
@@ -176,6 +190,7 @@
 			#{qualityStandard},
 			#{coreType},
 			#{retailType},
+			#{retailNum},
 			#{validity},
 			#{validUnit},
 			#{defaultRepoId},
@@ -184,9 +199,9 @@
 			#{taxRetailPrice},
 			#{barCode},
 			#{supervisionCode},
-			#{isPurchase},
-			#{isSale},
+			#{purchaseFlag},
 			#{createBy.id},
+			#{saleFlag},
 			#{createDate},
 			#{updateBy.id},
 			#{updateDate},
@@ -197,7 +212,6 @@
 	
 	<update id="update">
 		UPDATE goods SET 	
-			office_id = #{office.id},
 			goods_category = #{goodsCategory},
 			file_number = #{fileNumber},
 			goods_code = #{goodsCode},
@@ -225,6 +239,7 @@
 			quality_standard = #{qualityStandard},
 			core_type = #{coreType},
 			retail_type = #{retailType},
+			retail_num = #{retailNum},
 			validity = #{validity},
 			valid_unit = #{validUnit},
 			default_repo_id = #{defaultRepoId},
@@ -233,11 +248,8 @@
 			tax_retail_price = #{taxRetailPrice},
 			bar_code = #{barCode},
 			supervision_code = #{supervisionCode},
-			is_purchase = #{isPurchase},
-			is_sale = #{isSale},
-			update_by = #{updateBy.id},
-			update_date = #{updateDate},
-			remarks = #{remarks}
+			purchase_flag = #{purchaseFlag},
+			sale_flag = #{saleFlag}
 		WHERE id = #{id}
 	</update>
 	

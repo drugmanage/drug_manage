@@ -7,7 +7,7 @@ import com.thinkgem.fast.modules.goods.entity.Goods;
 /**
  * 商品资料DAO接口
  * @author 刘海涛
- * @version 2018-11-16
+ * @version 2018-11-17
  */
 @MyBatisDao
 public interface GoodsDao extends CrudDao<Goods> {

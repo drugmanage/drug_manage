@@ -22,7 +22,7 @@ import com.thinkgem.fast.modules.goods.service.GoodsService;
 /**
  * 商品资料Controller
  * @author 刘海涛
- * @version 2018-11-16
+ * @version 2018-11-17
  */
 @Controller
 @RequestMapping(value = "${adminPath}/goods/goods")

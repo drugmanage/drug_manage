@@ -13,7 +13,7 @@ import com.thinkgem.fast.modules.goods.dao.GoodsDao;
 /**
  * 商品资料Service
  * @author 刘海涛
- * @version 2018-11-16
+ * @version 2018-11-17
  */
 @Service
 @Transactional(readOnly = true)

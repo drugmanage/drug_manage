@@ -10,7 +10,7 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 商品资料Entity
  * @author 刘海涛
- * @version 2018-11-16
+ * @version 2018-11-17
  */
 public class Goods extends DataEntity<Goods> {
 	
@@ -43,6 +43,7 @@ public class Goods extends DataEntity<Goods> {
 	private String qualityStandard;		// 质量标准
 	private String coreType;		// 核心属性
 	private String retailType;		// 零售属性
+	private String retailNum;		// 零售属性数量
 	private String validity;		// 有效期
 	private String validUnit;		// 有效期单位
 	private String defaultRepoId;		// 默认仓库id
@@ -51,8 +52,8 @@ public class Goods extends DataEntity<Goods> {
 	private String taxRetailPrice;		// 含税零售价
 	private String barCode;		// 商品条形码编码
 	private String supervisionCode;		// 商品电子监管码
-	private String isPurchase;		// 是否停止采购
-	private String isSale;		// 是否停止销售
+	private String purchaseFlag;		// 是否停止采购
+	private String saleFlag;		// 是否停止销售
 	
 	public Goods() {
 		super();
@@ -311,6 +312,15 @@ public class Goods extends DataEntity<Goods> {
 		this.retailType = retailType;
 	}
 	
+	@Length(min=0, max=11, message="零售属性数量长度必须介于 0 和 11 之间")
+	public String getRetailNum() {
+		return retailNum;
+	}
+
+	public void setRetailNum(String retailNum) {
+		this.retailNum = retailNum;
+	}
+	
 	@Length(min=0, max=11, message="有效期长度必须介于 0 和 11 之间")
 	public String getValidity() {
 		return validity;
@@ -382,21 +392,21 @@ public class Goods extends DataEntity<Goods> {
 	}
 	
 	@Length(min=0, max=1, message="是否停止采购长度必须介于 0 和 1 之间")
-	public String getIsPurchase() {
-		return isPurchase;
+	public String getPurchaseFlag() {
+		return purchaseFlag;
 	}
 
-	public void setIsPurchase(String isPurchase) {
-		this.isPurchase = isPurchase;
+	public void setPurchaseFlag(String purchaseFlag) {
+		this.purchaseFlag = purchaseFlag;
 	}
 	
 	@Length(min=0, max=1, message="是否停止销售长度必须介于 0 和 1 之间")
-	public String getIsSale() {
-		return isSale;
+	public String getSaleFlag() {
+		return saleFlag;
 	}
 
-	public void setIsSale(String isSale) {
-		this.isSale = isSale;
+	public void setSaleFlag(String saleFlag) {
+		this.saleFlag = saleFlag;
 	}
 	
 }
