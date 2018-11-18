@@ -1,11 +1,15 @@
 package com.thinkgem.fast.modules.hrmuser.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.thinkgem.fast.common.config.Global;
+import com.thinkgem.fast.common.persistence.Page;
+import com.thinkgem.fast.common.utils.Collections3;
 import com.thinkgem.fast.common.utils.DateUtils;
+import com.thinkgem.fast.common.utils.StringUtils;
+import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.modules.hrmuser.entity.*;
-import com.thinkgem.fast.modules.hrmuser.service.*;
+import com.thinkgem.fast.modules.hrmuser.service.HrmUserService;
+import com.thinkgem.fast.modules.hrmuser.service.ManageSalesmanService;
+import com.thinkgem.fast.modules.sys.service.OfficeService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.thinkgem.fast.common.config.Global;
-import com.thinkgem.fast.common.persistence.Page;
-import com.thinkgem.fast.common.web.BaseController;
-import com.thinkgem.fast.common.utils.StringUtils;
-
-import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 内部员工信息操作Controller
@@ -36,6 +37,10 @@ public class HrmUserController extends BaseController {
 
     @Autowired
     private HrmUserService hrmUserService;
+    @Autowired
+    private OfficeService officeService;
+    @Autowired
+    private ManageSalesmanService manageSalesmanService;
 
     @ModelAttribute
     public HrmUser get(@RequestParam(required = false) String id) {
@@ -188,5 +193,24 @@ public class HrmUserController extends BaseController {
         hrmUserService.delete(hrmUser);
         addMessage(redirectAttributes, "删除内部员工成功");
         return "redirect:" + Global.getAdminPath() + "/hrmuser/hrmUser/?repage";
+    }
+
+    /**
+     * 分配业务员 -- 打开分配对话框
+     * @param hrmUser
+     * @param model
+     * @return
+     */
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @RequestMapping(value = "bindSale")
+    public String selectUserToManage(HrmUser hrmUser, Model model) {
+        ManageSalesman ms = new ManageSalesman();
+        ms.setManageUserId(hrmUser.getId());
+        List<ManageSalesman> userList = manageSalesmanService.findList(ms);
+        model.addAttribute("hrmUser", hrmUser);
+        model.addAttribute("userList", userList);
+        model.addAttribute("selectIds", Collections3.extractToString(userList, "salemanHrmUser.empName", ","));
+        model.addAttribute("officeList", officeService.findAll());
+        return "modules/sys/selectUserToRole";
     }
 }

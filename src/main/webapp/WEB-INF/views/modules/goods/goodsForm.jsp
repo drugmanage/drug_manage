@@ -22,6 +22,25 @@
 					}
 				}
 			});
+
+            $("#goodsName").keyup(function () {
+                var name = $(this).val();
+                var py = Mtils.utils.makePy(name);
+                $("#logogram").val(py);
+            })
+
+
+            $("#commonNameOne").keyup(function () {
+                var name = $(this).val();
+                var py = Mtils.utils.makePy(name);
+                $("#commonLogogramOne").val(py);
+            })
+
+            $("#commonNameTwo").keyup(function () {
+                var name = $(this).val();
+                var py = Mtils.utils.makePy(name);
+                $("#commonLogogramTwo").val(py);
+            })
 		});
 	</script>
 </head>

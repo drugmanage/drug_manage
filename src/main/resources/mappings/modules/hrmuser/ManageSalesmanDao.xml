@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.hrmuser.dao.ManageSalesmanDao">
+
+    <sql id="manageSalesmanColumns">
+		a.manage_user_id AS "manageUserId",
+		a.salesman_user_id AS "salesmanUserId",
+		saleMan.id AS "salemanHrmUser.id",
+		saleMan.emp_name AS "salemanHrmUser.empName"
+	</sql>
+
+    <sql id="manageSalesmanJoins">
+		left join hrm_user saleMan
+		on saleMan.id = a.salesman_user_id
+	</sql>
+
+    <select id="get" resultType="ManageSalesman">
+        SELECT
+        <include refid="manageSalesmanColumns"/>
+        FROM manage_salesman a
+        <include refid="manageSalesmanJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="ManageSalesman">
+        SELECT
+        <include refid="manageSalesmanColumns"/>
+        FROM manage_salesman a
+        <include refid="manageSalesmanJoins"/>
+        <where>
+            <if test="manageUserId != null and manageUserId !='' ">
+                a.manage_user_id = #{manageUserId}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="ManageSalesman">
+        SELECT
+        <include refid="manageSalesmanColumns"/>
+        FROM manage_salesman a
+        <include refid="manageSalesmanJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+		INSERT INTO manage_salesman(
+			manage_user_id,
+			salesman_user_id
+		) VALUES (
+			#{manageUserId},
+			#{salesmanUserId}
+		)
+	</insert>
+
+    <update id="update">
+		UPDATE manage_salesman SET 	
+			manage_user_id = #{manageUserId},
+			salesman_user_id = #{salesmanUserId}
+		WHERE id = #{id}
+	</update>
+
+    <update id="delete">
+		DELETE FROM manage_salesman
+		WHERE id = #{id}
+	</update>
+
+</mapper>

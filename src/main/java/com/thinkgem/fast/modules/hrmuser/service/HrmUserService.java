@@ -6,6 +6,8 @@ import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.modules.attachment.entity.MeisAttachment;
 import com.thinkgem.fast.modules.attachment.service.MeisAttachmentService;
 import com.thinkgem.fast.modules.hrmuser.entity.*;
+import com.thinkgem.fast.modules.settlement.entity.SettlementObject;
+import com.thinkgem.fast.modules.settlement.service.SettlementObjectService;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,8 @@ public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
     private HrmWorkExperService hrmWorkExperService;
     @Autowired
     private MeisAttachmentService meisAttachmentService;
+    @Autowired
+    private SettlementObjectService settlementObjectService;
 
     public HrmUser get(String id) {
         HrmUser hrmUser = super.get(id);
@@ -66,9 +70,9 @@ public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
         familyContact.setHrmUserId(userId);
         List<HrmFamilyContact> hrmFamilyList = hrmFamilyContactService.findList(familyContact);
 
-        HrmBank hrmBank=new HrmBank();
+        HrmBank hrmBank = new HrmBank();
         hrmBank.setHrmUserId(userId);
-        List<HrmBank> hrmBanksList =hrmBankService.findList(hrmBank);
+        List<HrmBank> hrmBanksList = hrmBankService.findList(hrmBank);
         for (HrmBank bank : hrmBanksList) {
             MeisAttachment bankAttachment = new MeisAttachment();
             bankAttachment.setBizId(bank.getId());
@@ -105,6 +109,26 @@ public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
     @Transactional
     public void save(HrmUser hrmUser) {
         super.save(hrmUser);
+        if ("1".equals(hrmUser.getSettlementFlag())) {
+            SettlementObject settlementObject = new SettlementObject();
+            settlementObject.setOuterId(hrmUser.getId());
+            //1区域经理2业务员3内部员工
+            String ut = hrmUser.getUserType();
+            if ("1".equals(ut)) {
+                /**
+                 * 结算对象类型
+                 1-客户资料
+                 2-业务组
+                 3-供应商业务组
+                 4-区域经理
+                 5-业务员
+                 */
+                settlementObject.setSettlementType("4");
+            } else if ("2".equals(ut)) {
+                settlementObject.setSettlementType("5");
+            }
+            settlementObjectService.save(settlementObject);
+        }
         //保存照片信息
         meisAttachmentService.saveAttachment(hrmUser.getUserPhoto(), hrmUser.getId(), "userPhoto", "img");
         meisAttachmentService.saveAttachment(hrmUser.getCertPhoto(), hrmUser.getId(), "certPhoto", "img");

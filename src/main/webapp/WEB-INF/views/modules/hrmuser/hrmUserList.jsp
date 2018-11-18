@@ -14,6 +14,71 @@
 			$("#searchForm").submit();
         	return false;
         }
+
+        function showSaleDiv(id){
+
+            var width = $("#content",window.top.document).width();
+            if(width!=undefined){
+                width = width-100;
+            }else{
+                width = 1400;
+            }
+            var _jBoxConfig = {};
+            _jBoxConfig.defaults = {
+                opacity: 0.5,
+                persistent: true, /* 在显示隔离层的情况下，点击隔离层时，是否坚持窗口不关闭 */
+            }
+            top.$.jBox.setDefaults(_jBoxConfig);
+            top.$.jBox.open("iframe:${ctx}/hrmuser/hrmUser/bindSale?id="+id, "业务员信息", 810,$(top.document).height()-240, {
+                buttons:{"确定分配":"ok", "清除已选":"clear", "关闭":true}, bottomText:"区域经理分配业务员信息。",submit:function(v, h, f){
+                    var pre_ids = h.find("iframe")[0].contentWindow.pre_ids;
+                    var ids = h.find("iframe")[0].contentWindow.ids;
+                    //nodes = selectedTree.getSelectedNodes();
+                    if (v=="ok"){
+                        // 删除''的元素
+                        if(ids[0]==''){
+                            ids.shift();
+                            pre_ids.shift();
+                        }
+                        if(pre_ids.sort().toString() == ids.sort().toString()){
+                            top.$.jBox.tip("未给角色【${role.name}】分配新成员！", 'info');
+                            return false;
+                        };
+                        // 执行保存
+                        loading('正在提交，请稍等...');
+                        var idsArr = "";
+                        for (var i = 0; i<ids.length; i++) {
+                            idsArr = (idsArr + ids[i]) + (((i + 1)== ids.length) ? '':',');
+                        }
+                        $('#idsArr').val(idsArr);
+                        $('#assignRoleForm').submit();
+                        return true;
+                    } else if (v=="clear"){
+                        h.find("iframe")[0].contentWindow.clearAssign();
+                        return false;
+                    }
+                }, loaded:function(h){
+                    $(".jbox-content", top.document).css("overflow-y","hidden");
+                }
+            });
+        }
+
+        function showCustomerDiv(id){
+
+            var width = $("#content",window.top.document).width();
+            if(width!=undefined){
+                width = width-100;
+            }else{
+                width = 1400;
+            }
+            var _jBoxConfig = {};
+            _jBoxConfig.defaults = {
+                opacity: 0.5,
+                persistent: true, /* 在显示隔离层的情况下，点击隔离层时，是否坚持窗口不关闭 */
+            }
+            top.$.jBox.setDefaults(_jBoxConfig);
+
+        }
 	</script>
 </head>
 <body>
@@ -70,6 +135,12 @@
 				<form:radiobuttons path="companyType" items="${fns:getDictList('user_company_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
+			<li class="clearfix"></li>
+		</ul>
+
+		<ul class="ul-form">
+			<li class="btns"><input id="btnBindSalesman" class="btn btn-primary" type="submit" value="绑定业务员"/></li>
+			<li class="btns"><input id="btnBindCustomer" class="btn btn-primary" type="submit" value="绑定客户"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
@@ -145,6 +216,11 @@
 				</td>
 				<shiro:hasPermission name="hrmuser:hrmUser:edit"><td>
     				<a href="${ctx}/hrmuser/hrmUser/form?id=${hrmUser.id}">修改</a>
+					<c:if test="${hrmUser.userType=='1'}">
+						<a href="javascript:void(0)" onclick="showSaleDiv('${hrmUser.id}')">绑定业务员</a>
+						<a href="javascript:void(0)" onclick="showCustomerDiv('${hrmUser.id}')">绑定客户</a>
+					</c:if>
+
 					<a href="${ctx}/hrmuser/hrmUser/delete?id=${hrmUser.id}" onclick="return confirmx('确认要删除该内部员工吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

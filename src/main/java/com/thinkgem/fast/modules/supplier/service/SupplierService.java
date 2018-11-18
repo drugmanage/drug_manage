@@ -5,6 +5,8 @@ import java.util.List;
 import com.thinkgem.fast.modules.attachment.entity.MeisAttachment;
 import com.thinkgem.fast.modules.attachment.service.MeisAttachmentService;
 import com.thinkgem.fast.modules.hrmuser.entity.HrmAddress;
+import com.thinkgem.fast.modules.settlement.entity.SettlementObject;
+import com.thinkgem.fast.modules.settlement.service.SettlementObjectService;
 import com.thinkgem.fast.modules.supplier.entity.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,8 @@ public class SupplierService extends CrudService<SupplierDao, Supplier> {
 	private SupplierInvoiceInfoService supplierInvoiceInfoService;
 	@Autowired
 	private MeisAttachmentService meisAttachmentService;
+	@Autowired
+	private SettlementObjectService settlementObjectService;
 
 	public Supplier get(String id) {
 		Supplier supplier= super.get(id);
@@ -139,7 +143,20 @@ public class SupplierService extends CrudService<SupplierDao, Supplier> {
 
 	private void saveCollections(Supplier supplier) {
 		String sId=supplier.getId();
-
+		if ("1".equals(supplier.getSettlementFlag())) {
+			SettlementObject settlementObject = new SettlementObject();
+			settlementObject.setOuterId(supplier.getId());
+				/**
+				 * 结算对象类型
+				 1-客户资料
+				 2-业务组
+				 3-供应商业务组
+				 4-区域经理
+				 5-业务员
+				 */
+				settlementObject.setSettlementType("3");
+			settlementObjectService.save(settlementObject);
+		}
 		List<SupplierAddress> supplierAddressList = supplier.getSupplierAddressList();
 		List<SupplierBank> supplierBankList = supplier.getSupplierBankList();
 		List<SupplierConsigner> supplierConsignerList = supplier.getSupplierConsignerList();
