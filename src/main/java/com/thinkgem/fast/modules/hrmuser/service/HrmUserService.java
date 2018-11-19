@@ -8,6 +8,8 @@ import com.thinkgem.fast.modules.attachment.service.MeisAttachmentService;
 import com.thinkgem.fast.modules.hrmuser.entity.*;
 import com.thinkgem.fast.modules.settlement.entity.SettlementObject;
 import com.thinkgem.fast.modules.settlement.service.SettlementObjectService;
+import com.thinkgem.fast.modules.sys.entity.User;
+import com.thinkgem.fast.modules.sys.utils.UserUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -98,6 +100,9 @@ public class HrmUserService extends CrudService<HrmUserDao, HrmUser> {
     }
 
     public List<HrmUser> findList(HrmUser hrmUser) {
+        User user = UserUtils.getUser();
+        //增加数据权限
+        hrmUser.getSqlMap().put("dsf", dataScopeFilter(user.getCurrentUser(), "o", "u2"));
         return super.findList(hrmUser);
     }
 

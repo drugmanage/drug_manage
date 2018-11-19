@@ -1,5 +1,7 @@
 package com.thinkgem.fast.modules.hrmuser.web;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.thinkgem.fast.common.config.Global;
 import com.thinkgem.fast.common.persistence.Page;
 import com.thinkgem.fast.common.utils.Collections3;
@@ -18,12 +20,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 内部员工信息操作Controller
@@ -209,8 +213,39 @@ public class HrmUserController extends BaseController {
         List<ManageSalesman> userList = manageSalesmanService.findList(ms);
         model.addAttribute("hrmUser", hrmUser);
         model.addAttribute("userList", userList);
-        model.addAttribute("selectIds", Collections3.extractToString(userList, "salemanHrmUser.empName", ","));
+        model.addAttribute("selectIds", Collections3.extractToString(userList, "salemanHrmUser.id", ","));
         model.addAttribute("officeList", officeService.findAll());
-        return "modules/sys/selectUserToRole";
+        return "modules/hrmuser/salesmanList";
+    }
+
+    /**
+     * 分配业务员 -- 根据部门编号获取员工列表
+     * @param hrmUser
+     * @return
+     */
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "hrmUserByOffice")
+    public List<Map<String, Object>> users( HrmUser hrmUser) {
+        List<Map<String, Object>> mapList = Lists.newArrayList();
+//        Page<User> page = systemService.findUser(new Page<User>(1, -1), user);
+        List<HrmUser> list = hrmUserService.findList(hrmUser);
+        for (HrmUser e : list) {
+            Map<String, Object> map = Maps.newHashMap();
+            map.put("id", e.getId());
+            map.put("pId", 0);
+            map.put("name", e.getEmpName());
+            mapList.add(map);
+        }
+        return mapList;
+    }
+
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @RequestMapping(value = "assignSaleman")
+    public String assignSaleman(String manageId, String[] idsArr, RedirectAttributes redirectAttributes) {
+        StringBuilder msg = new StringBuilder();
+        manageSalesmanService.assignSaleman(manageId,  idsArr);
+        addMessage(redirectAttributes, "已成功分配业务员");
+        return "redirect:" + adminPath + "/hrmuser/hrmUser";
     }
 }

@@ -32,16 +32,18 @@
             <c:forEach items="${userList}" var="user">
             {id:"${user.salemanHrmUser.id}",
                 pId:"0",
-                name:"<font color='red' style='font-weight:bold;'>${user.salemanHrmUser.empName}</font>"},
+                name:"<a href='javascript:void(0)' onclick='remove(\"${user.manageUserId}\",\"${user.salesmanUserId}\")'><font color='red' style='font-weight:bold;'>${user.salemanHrmUser.empName}</font></a>"},
             </c:forEach>];
 
         var selectedNodes =[
             <c:forEach items="${userList}" var="user">
             {id:"${user.salemanHrmUser.id}",
                 pId:"0",
-                name:"<font color='red' style='font-weight:bold;'>${user.salemanHrmUser.empName}</font>"},
+                name:"<a href='javascript:void(0)' onclick='remove(\"${user.manageUserId}\",\"${user.salesmanUserId}\")'><font color='red' style='font-weight:bold;'>${user.salemanHrmUser.empName}</font></a>"},
             </c:forEach>];
 
+        var hrmManageId ="${hrmUser.id}";
+        var empName ="${hrmUser.empName}";
         var pre_ids = "${selectIds}".split(",");
         var ids = "${selectIds}".split(",");
 
@@ -49,7 +51,7 @@
         function treeOnClick(event, treeId, treeNode, clickFlag){
             $.fn.zTree.getZTreeObj(treeId).expandNode(treeNode);
             if("officeTree"==treeId){
-                $.get("${ctx}/sys/role/users?officeId=" + treeNode.id, function(userNodes){
+                $.get("${ctx}/hrmuser/hrmUser/hrmUserByOffice?userType=2&office.id=" + treeNode.id, function(userNodes){
                     $.fn.zTree.init($("#userTree"), setting, userNodes);
                 });
             }
@@ -70,17 +72,20 @@
                 }
             }
         };
-        function clearAssign(){
+        function clearSalesman(){
             var submit = function (v, h, f) {
                 if (v == 'ok'){
                     var tips="";
-                    if(pre_ids.sort().toString() == ids.sort().toString()){
-                        tips = "未给员工【${hrmUser.empNname}】分配业务员！";
+                    debugger;
+                    if(pre_ids.sort().toString() ==""||ids.sort().toString()== ""){
+                        tips = "未给员工【${hrmUser.empName}】分配业务员！";
                     }else{
                         tips = "已选业务员清除成功！";
                     }
-                    ids=pre_ids.slice(0);
-                    selectedNodes=pre_selectedNodes;
+                    pre_ids=[];
+                    ids = [];
+//                    ids=pre_ids.slice(0);
+                    selectedNodes=[];
                     $.fn.zTree.init($("#selectedTree"), setting, selectedNodes);
                     top.$.jBox.tip(tips, 'info');
                 } else if (v == 'cancel'){
@@ -89,7 +94,7 @@
                 }
                 return true;
             };
-            tips="确定清除员【${hrmUser.empNname}】下的已选业务员？";
+            tips="确定清除员【${hrmUser.empName}】下的已选业务员？";
             top.$.jBox.confirm(tips, "清除确认", submit);
         };
         function initHeight(){
@@ -97,6 +102,20 @@
             $("#depart_div").height(height+16);
             $("#selection_div").height(height+16);
             $("#selected_div").height(height+16);
+        }
+        function remove(manageUserId,salesmanUserId){
+            var submit = function (v, h, f) {
+                if (v == 'ok'){
+                    var tips=manageUserId+","+salesmanUserId;
+                    top.$.jBox.tip(tips, 'info');
+                } else if (v == 'cancel'){
+                    // 取消
+                    top.$.jBox.tip("取消清除操作！", 'info');
+                }
+                return true;
+            };
+            tips="确定清除员【${hrmUser.empName}】下的已选业务员？";
+            top.$.jBox.confirm(tips, "清除确认", submit);
         }
 	</script>
 </head>
@@ -106,11 +125,11 @@
             <p>所在部门：</p>
             <div id="officeTree" class="ztree"></div>
         </div>
-        <div id="selection_div" class="span3" style=" margin: 0px;padding-left: 20px;width:270px;  overflow: scroll;"">
+        <div id="selection_div" class="span3" style=" margin: 0px;padding-left: 20px;width:270px;  overflow: scroll;">
             <p>待选人员：</p>
             <div id="userTree" class="ztree"></div>
         </div>
-        <div id="selected_div" class="span3" style="padding-left:16px;border-left: 1px solid #A8A8A8;margin: 0px;padding-left: 20px;width:270px;  overflow: scroll;"">
+        <div id="selected_div" class="span3" style="padding-left:16px;border-left: 1px solid #A8A8A8;margin: 0px;padding-left: 20px;width:270px;  overflow: scroll;">
         <p>已选人员：</p>
         <div id="selectedTree" class="ztree"></div>
         </div>

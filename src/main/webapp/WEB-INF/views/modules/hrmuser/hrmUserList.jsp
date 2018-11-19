@@ -15,7 +15,7 @@
         	return false;
         }
 
-        function showSaleDiv(id){
+        function showSaleDiv(id,name){
 
             var width = $("#content",window.top.document).width();
             if(width!=undefined){
@@ -33,6 +33,8 @@
                 buttons:{"确定分配":"ok", "清除已选":"clear", "关闭":true}, bottomText:"区域经理分配业务员信息。",submit:function(v, h, f){
                     var pre_ids = h.find("iframe")[0].contentWindow.pre_ids;
                     var ids = h.find("iframe")[0].contentWindow.ids;
+                    var manageId = h.find("iframe")[0].contentWindow.hrmManageId;
+                    var empName = h.find("iframe")[0].contentWindow.empName;
                     //nodes = selectedTree.getSelectedNodes();
                     if (v=="ok"){
                         // 删除''的元素
@@ -41,7 +43,7 @@
                             pre_ids.shift();
                         }
                         if(pre_ids.sort().toString() == ids.sort().toString()){
-                            top.$.jBox.tip("未给角色【${role.name}】分配新成员！", 'info');
+                            top.$.jBox.tip("未给员工【"+empName+"】分配新成员！", 'info');
                             return false;
                         };
                         // 执行保存
@@ -51,10 +53,11 @@
                             idsArr = (idsArr + ids[i]) + (((i + 1)== ids.length) ? '':',');
                         }
                         $('#idsArr').val(idsArr);
-                        $('#assignRoleForm').submit();
+                        $("#manageId").val(manageId);
+                        $('#assignSalemanForm').submit();
                         return true;
                     } else if (v=="clear"){
-                        h.find("iframe")[0].contentWindow.clearAssign();
+                        h.find("iframe")[0].contentWindow.clearSalesman();
                         return false;
                     }
                 }, loaded:function(h){
@@ -86,6 +89,11 @@
 		<li class="active"><a href="${ctx}/hrmuser/hrmUser/">内部员工列表</a></li>
 		<shiro:hasPermission name="hrmuser:hrmUser:edit"><li><a href="${ctx}/hrmuser/hrmUser/form">内部员工添加</a></li></shiro:hasPermission>
 	</ul>
+	<form id="assignSalemanForm" action="${ctx}/hrmuser/hrmUser/assignSaleman" method="post" class="hide">
+		<input type="hidden" name="manageId" id="manageId" value=""/>
+		<input id="idsArr" type="hidden" name="idsArr" value=""/>
+	</form>
+
 	<form:form id="searchForm" modelAttribute="hrmUser" action="${ctx}/hrmuser/hrmUser/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
@@ -217,7 +225,7 @@
 				<shiro:hasPermission name="hrmuser:hrmUser:edit"><td>
     				<a href="${ctx}/hrmuser/hrmUser/form?id=${hrmUser.id}">修改</a>
 					<c:if test="${hrmUser.userType=='1'}">
-						<a href="javascript:void(0)" onclick="showSaleDiv('${hrmUser.id}')">绑定业务员</a>
+						<a href="javascript:void(0)" onclick="showSaleDiv('${hrmUser.id}','${hrmUser.empName}')">绑定业务员</a>
 						<a href="javascript:void(0)" onclick="showCustomerDiv('${hrmUser.id}')">绑定客户</a>
 					</c:if>
 

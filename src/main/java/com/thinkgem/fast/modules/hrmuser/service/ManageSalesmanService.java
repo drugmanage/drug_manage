@@ -2,6 +2,7 @@ package com.thinkgem.fast.modules.hrmuser.service;
 
 import com.thinkgem.fast.common.persistence.Page;
 import com.thinkgem.fast.common.service.CrudService;
+import com.thinkgem.fast.common.utils.Collections3;
 import com.thinkgem.fast.modules.goods.dao.GoodsDao;
 import com.thinkgem.fast.modules.goods.entity.Goods;
 import com.thinkgem.fast.modules.hrmuser.dao.ManageSalesmanDao;
@@ -46,5 +47,26 @@ public class ManageSalesmanService extends CrudService<ManageSalesmanDao, Manage
     public void delete(ManageSalesman manageSalesman) {
         super.delete(manageSalesman);
     }
+
+    @Transactional(readOnly = false)
+    public void assignSaleman(String manageId, String[] idsArr) {
+        ManageSalesman param = new ManageSalesman();
+        param.setManageUserId(manageId);
+        List<ManageSalesman> msList = findList(param);
+        List<String> salesmanUserId = Collections3.extractToList(msList, "salesmanUserId");
+
+        for (int i = 0; i < idsArr.length; i++) {
+            if (salesmanUserId.contains(idsArr[i])) {
+                continue;
+            }
+            param.setSalesmanUserId(idsArr[i]);
+            delete(param);
+            ManageSalesman sm = new ManageSalesman();
+            sm.setManageUserId(manageId);
+            sm.setSalesmanUserId(idsArr[0]);
+            this.save(sm);
+        }
+    }
+
 
 }

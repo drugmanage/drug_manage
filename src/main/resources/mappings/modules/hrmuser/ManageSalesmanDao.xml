@@ -77,7 +77,7 @@
 
     <update id="delete">
 		DELETE FROM manage_salesman
-		WHERE id = #{id}
+		WHERE manage_user_id = #{manageUserId} and salesman_user_id = #{salesmanUserId}
 	</update>
 
 </mapper>

@@ -1,6 +1,7 @@
 package com.thinkgem.fast.modules.hrmuser.entity;
 
 import com.thinkgem.fast.modules.sys.entity.Area;
+import com.thinkgem.fast.modules.sys.entity.Office;
 import com.thinkgem.fast.modules.sys.entity.User;
 import org.hibernate.validator.constraints.Length;
 
@@ -21,6 +22,7 @@ public class HrmUser extends DataEntity<HrmUser> {
 	
 	private static final long serialVersionUID = 1L;
 	private User sysUser;		// 用户表id
+	private Office office;
 	private String empNumber;		// 职员编号
 	private String empName;		// 职员名称
 	private String pinyin;		// 助记码
@@ -76,6 +78,14 @@ public class HrmUser extends DataEntity<HrmUser> {
 	private List<HrmBank> hrmBanksList;
 
 	private List<HrmAddress> hrmAddressList;
+
+	public Office getOffice() {
+		return office;
+	}
+
+	public void setOffice(Office office) {
+		this.office = office;
+	}
 
 	public String getUserPhoto() {
 		return userPhoto;

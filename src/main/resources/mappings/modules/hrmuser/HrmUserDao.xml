@@ -47,13 +47,16 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		o.id as "office.id",
+		o.name as "office.name"
 	</sql>
 
 
 	<sql id="hrmUserJoins">
 		LEFT JOIN sys_user u2 ON u2.id = a.sys_user_id
 		left join sys_area area on area.id = a.area_id
+		left join sys_office o on a.office_id = o.id
 	</sql>
 
 
@@ -105,6 +108,14 @@
 			<if test="companyType != null and companyType != ''">
 				AND a.company_type = #{companyType}
 			</if>
+			<if test="office != null and office.id != null and office.id != ''">
+				AND (o.id = #{office.id} OR o.parent_ids LIKE
+				<if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+				<if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
+				<if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+			</if>
+			<!-- 数据范围过滤 -->
+			${sqlMap.dsf}
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
