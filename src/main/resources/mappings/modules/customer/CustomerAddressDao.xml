@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.customer.dao.CustomerAddressDao">
+    
+	<sql id="customerAddressColumns">
+		a.id AS "id",
+		a.customer_id AS "customerId",
+		a.receiving_name AS "receivingName",
+		a.area_id AS "area.id",
+		a.receiving_address AS "receivingAddress",
+		a.contact_phone AS "contactPhone",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a4.name AS "area.name"
+	</sql>
+	
+	<sql id="customerAddressJoins">
+		LEFT JOIN sys_area a4 ON a4.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="CustomerAddress">
+		SELECT 
+			<include refid="customerAddressColumns"/>
+		FROM customer_address a
+		<include refid="customerAddressJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CustomerAddress">
+		SELECT 
+			<include refid="customerAddressColumns"/>
+		FROM customer_address a
+		<include refid="customerAddressJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="customerId != null and customerId != ''">
+				AND a.customer_id = #{customerId}
+			</if>
+			<if test="receivingName != null and receivingName != ''">
+				AND a.receiving_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{receivingName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{receivingName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{receivingName},'%')</if>
+			</if>
+			<if test="area != null and area.id != null and area.id != ''">
+				AND a.area_id = #{area.id}
+			</if>
+			<if test="receivingAddress != null and receivingAddress != ''">
+				AND a.receiving_address LIKE 
+					<if test="dbName == 'oracle'">'%'||#{receivingAddress}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{receivingAddress}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{receivingAddress},'%')</if>
+			</if>
+			<if test="contactPhone != null and contactPhone != ''">
+				AND a.contact_phone = #{contactPhone}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CustomerAddress">
+		SELECT 
+			<include refid="customerAddressColumns"/>
+		FROM customer_address a
+		<include refid="customerAddressJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO customer_address(
+			id,
+			customer_id,
+			receiving_name,
+			area_id,
+			receiving_address,
+			contact_phone,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{customerId},
+			#{receivingName},
+			#{area.id},
+			#{receivingAddress},
+			#{contactPhone},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE customer_address SET 	
+			customer_id = #{customerId},
+			receiving_name = #{receivingName},
+			area_id = #{area.id},
+			receiving_address = #{receivingAddress},
+			contact_phone = #{contactPhone},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE customer_address SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

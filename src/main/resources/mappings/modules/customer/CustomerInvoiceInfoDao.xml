@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.customer.dao.CustomerInvoiceInfoDao">
+    
+	<sql id="customerInvoiceInfoColumns">
+		a.id AS "id",
+		a.account_name AS "accountName",
+		a.bank_deposit AS "bankDeposit",
+		a.area_id AS "area.id",
+		a.detail_address AS "detailAddress",
+		a.phone AS "phone",
+		a.account_number AS "accountNumber",
+		a.duty_paragraph AS "dutyParagraph",
+		a.invoice_path AS "invoicePath",
+		a.stop_flag AS "stopFlag",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a4.name AS "area.name"
+	</sql>
+	
+	<sql id="customerInvoiceInfoJoins">
+		LEFT JOIN sys_area a4 ON a4.id = a.area_id
+	</sql>
+    
+	<select id="get" resultType="CustomerInvoiceInfo">
+		SELECT 
+			<include refid="customerInvoiceInfoColumns"/>
+		FROM customer_invoice_info a
+		<include refid="customerInvoiceInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CustomerInvoiceInfo">
+		SELECT 
+			<include refid="customerInvoiceInfoColumns"/>
+		FROM customer_invoice_info a
+		<include refid="customerInvoiceInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CustomerInvoiceInfo">
+		SELECT 
+			<include refid="customerInvoiceInfoColumns"/>
+		FROM customer_invoice_info a
+		<include refid="customerInvoiceInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO customer_invoice_info(
+			id,
+			account_name,
+			bank_deposit,
+			area_id,
+			detail_address,
+			phone,
+			account_number,
+			duty_paragraph,
+			invoice_path,
+			stop_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{accountName},
+			#{bankDeposit},
+			#{area.id},
+			#{detailAddress},
+			#{phone},
+			#{accountNumber},
+			#{dutyParagraph},
+			#{invoicePath},
+			#{stopFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE customer_invoice_info SET 	
+			account_name = #{accountName},
+			bank_deposit = #{bankDeposit},
+			area_id = #{area.id},
+			detail_address = #{detailAddress},
+			phone = #{phone},
+			account_number = #{accountNumber},
+			duty_paragraph = #{dutyParagraph},
+			invoice_path = #{invoicePath},
+			stop_flag = #{stopFlag},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE customer_invoice_info SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

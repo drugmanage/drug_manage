@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.customer.dao.CustomerConsignerDao">
+    
+	<sql id="customerConsignerColumns">
+		a.id AS "id",
+		a.contacts_name AS "contactsName",
+		a.sex AS "sex",
+		a.phone AS "phone",
+		a.cert_number AS "certNumber",
+		a.consigner_vali AS "consignerVali",
+		a.proxy_book AS "proxyBook",
+		a.proxy_book_vali AS "proxyBookVali",
+		a.proxy_book_img_book AS "proxyBookImgBook",
+		a.id_card_img_book AS "idCardImgBook",
+		a.stop_flag AS "stopFlag",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="customerConsignerJoins">
+	</sql>
+    
+	<select id="get" resultType="CustomerConsigner">
+		SELECT 
+			<include refid="customerConsignerColumns"/>
+		FROM customer_consigner a
+		<include refid="customerConsignerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="CustomerConsigner">
+		SELECT 
+			<include refid="customerConsignerColumns"/>
+		FROM customer_consigner a
+		<include refid="customerConsignerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="CustomerConsigner">
+		SELECT 
+			<include refid="customerConsignerColumns"/>
+		FROM customer_consigner a
+		<include refid="customerConsignerJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO customer_consigner(
+			id,
+			contacts_name,
+			sex,
+			phone,
+			cert_number,
+			consigner_vali,
+			proxy_book,
+			proxy_book_vali,
+			proxy_book_img_book,
+			id_card_img_book,
+			stop_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{contactsName},
+			#{sex},
+			#{phone},
+			#{certNumber},
+			#{consignerVali},
+			#{proxyBook},
+			#{proxyBookVali},
+			#{proxyBookImgBook},
+			#{idCardImgBook},
+			#{stopFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE customer_consigner SET 	
+			contacts_name = #{contactsName},
+			sex = #{sex},
+			phone = #{phone},
+			cert_number = #{certNumber},
+			consigner_vali = #{consignerVali},
+			proxy_book = #{proxyBook},
+			proxy_book_vali = #{proxyBookVali},
+			proxy_book_img_book = #{proxyBookImgBook},
+			id_card_img_book = #{idCardImgBook},
+			stop_flag = #{stopFlag},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE customer_consigner SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
