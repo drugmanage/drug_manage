@@ -7,7 +7,7 @@ import com.thinkgem.fast.modules.customer.entity.CustomerConsigner;
 /**
  * 委托人DAO接口
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 @MyBatisDao
 public interface CustomerConsignerDao extends CrudDao<CustomerConsigner> {

@@ -7,7 +7,7 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 委托人Entity
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 public class CustomerConsigner extends DataEntity<CustomerConsigner> {
 	
@@ -21,7 +21,7 @@ public class CustomerConsigner extends DataEntity<CustomerConsigner> {
 	private String proxyBookVali;		// 委托书有效期
 	private String proxyBookImgBook;		// 委托书图片路径
 	private String idCardImgBook;		// 身份证图片路径
-	private String stopFlag;		// 是否停用            0、未停用            1、停用
+	private String stopFlag;		// 是否停用
 	
 	public CustomerConsigner() {
 		super();
@@ -112,7 +112,7 @@ public class CustomerConsigner extends DataEntity<CustomerConsigner> {
 		this.idCardImgBook = idCardImgBook;
 	}
 	
-	@Length(min=0, max=1, message="是否停用            0、未停用            1、停用长度必须介于 0 和 1 之间")
+	@Length(min=0, max=1, message="是否停用长度必须介于 0 和 1 之间")
 	public String getStopFlag() {
 		return stopFlag;
 	}

@@ -43,7 +43,7 @@
 			<div class="div-b">
 				<label class="control-label">性别：</label>
 				<div class="controls">
-					<form:input path="sex" htmlEscape="false" maxlength="1" class="input-xlarge "/>
+					<form:radiobuttons path="sex" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
 				</div>
 			</div>
 		</div>
@@ -65,7 +65,9 @@
 			<div class="div-a">
 				<label class="control-label">未投入有效期：</label>
 				<div class="controls">
-					<form:input path="consignerVali" htmlEscape="false" maxlength="4" class="input-xlarge "/>
+					<input name="consignerVali" type="text" readonly="readonly" maxlength="20" class="input-xlarge Wdate "
+						value="<fmt:formatDate value="${customerConsigner.consignerVali}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 				</div>
 			</div>
 			<div class="div-b">
@@ -85,7 +87,8 @@
 			<div class="div-b">
 				<label class="control-label">委托书图片路径：</label>
 				<div class="controls">
-					<form:input path="proxyBookImgBook" htmlEscape="false" maxlength="128" class="input-xlarge "/>
+					<form:hidden id="proxyBookImgBook" path="proxyBookImgBook" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+					<sys:ckfinder input="proxyBookImgBook" type="files" uploadPath="/customer/customerConsigner" selectMultiple="true"/>
 				</div>
 			</div>
 		</div>
@@ -93,13 +96,14 @@
 			<div class="div-a">
 				<label class="control-label">身份证图片路径：</label>
 				<div class="controls">
-					<form:input path="idCardImgBook" htmlEscape="false" maxlength="128" class="input-xlarge "/>
+					<form:hidden id="idCardImgBook" path="idCardImgBook" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+					<sys:ckfinder input="idCardImgBook" type="files" uploadPath="/customer/customerConsigner" selectMultiple="true"/>
 				</div>
 			</div>
 			<div class="div-b">
-				<label class="control-label">是否停用            0、未停用            1、停用：</label>
+				<label class="control-label">是否停用：</label>
 				<div class="controls">
-					<form:input path="stopFlag" htmlEscape="false" maxlength="1" class="input-xlarge "/>
+					<form:radiobuttons path="stopFlag" items="${fns:getDictList('stop_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
 				</div>
 			</div>
 		</div>
