@@ -2,14 +2,13 @@ package com.thinkgem.fast.modules.customer.entity;
 
 import org.hibernate.validator.constraints.Length;
 import com.thinkgem.fast.modules.sys.entity.Area;
-import javax.validation.constraints.NotNull;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
 
 /**
  * 客户收货地址Entity
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 public class CustomerAddress extends DataEntity<CustomerAddress> {
 	
@@ -28,7 +27,7 @@ public class CustomerAddress extends DataEntity<CustomerAddress> {
 		super(id);
 	}
 
-	@Length(min=1, max=64, message="客户表ID长度必须介于 1 和 64 之间")
+	@Length(min=0, max=64, message="客户表ID长度必须介于 0 和 64 之间")
 	public String getCustomerId() {
 		return customerId;
 	}
@@ -37,7 +36,7 @@ public class CustomerAddress extends DataEntity<CustomerAddress> {
 		this.customerId = customerId;
 	}
 	
-	@Length(min=1, max=32, message="收货人长度必须介于 1 和 32 之间")
+	@Length(min=0, max=32, message="收货人长度必须介于 0 和 32 之间")
 	public String getReceivingName() {
 		return receivingName;
 	}
@@ -46,7 +45,6 @@ public class CustomerAddress extends DataEntity<CustomerAddress> {
 		this.receivingName = receivingName;
 	}
 	
-	@NotNull(message="区域id不能为空")
 	public Area getArea() {
 		return area;
 	}
@@ -55,7 +53,7 @@ public class CustomerAddress extends DataEntity<CustomerAddress> {
 		this.area = area;
 	}
 	
-	@Length(min=1, max=255, message="收货地址:街道门牌号长度必须介于 1 和 255 之间")
+	@Length(min=0, max=255, message="收货地址:街道门牌号长度必须介于 0 和 255 之间")
 	public String getReceivingAddress() {
 		return receivingAddress;
 	}
@@ -64,7 +62,7 @@ public class CustomerAddress extends DataEntity<CustomerAddress> {
 		this.receivingAddress = receivingAddress;
 	}
 	
-	@Length(min=1, max=20, message="联系人电话长度必须介于 1 和 20 之间")
+	@Length(min=0, max=20, message="联系人电话长度必须介于 0 和 20 之间")
 	public String getContactPhone() {
 		return contactPhone;
 	}

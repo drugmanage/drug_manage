@@ -7,7 +7,7 @@ import com.thinkgem.fast.modules.customer.entity.CustomerAddress;
 /**
  * 客户收货地址DAO接口
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 @MyBatisDao
 public interface CustomerAddressDao extends CrudDao<CustomerAddress> {

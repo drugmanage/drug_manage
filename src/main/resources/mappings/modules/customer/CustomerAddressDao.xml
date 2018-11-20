@@ -37,27 +37,6 @@
 		<include refid="customerAddressJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="customerId != null and customerId != ''">
-				AND a.customer_id = #{customerId}
-			</if>
-			<if test="receivingName != null and receivingName != ''">
-				AND a.receiving_name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{receivingName}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{receivingName}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{receivingName},'%')</if>
-			</if>
-			<if test="area != null and area.id != null and area.id != ''">
-				AND a.area_id = #{area.id}
-			</if>
-			<if test="receivingAddress != null and receivingAddress != ''">
-				AND a.receiving_address LIKE 
-					<if test="dbName == 'oracle'">'%'||#{receivingAddress}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{receivingAddress}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{receivingAddress},'%')</if>
-			</if>
-			<if test="contactPhone != null and contactPhone != ''">
-				AND a.contact_phone = #{contactPhone}
-			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -124,8 +103,6 @@
 			area_id = #{area.id},
 			receiving_address = #{receivingAddress},
 			contact_phone = #{contactPhone},
-			update_by = #{updateBy.id},
-			update_date = #{updateDate},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>

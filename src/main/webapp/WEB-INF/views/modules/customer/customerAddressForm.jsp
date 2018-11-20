@@ -37,15 +37,13 @@
 			<div class="div-a">
 				<label class="control-label">客户表ID：</label>
 				<div class="controls">
-					<form:input path="customerId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-					<span class="help-inline"><font color="red">*</font> </span>
+					<form:input path="customerId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
 			<div class="div-b">
 				<label class="control-label">收货人：</label>
 				<div class="controls">
-					<form:input path="receivingName" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
-					<span class="help-inline"><font color="red">*</font> </span>
+					<form:input path="receivingName" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 				</div>
 			</div>
 		</div>
@@ -54,15 +52,13 @@
 				<label class="control-label">区域id：</label>
 				<div class="controls">
 					<sys:treeselect id="area" name="area.id" value="${customerAddress.area.id}" labelName="area.name" labelValue="${customerAddress.area.name}"
-						title="区域" url="/sys/area/treeData" cssClass="input-large required" allowClear="true" notAllowSelectParent="true"/>
-					<span class="help-inline"><font color="red">*</font> </span>
+						title="区域" url="/sys/area/treeData" cssClass="input-large " allowClear="true" notAllowSelectParent="true"/>
 				</div>
 			</div>
 			<div class="div-b">
 				<label class="control-label">收货地址:街道门牌号：</label>
 				<div class="controls">
-					<form:input path="receivingAddress" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
-					<span class="help-inline"><font color="red">*</font> </span>
+					<form:input path="receivingAddress" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 				</div>
 			</div>
 		</div>
@@ -70,8 +66,7 @@
 			<div class="div-a">
 				<label class="control-label">联系人电话：</label>
 				<div class="controls">
-					<form:input path="contactPhone" htmlEscape="false" maxlength="20" class="input-xlarge required"/>
-					<span class="help-inline"><font color="red">*</font> </span>
+					<form:input path="contactPhone" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 				</div>
 			</div>
 			<div class="div-b">
