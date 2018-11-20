@@ -8,7 +8,10 @@ import com.thinkgem.fast.common.utils.Collections3;
 import com.thinkgem.fast.common.utils.DateUtils;
 import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.common.web.BaseController;
+import com.thinkgem.fast.modules.customer.entity.Customer;
+import com.thinkgem.fast.modules.customer.service.CustomerService;
 import com.thinkgem.fast.modules.hrmuser.entity.*;
+import com.thinkgem.fast.modules.hrmuser.service.HrmUserCustomerService;
 import com.thinkgem.fast.modules.hrmuser.service.HrmUserService;
 import com.thinkgem.fast.modules.hrmuser.service.ManageSalesmanService;
 import com.thinkgem.fast.modules.sys.service.OfficeService;
@@ -25,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +49,11 @@ public class HrmUserController extends BaseController {
     private OfficeService officeService;
     @Autowired
     private ManageSalesmanService manageSalesmanService;
+    @Autowired
+    private HrmUserCustomerService hrmUserCustomerService;
+    @Autowired
+    private CustomerService customerService;
+
 
     @ModelAttribute
     public HrmUser get(@RequestParam(required = false) String id) {
@@ -201,6 +210,7 @@ public class HrmUserController extends BaseController {
 
     /**
      * 分配业务员 -- 打开分配对话框
+     *
      * @param hrmUser
      * @param model
      * @return
@@ -220,13 +230,14 @@ public class HrmUserController extends BaseController {
 
     /**
      * 分配业务员 -- 根据部门编号获取员工列表
+     *
      * @param hrmUser
      * @return
      */
     @RequiresPermissions("hrmuser:hrmUser:edit")
     @ResponseBody
     @RequestMapping(value = "hrmUserByOffice")
-    public List<Map<String, Object>> users( HrmUser hrmUser) {
+    public List<Map<String, Object>> users(HrmUser hrmUser) {
         List<Map<String, Object>> mapList = Lists.newArrayList();
 //        Page<User> page = systemService.findUser(new Page<User>(1, -1), user);
         List<HrmUser> list = hrmUserService.findList(hrmUser);
@@ -240,12 +251,71 @@ public class HrmUserController extends BaseController {
         return mapList;
     }
 
+    /**
+     * 分配业务员给区域经理
+     *
+     * @param manageId
+     * @param idsArr
+     * @param redirectAttributes
+     * @return
+     */
     @RequiresPermissions("hrmuser:hrmUser:edit")
     @RequestMapping(value = "assignSaleman")
     public String assignSaleman(String manageId, String[] idsArr, RedirectAttributes redirectAttributes) {
         StringBuilder msg = new StringBuilder();
-        manageSalesmanService.assignSaleman(manageId,  idsArr);
+        manageSalesmanService.assignSaleman(manageId, idsArr);
         addMessage(redirectAttributes, "已成功分配业务员");
         return "redirect:" + adminPath + "/hrmuser/hrmUser";
     }
+
+    /**
+     * 删除选中的业务员
+     *
+     * @param manageId
+     * @param saleId
+     * @return
+     */
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "removeSale")
+    public Map<String, Object> removeSale(String manageId, String saleId) {
+        ManageSalesman sm = new ManageSalesman();
+        sm.setManageUserId(manageId);
+        sm.setSalesmanUserId(saleId);
+        Map<String, Object> res = new HashMap<String, Object>();
+        try {
+            res.put("code","1");
+            manageSalesmanService.delete(sm);
+        }catch (Exception e){
+            e.printStackTrace();
+            res.put("code","0");
+        }
+        return res;
+    }
+
+    /**
+     * 分配业务员 -- 打开分配对话框
+     *
+     * @param hrmUser
+     * @param model
+     * @return
+     */
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @RequestMapping(value = "bindCustomer")
+    public String bindCustomer(HrmUser hrmUser, Model model) {
+        HrmUserCustomer huc = new HrmUserCustomer();
+        huc.setHrmUserId(hrmUser.getId());
+        List<HrmUserCustomer> selectedCustomerList = hrmUserCustomerService.findList(huc);
+        //员工信息
+        model.addAttribute("hrmUser", hrmUser);
+        //客户列表信息
+        model.addAttribute("selectedCustomerList", selectedCustomerList);
+        //已经选中的
+        model.addAttribute("selectIds", Collections3.extractToString(selectedCustomerList, "customer.id", ","));
+        List<Customer> list = customerService.findList(null);
+        model.addAttribute("customerList", list);
+        return "modules/hrmuser/salesmanList";
+    }
+
+
 }

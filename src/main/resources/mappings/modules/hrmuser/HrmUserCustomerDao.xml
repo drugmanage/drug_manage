@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.hrmuser.dao.HrmUserCustomerDao">
+    
+	<sql id="hrmUserCustomerColumns">
+		a.hrm_user_id AS "hrmUserId",
+		a.customer_id AS "customerId",
+		c.name as "customer.name",
+		c.id as "customer.id"
+	</sql>
+	
+	<sql id="hrmUserCustomerJoins">
+		left join customer c on c.id = a.customer_id
+	</sql>
+    
+	<select id="get" resultType="HrmUserCustomer">
+		SELECT 
+			<include refid="hrmUserCustomerColumns"/>
+		FROM hrm_user_customer a
+		<include refid="hrmUserCustomerJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="HrmUserCustomer">
+		SELECT 
+			<include refid="hrmUserCustomerColumns"/>
+		FROM hrm_user_customer a
+		<include refid="hrmUserCustomerJoins"/>
+		<where>
+			<if test="hrmUserId!=null and hrmUserId!=''">
+				a.hrm_user_id = #{hrmUserId}
+			</if>
+			<if test="customerId!=null and customerId!=''">
+				a.customer_id = #{customerId}
+			</if>
+		</where>
+
+	</select>
+	
+	<select id="findAllList" resultType="HrmUserCustomer">
+		SELECT 
+			<include refid="hrmUserCustomerColumns"/>
+		FROM hrm_user_customer a
+		<include refid="hrmUserCustomerJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO hrm_user_customer(
+			hrm_user_id,
+			customer_id
+		) VALUES (
+			#{hrmUserId},
+			#{customerId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE hrm_user_customer SET 	
+			hrm_user_id = #{hrmUserId},
+			customer_id = #{customerId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM hrm_user_customer
+		WHERE hrm_user_id = #{hrmUserId} and customer_id = #{customerId}
+	</update>
+	
+</mapper>
