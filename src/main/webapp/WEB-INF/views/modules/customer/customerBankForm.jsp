@@ -35,39 +35,32 @@
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">客户id：</label>
-				<div class="controls">
-					<form:input path="customerId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
 				<label class="control-label">开户银行：</label>
 				<div class="controls">
 					<form:input path="bank" htmlEscape="false" maxlength="3" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">银行账号：</label>
 				<div class="controls">
 					<form:input path="bankNumber" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">开户户名：</label>
 				<div class="controls">
 					<form:input path="openAccountName" htmlEscape="false" maxlength="128" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">备注信息：</label>
 				<div class="controls">
 					<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
 				</div>
 			</div>
+		</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="customer:customerBank:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

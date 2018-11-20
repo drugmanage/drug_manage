@@ -7,7 +7,7 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 客户银行卡信息Entity
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 public class CustomerBank extends DataEntity<CustomerBank> {
 	

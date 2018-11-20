@@ -93,12 +93,9 @@
 	
 	<update id="update">
 		UPDATE customer_bank SET 	
-			customer_id = #{customerId},
 			bank = #{bank},
 			bank_number = #{bankNumber},
 			open_account_name = #{openAccountName},
-			update_by = #{updateBy.id},
-			update_date = #{updateDate},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>

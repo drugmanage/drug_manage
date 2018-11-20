@@ -33,20 +33,12 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>更新时间</th>
-				<th>备注信息</th>
 				<shiro:hasPermission name="customer:customerBank:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="customerBank">
 			<tr>
-				<td><a href="${ctx}/customer/customerBank/form?id=${customerBank.id}">
-					<fmt:formatDate value="${customerBank.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</a></td>
-				<td>
-					${customerBank.remarks}
-				</td>
 				<shiro:hasPermission name="customer:customerBank:edit"><td>
     				<a href="${ctx}/customer/customerBank/form?id=${customerBank.id}">修改</a>
 					<a href="${ctx}/customer/customerBank/delete?id=${customerBank.id}" onclick="return confirmx('确认要删除该客户银行卡信息吗？', this.href)">删除</a>
