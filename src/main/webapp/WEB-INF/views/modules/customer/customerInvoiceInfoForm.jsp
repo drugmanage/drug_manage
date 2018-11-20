@@ -43,7 +43,10 @@
 			<div class="div-b">
 				<label class="control-label">开户行：</label>
 				<div class="controls">
-					<form:input path="bankDeposit" htmlEscape="false" maxlength="128" class="input-xlarge "/>
+					<form:select path="bankDeposit" class="input-xlselect ">
+						<form:option value="" label=""/>
+						<form:options items="${fns:getDictList('bank')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+					</form:select>
 				</div>
 			</div>
 		</div>
@@ -86,7 +89,8 @@
 			<div class="div-b">
 				<label class="control-label">开票图片路径：</label>
 				<div class="controls">
-					<form:input path="invoicePath" htmlEscape="false" maxlength="128" class="input-xlarge "/>
+					<form:hidden id="invoicePath" path="invoicePath" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+					<sys:ckfinder input="invoicePath" type="files" uploadPath="/customer/customerInvoiceInfo" selectMultiple="true"/>
 				</div>
 			</div>
 		</div>
@@ -94,7 +98,7 @@
 			<div class="div-a">
 				<label class="control-label">是否停用            0、未停用            1、停用：</label>
 				<div class="controls">
-					<form:input path="stopFlag" htmlEscape="false" maxlength="1" class="input-xlarge "/>
+					<form:radiobuttons path="stopFlag" items="${fns:getDictList('stop_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
 				</div>
 			</div>
 			<div class="div-b">
