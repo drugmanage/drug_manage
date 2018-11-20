@@ -9,7 +9,7 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 证件模板Entity
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 public class CustomerDocumentTemplate extends DataEntity<CustomerDocumentTemplate> {
 	

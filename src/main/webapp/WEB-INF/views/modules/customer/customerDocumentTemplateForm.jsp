@@ -75,7 +75,8 @@
 			<div class="div-b">
 				<label class="control-label">图片路径：</label>
 				<div class="controls">
-					<form:input path="imgPath" htmlEscape="false" maxlength="128" class="input-xlarge "/>
+					<form:hidden id="imgPath" path="imgPath" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+					<sys:ckfinder input="imgPath" type="files" uploadPath="/customer/customerDocumentTemplate" selectMultiple="true"/>
 				</div>
 			</div>
 		</div>

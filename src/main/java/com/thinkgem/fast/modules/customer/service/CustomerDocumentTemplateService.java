@@ -13,7 +13,7 @@ import com.thinkgem.fast.modules.customer.dao.CustomerDocumentTemplateDao;
 /**
  * 证件模板Service
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 @Service
 @Transactional(readOnly = true)

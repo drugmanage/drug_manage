@@ -22,7 +22,7 @@ import com.thinkgem.fast.modules.customer.service.CustomerDocumentTemplateServic
 /**
  * 证件模板Controller
  * @author 刘海涛
- * @version 2018-11-19
+ * @version 2018-11-20
  */
 @Controller
 @RequestMapping(value = "${adminPath}/customer/customerDocumentTemplate")

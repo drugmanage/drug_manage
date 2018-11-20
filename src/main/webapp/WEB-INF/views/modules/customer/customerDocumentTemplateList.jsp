@@ -25,9 +25,6 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>证件名称：</label>
-				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -36,24 +33,12 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>证件名称</th>
-				<th>更新时间</th>
-				<th>备注信息</th>
 				<shiro:hasPermission name="customer:customerDocumentTemplate:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="customerDocumentTemplate">
 			<tr>
-				<td><a href="${ctx}/customer/customerDocumentTemplate/form?id=${customerDocumentTemplate.id}">
-					${customerDocumentTemplate.name}
-				</a></td>
-				<td>
-					<fmt:formatDate value="${customerDocumentTemplate.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${customerDocumentTemplate.remarks}
-				</td>
 				<shiro:hasPermission name="customer:customerDocumentTemplate:edit"><td>
     				<a href="${ctx}/customer/customerDocumentTemplate/form?id=${customerDocumentTemplate.id}">修改</a>
 					<a href="${ctx}/customer/customerDocumentTemplate/delete?id=${customerDocumentTemplate.id}" onclick="return confirmx('确认要删除该证件模板吗？', this.href)">删除</a>
