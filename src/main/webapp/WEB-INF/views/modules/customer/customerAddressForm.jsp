@@ -35,47 +35,40 @@
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">客户表ID：</label>
-				<div class="controls">
-					<form:input path="customerId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
 				<label class="control-label">收货人：</label>
 				<div class="controls">
 					<form:input path="receivingName" htmlEscape="false" maxlength="32" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">区域id：</label>
 				<div class="controls">
 					<sys:treeselect id="area" name="area.id" value="${customerAddress.area.id}" labelName="area.name" labelValue="${customerAddress.area.name}"
 						title="区域" url="/sys/area/treeData" cssClass="input-large " allowClear="true" notAllowSelectParent="true"/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">收货地址:街道门牌号：</label>
 				<div class="controls">
 					<form:input path="receivingAddress" htmlEscape="false" maxlength="255" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">联系人电话：</label>
 				<div class="controls">
 					<form:input path="contactPhone" htmlEscape="false" maxlength="20" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">备注信息：</label>
 				<div class="controls">
 					<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="customer:customerAddress:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

@@ -98,7 +98,6 @@
 	
 	<update id="update">
 		UPDATE customer_address SET 	
-			customer_id = #{customerId},
 			receiving_name = #{receivingName},
 			area_id = #{area.id},
 			receiving_address = #{receivingAddress},
