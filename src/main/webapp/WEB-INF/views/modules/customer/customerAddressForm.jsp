@@ -38,7 +38,7 @@
 			</td>
 			<td>
 				<input type="text" class="table-form-control" name="customerAddressList[${i.index }].contactPhone"
-					   value="${item.contactPhone }"
+					   value="${item.remarks }"
 					   valid='vnum'/>
 			</td>
 			<td>
