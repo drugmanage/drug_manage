@@ -2,6 +2,8 @@ package com.thinkgem.fast.modules.customer.service;
 
 import java.util.List;
 
+import com.thinkgem.fast.modules.customer.dao.CustomerBankDao;
+import com.thinkgem.fast.modules.customer.entity.CustomerBank;
 import com.thinkgem.fast.modules.settlement.entity.SettlementObject;
 import com.thinkgem.fast.modules.settlement.service.SettlementObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +29,17 @@ public class CustomerService extends CrudService<CustomerDao, Customer> {
     private CustomerDao customerDao;
     @Autowired
     private SettlementObjectService settlementObjectService;
+    @Autowired
+    private CustomerBankDao customerBankDao;
 
     public Customer get(String id) {
-        return super.get(id);
+        Customer customer = super.get(id);
+        String customerId = customer.getId();
+        CustomerBank customerBank = new CustomerBank();
+        customerBank.setCustomerId(customerId);
+        List<CustomerBank> customerBankList = customerBankDao.findList(customerBank);
+        customer.setCustomerBankList(customerBankList);
+        return customer;
     }
 
     public List<Customer> findList(Customer customer) {
