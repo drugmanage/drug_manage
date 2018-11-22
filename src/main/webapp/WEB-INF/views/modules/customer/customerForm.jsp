@@ -254,14 +254,13 @@
             </div>
         </div>
 
-        <%--<div class="tab-pane" id="addressInfo">--%>
-            <%--<%@include file="/WEB-INF/views/modules/customer/customerAddressForm.jsp" %>--%>
-        <%--</div>--%>
+        <div class="tab-pane" id="addressInfo">
+            <%@include file="/WEB-INF/views/modules/customer/customerAddressForm.jsp" %>
+        </div>
 
         <div class="tab-pane" id="bankInfo">
             <%@include file="/WEB-INF/views/modules/customer/customerBankForm.jsp" %>
         </div>
-<%--
         <div class="tab-pane" id="invoiceInfo">
             <%@include file="/WEB-INF/views/modules/customer/customerInvoiceInfoForm.jsp" %>
         </div>
@@ -273,7 +272,6 @@
         <div class="tab-pane" id="documentInfo">
             <%@include file="/WEB-INF/views/modules/customer/customerDocumentTemplateForm.jsp" %>
         </div>
---%>
 
     </div>
 

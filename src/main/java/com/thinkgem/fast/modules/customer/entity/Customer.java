@@ -44,12 +44,15 @@ public class Customer extends DataEntity<Customer> {
     private String settlementFlag;        // 是否为结算对象
 
     // 对应的客户收货地址列表
-    private List<CustomerAddress> customerAddresslist;
+    private List<CustomerAddress> customerAddressList;
     // 对应的客户银行卡信息列表
     private List<CustomerBank> customerBankList;
     // 对应的开票信息列表
+    private List<CustomerInvoiceInfo> customerInvoiceInfoList;
     // 证件模板列表
+    private List<CustomerDocumentTemplate> customerDocumentTemplateList;
     // 委托人列表
+    private List<CustomerConsigner> customerConsignerList;
 
     public Customer() {
         super();
@@ -261,5 +264,37 @@ public class Customer extends DataEntity<Customer> {
 
     public void setCustomerBankList(List<CustomerBank> customerBankList) {
         this.customerBankList = customerBankList;
+    }
+
+    public List<CustomerAddress> getCustomerAddressList() {
+        return customerAddressList;
+    }
+
+    public void setCustomerAddressList(List<CustomerAddress> customerAddressList) {
+        this.customerAddressList = customerAddressList;
+    }
+
+    public List<CustomerInvoiceInfo> getCustomerInvoiceInfoList() {
+        return customerInvoiceInfoList;
+    }
+
+    public void setCustomerInvoiceInfoList(List<CustomerInvoiceInfo> customerInvoiceInfoList) {
+        this.customerInvoiceInfoList = customerInvoiceInfoList;
+    }
+
+    public List<CustomerDocumentTemplate> getCustomerDocumentTemplateList() {
+        return customerDocumentTemplateList;
+    }
+
+    public void setCustomerDocumentTemplateList(List<CustomerDocumentTemplate> customerDocumentTemplateList) {
+        this.customerDocumentTemplateList = customerDocumentTemplateList;
+    }
+
+    public List<CustomerConsigner> getCustomerConsignerList() {
+        return customerConsignerList;
+    }
+
+    public void setCustomerConsignerList(List<CustomerConsigner> customerConsignerList) {
+        this.customerConsignerList = customerConsignerList;
     }
 }

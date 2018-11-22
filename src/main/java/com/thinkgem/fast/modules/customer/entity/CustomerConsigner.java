@@ -16,7 +16,7 @@ public class CustomerConsigner extends DataEntity<CustomerConsigner> {
 	private String sex;		// 性别
 	private String phone;		// 电话
 	private String certNumber;		// 证件号
-	private String consignerVali;		// 未投入有效期
+	private String consignerVali;		// 委托人有效期
 	private String proxyBook;		// 委托书
 	private String proxyBookVali;		// 委托书有效期
 	private String proxyBookImgBook;		// 委托书图片路径

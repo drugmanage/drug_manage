@@ -1,123 +1,94 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<html>
-<head>
-	<title>委托人管理</title>
-	<meta name="decorator" content="default"/>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			//$("#name").focus();
-			$("#inputForm").validate({
-				submitHandler: function(form){
-					loading('正在提交，请稍等...');
-					form.submit();
-				},
-				errorContainer: "#messageBox",
-				errorPlacement: function(error, element) {
-					$("#messageBox").text("输入有误，请先更正。");
-					if (element.is(":checkbox")||element.is(":radio")||element.parent().is(".input-append")){
-						error.appendTo(element.parent().parent());
-					} else {
-						error.insertAfter(element);
-					}
-				}
-			});
-		});
-	</script>
-</head>
-<body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/customer/customerConsigner/">委托人列表</a></li>
-		<li class="active"><a href="${ctx}/customer/customerConsigner/form?id=${customerConsigner.id}">委托人<shiro:hasPermission name="customer:customerConsigner:edit">${not empty customerConsigner.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="customer:customerConsigner:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
-	<form:form id="inputForm" modelAttribute="customerConsigner" action="${ctx}/customer/customerConsigner/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">联系人：</label>
-				<div class="controls">
-					<form:input path="contactsName" htmlEscape="false" maxlength="32" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">性别：</label>
-				<div class="controls">
-					<form:radiobuttons path="sex" items="${fns:getDictList('sex')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">电话：</label>
-				<div class="controls">
-					<form:input path="phone" htmlEscape="false" maxlength="20" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">证件号：</label>
-				<div class="controls">
-					<form:input path="certNumber" htmlEscape="false" maxlength="32" class="input-xlarge "/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">未投入有效期：</label>
-				<div class="controls">
-					<input name="consignerVali" type="text" readonly="readonly" maxlength="20" class="input-xlarge Wdate "
-						value="<fmt:formatDate value="${customerConsigner.consignerVali}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-						onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">委托书：</label>
-				<div class="controls">
-					<form:input path="proxyBook" htmlEscape="false" maxlength="64" class="input-xlarge "/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">委托书有效期：</label>
-				<div class="controls">
-					<form:input path="proxyBookVali" htmlEscape="false" maxlength="4" class="input-xlarge "/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">委托书图片路径：</label>
-				<div class="controls">
-					<form:hidden id="proxyBookImgBook" path="proxyBookImgBook" htmlEscape="false" maxlength="128" class="input-xlarge"/>
-					<sys:ckfinder input="proxyBookImgBook" type="files" uploadPath="/customer/customerConsigner" selectMultiple="true"/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">身份证图片路径：</label>
-				<div class="controls">
-					<form:hidden id="idCardImgBook" path="idCardImgBook" htmlEscape="false" maxlength="128" class="input-xlarge"/>
-					<sys:ckfinder input="idCardImgBook" type="files" uploadPath="/customer/customerConsigner" selectMultiple="true"/>
-				</div>
-			</div>
-			<div class="div-b">
-				<label class="control-label">是否停用：</label>
-				<div class="controls">
-					<form:radiobuttons path="stopFlag" items="${fns:getDictList('stop_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">备注信息：</label>
-				<div class="controls">
-					<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
-				</div>
-			</div>
-		<div class="form-actions">
-			<shiro:hasPermission name="customer:customerConsigner:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
-			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
-		</div>
-	</form:form>
-</body>
-</html>
+<table class="table table-striped table-bordered table-hover" width="100%">
+	<thead>
+	<tr>
+		<th style="width:22%;">联系人</th>
+		<th style="width:22%;">性别</th>
+		<th style="width:22%;">电话</th>
+		<th style="width:22%;">证件号</th>
+		<th style="width:22%;">委托人有效期</th>
+		<th style="width:22%;">委托书</th>
+		<th style="width:22%;">委托书有效期</th>
+		<th style="width:22%;">委托书图片</th>
+		<th style="width:22%;">身份证图片</th>
+		<th style="width:22%;">是否停用</th>
+		<th style="width:22%;">备注</th>
+		<th width="60">操作</th>
+	</tr>
+	</thead>
+	<tbody id="consigner_contentField">
+	<c:forEach items="${customer.customerConsignerList }" var="item" varStatus="i">
+		<tr id="consigner_tr_${i.index}">
+			<td>
+				<input type="hidden" name="itemConsignerId" value="${i.index}"/>
+				<input type="hidden" name="customerConsignerList[${i.index }].id" value="${item.id }"/>
+				<input type="text" class="table-form-control" name="customerConsignerList[${i.index }].contactsName"
+					   value="${item.contactsName }" valid='vtext'/>
+			</td>
+			<td>
+				<select class="table-form-control" name="customerConsignerList[${i.index }].sex">
+					<c:forEach items="${fns:getDictList('sex')}" var="dict" varStatus="idx">
+						<option value="${dict.value}"
+								<c:if test="${dict.value == item.status }">selected='true'</c:if> >${dict.label}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td>
+				<input type="text" class="table-form-control" name="customerConsignerList[${i.index }].phone"
+					   value="${item.phone }"
+					   valid='vnum'/>
+			</td>
+			<td>
+				<input type="text" class="table-form-control" name="customerConsignerList[${i.index }].certNumber"
+					   value="${item.certNumber }"
+					   valid='vnum'/>
+			</td>
+			<td>
+				<input type="text" name="customerConsignerList[${i.index }].endDate" class="input-medium Wdate "
+					   value="<fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd"/>"
+					   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			</td>
+			<td>
+				<input type="text" class="table-form-control" name="customerConsignerList[${i.index }].proxyBook"
+					   value="${item.proxyBook }"
+					   valid='vnum'/>
+			</td>
+			<td>
+				<input type="text" name="customerConsignerList[${i.index }].endDate" class="input-medium Wdate "
+					   value="<fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd"/>"
+					   onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			</td>
+			<td>
+				<input type="hidden" id="nameImagefront${i.index }" name="customerConsignerList[${i.index }].proxyBookImgBook" value="${item.proxyBookImgBook}"/>
+				<sys:ckfinder input="nameImagefront${i.index }" type="images" uploadPath="/photo/customer/proxy" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+			</td>
+			<td>
+				<input type="hidden" id="nameImageback${i.index }" name="customerConsignerList[${i.index }].idCardImgBook" value="${item.idCardImgBook}"/>
+				<sys:ckfinder input="nameImageback${i.index }" type="images" uploadPath="/photo/customer/idCard" selectMultiple="false" maxWidth="100" maxHeight="100"/>
+			</td>
+			<td>
+				<select class="table-form-control" name="customerConsignerList[${i.index }].sex">
+					<c:forEach items="${fns:getDictList('stop_flag')}" var="dict" varStatus="idx">
+						<option value="${dict.value}"
+								<c:if test="${dict.value == item.status }">selected='true'</c:if> >${dict.label}</option>
+					</c:forEach>
+				</select>
+			</td>
+			<td>
+				<input type="text" class="table-form-control" name="customerConsignerList[${i.index }].contactPhone"
+					   value="${item.remarks }"
+					   valid='vnum'/>
+			</td>
+			<td>
+				<a href="javascript:void(0)" class="btnDel" onclick="oper.consigner.del('${i.index}','${item.id }');">删除</a>
+			</td>
+		</tr>
+	</c:forEach>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="10"><a href="javascript:" onclick="oper.consigner.add();" class="btn">新增</a></td>
+	</tr>
+	</tfoot>
+</table>
