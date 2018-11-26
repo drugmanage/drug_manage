@@ -49,24 +49,21 @@ public class HrmUserCustomerService extends CrudService<HrmUserCustomerDao, HrmU
     }
 
     @Transactional(readOnly = false)
-    public void assignSaleman(String manageId, String[] idsArr) {
+    public void assignCustomer(String manageId, String[] idsArr) {
         HrmUserCustomer param = new HrmUserCustomer();
         param.setHrmUserId(manageId);
         List<HrmUserCustomer> msList = findList(param);
-        List<String> salesmanUserId = Collections3.extractToList(msList, "customerId");
+        List<String> customerIdList = Collections3.extractToList(msList, "customerId");
 
         for (int i = 0; i < idsArr.length; i++) {
-            if (salesmanUserId.contains(idsArr[i])) {
+            if (customerIdList.contains(idsArr[i])) {
                 continue;
             }
-//            param.setCustomerId(idsArr[i]);
-//            delete(param);
-            HrmUserCustomer sm = new HrmUserCustomer();
-            sm.setHrmUserId(manageId);
-            sm.setCustomerId(idsArr[0]);
-            this.save(sm);
+
+            HrmUserCustomer hc = new HrmUserCustomer();
+            hc.setHrmUserId(manageId);
+            hc.setCustomerId(idsArr[i]);
+            this.save(hc);
         }
     }
-
-
 }

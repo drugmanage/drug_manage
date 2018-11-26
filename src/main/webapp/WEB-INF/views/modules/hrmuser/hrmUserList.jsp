@@ -80,7 +80,7 @@
                 persistent: true, /* 在显示隔离层的情况下，点击隔离层时，是否坚持窗口不关闭 */
             }
             top.$.jBox.setDefaults(_jBoxConfig);
-            top.$.jBox.open("iframe:${ctx}/hrmuser/hrmUser/bindCustomer?id="+id, "业务员信息", 810,$(top.document).height()-240, {
+            top.$.jBox.open("iframe:${ctx}/hrmuser/hrmUser/bindCustomer?id="+id, "客户信息", 810,$(top.document).height()-240, {
                 buttons:{"确定分配":"ok", "清除已选":"clear", "关闭":true}, bottomText:"分配客户信息。",submit:function(v, h, f){
                     var pre_ids = h.find("iframe")[0].contentWindow.pre_ids;
                     var ids = h.find("iframe")[0].contentWindow.ids;
@@ -103,9 +103,9 @@
                         for (var i = 0; i<ids.length; i++) {
                             idsArr = (idsArr + ids[i]) + (((i + 1)== ids.length) ? '':',');
                         }
-                        $('#idsArr').val(idsArr);
-                        $("#manageId").val(manageId);
-                        $('#assignSalemanForm').submit();
+                        $('#idsCustomerArr').val(idsArr);
+                        $("#hrmUserId").val(manageId);
+                        $('#assignCustomerForm').submit();
                         return true;
                     } else if (v=="clear"){
                         h.find("iframe")[0].contentWindow.clearSalesman();
@@ -127,6 +127,10 @@
 	<form id="assignSalemanForm" action="${ctx}/hrmuser/hrmUser/assignSaleman" method="post" class="hide">
 		<input type="hidden" name="manageId" id="manageId" value=""/>
 		<input id="idsArr" type="hidden" name="idsArr" value=""/>
+	</form>
+	<form id="assignCustomerForm" action="${ctx}/hrmuser/hrmUser/assignCustomer" method="post" class="hide">
+		<input type="hidden" name="manageId" id="hrmUserId" value=""/>
+		<input id="idsCustomerArr" type="hidden" name="idsArr" value=""/>
 	</form>
 
 	<form:form id="searchForm" modelAttribute="hrmUser" action="${ctx}/hrmuser/hrmUser/" method="post" class="breadcrumb form-search">

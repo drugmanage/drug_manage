@@ -314,8 +314,49 @@ public class HrmUserController extends BaseController {
         model.addAttribute("selectIds", Collections3.extractToString(selectedCustomerList, "customer.id", ","));
         List<Customer> list = customerService.findList(null);
         model.addAttribute("customerList", list);
-        return "modules/hrmuser/salesmanList";
+        return "modules/hrmuser/selectCustomerList";
     }
 
+    /**
+     * 分配业务员给区域经理
+     *
+     * @param manageId
+     * @param idsArr
+     * @param redirectAttributes
+     * @return
+     */
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @RequestMapping(value = "assignCustomer")
+    public String assignCustomer(String manageId, String[] idsArr, RedirectAttributes redirectAttributes) {
+        StringBuilder msg = new StringBuilder();
+        hrmUserCustomerService.assignCustomer(manageId, idsArr);
+        addMessage(redirectAttributes, "已成功分配业务员");
+        return "redirect:" + adminPath + "/hrmuser/hrmUser";
+    }
+
+    /**
+     * 删除选中的业务员
+     *
+     * @param manageId
+     * @param saleId
+     * @return
+     */
+    @RequiresPermissions("hrmuser:hrmUser:edit")
+    @ResponseBody
+    @RequestMapping(value = "removeCustomer")
+    public Map<String, Object> removeCustomer(String manageId, String saleId) {
+        ManageSalesman sm = new ManageSalesman();
+        sm.setManageUserId(manageId);
+        sm.setSalesmanUserId(saleId);
+        Map<String, Object> res = new HashMap<String, Object>();
+        try {
+            res.put("code","1");
+            manageSalesmanService.delete(sm);
+        }catch (Exception e){
+            e.printStackTrace();
+            res.put("code","0");
+        }
+        return res;
+    }
 
 }
