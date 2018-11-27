@@ -4,7 +4,6 @@
     var oper = {
         address: {
             socpName: "address_",
-            //工作经历页面
             add: function () {
                 if ($("input[name='itemAddressId']") && $("input[name='itemAddressId']").length != 0) {
                     var itemAddressId = [];
@@ -162,8 +161,6 @@
                 }
             },
             appendHtml: function (newMaxId) {
-                var frontUploadId = "front" + newMaxId;
-                var backUploadId = "back" + newMaxId;
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden" name="itemBankId" value="' + newMaxId + '"/>'
