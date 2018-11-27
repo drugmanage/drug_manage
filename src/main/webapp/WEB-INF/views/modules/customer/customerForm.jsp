@@ -122,7 +122,7 @@
                     <div class="controls">
                         <form:select path="customerType" class="input-xlselect ">
                             <form:option value="" label=""/>
-                            <form:options items="${fns:getDictList('customer_type')}" itemLabel="label"
+                            <form:options items="${fns:getDictList('client_type')}" itemLabel="label"
                                           itemValue="value"
                                           htmlEscape="false"/>
                         </form:select>

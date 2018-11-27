@@ -3,17 +3,17 @@
 <table class="table table-striped table-bordered table-hover" width="100%">
 	<thead>
 	<tr>
-		<th style="width:22%;">联系人</th>
-		<th style="width:22%;">性别</th>
-		<th style="width:22%;">电话</th>
-		<th style="width:22%;">证件号</th>
-		<th style="width:22%;">委托人有效期</th>
-		<th style="width:22%;">委托书</th>
-		<th style="width:22%;">委托书有效期</th>
-		<th style="width:22%;">委托书图片</th>
-		<th style="width:22%;">身份证图片</th>
-		<th style="width:22%;">是否停用</th>
-		<th style="width:22%;">备注</th>
+		<th style="width:18%;">联系人</th>
+		<th style="width:18%;">性别</th>
+		<th style="width:18%;">电话</th>
+		<th style="width:18%;">证件号</th>
+		<th style="width:18%;">委托人有效期</th>
+		<th style="width:18%;">委托书</th>
+		<th style="width:18%;">委托书有效期</th>
+		<th style="width:18%;">委托书图片</th>
+		<th style="width:18%;">身份证图片</th>
+		<th style="width:18%;">是否停用</th>
+		<th style="width:18%;">备注</th>
 		<th width="60">操作</th>
 	</tr>
 	</thead>

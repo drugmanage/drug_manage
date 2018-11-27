@@ -3,15 +3,15 @@
 <table class="table table-striped table-bordered table-hover" width="100%">
     <thead>
     <tr>
-        <th style="width:22%;">开户名称</th>
-        <th style="width:22%;">开户行</th>
-        <th style="width:22%;">区域</th>
-        <th style="width:22%;">详细地址</th>
-        <th style="width:22%;">联系电话</th>
-        <th style="width:22%;">账号</th>
-        <th style="width:22%;">税号</th>
-        <th style="width:22%;">开票图片</th>
-        <th style="width:22%;">是否停用</th>
+        <th style="width:10%;">开户名称</th>
+        <th style="width:10%;">开户行</th>
+        <th style="width:10%;">区域</th>
+        <th style="width:10%;">详细地址</th>
+        <th style="width:10%;">联系电话</th>
+        <th style="width:10%;">账号</th>
+        <th style="width:10%;">税号</th>
+        <th style="width:10%;">开票图片</th>
+        <th style="width:10%;">是否停用</th>
         <th width="60">操作</th>
     </tr>
     </thead>
@@ -75,14 +75,14 @@
             </td>
             <td>
                 <a href="javascript:void(0)" class="btnDel"
-                   onclick="oper.consigner.del('${i.index}','${item.id }');">删除</a>
+                   onclick="oper.invoice.del('${i.index}','${item.id }');">删除</a>
             </td>
         </tr>
     </c:forEach>
     </tbody>
     <tfoot>
     <tr>
-        <td colspan="10"><a href="javascript:" onclick="oper.consigner.add();" class="btn">新增</a></td>
+        <td colspan="10"><a href="javascript:" onclick="oper.invoice.add();" class="btn">新增</a></td>
     </tr>
     </tfoot>
 </table>

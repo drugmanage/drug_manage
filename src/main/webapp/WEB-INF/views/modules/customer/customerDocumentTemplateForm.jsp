@@ -3,13 +3,13 @@
 <table class="table table-striped table-bordered table-hover" width="100%">
     <thead>
     <tr>
-        <th style="width:22%;">证件名称</th>
-        <th style="width:22%;">证书编码</th>
-        <th style="width:22%;">发证机关</th>
-        <th style="width:22%;">发证日期</th>
-        <th style="width:22%;">有效期至</th>
-        <th style="width:22%;">图片</th>
-        <th style="width:22%;">备注</th>
+        <th style="width:12%;">证件名称</th>
+        <th style="width:12%;">证书编码</th>
+        <th style="width:12%;">发证机关</th>
+        <th style="width:12%;">发证日期</th>
+        <th style="width:12%;">有效期至</th>
+        <th style="width:12%;">图片</th>
+        <th style="width:12%;">备注</th>
         <th width="60">操作</th>
     </tr>
     </thead>

@@ -3,10 +3,10 @@
 <table class="table table-striped table-bordered table-hover" width="100%">
 	<thead>
 	<tr>
-		<th style="width:15%;">开户银行</th>
-		<th style="width:15%;">银行账号</th>
-		<th style="width:15%;">开户户名</th>
-		<th style="width:15%;">备注</th>
+		<th style="width:22%;">开户银行</th>
+		<th style="width:22%;">银行账号</th>
+		<th style="width:22%;">开户户名</th>
+		<th style="width:22%;">备注</th>
 		<th width="60">操作</th>
 	</tr>
 	</thead>

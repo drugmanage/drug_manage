@@ -3,11 +3,11 @@
 <table class="table table-striped table-bordered table-hover" width="100%">
 	<thead>
 	<tr>
-		<th style="width:22%;">收货人</th>
-		<th style="width:22%;">区域</th>
-		<th style="width:22%;">街道门牌号</th>
-		<th style="width:22%;">联系人电话</th>
-		<th style="width:22%;">备注</th>
+		<th style="width:18%;">收货人</th>
+		<th style="width:18%;">区域</th>
+		<th style="width:18%;">街道门牌号</th>
+		<th style="width:18%;">联系人电话</th>
+		<th style="width:18%;">备注</th>
 		<th width="60">操作</th>
 	</tr>
 	</thead>
