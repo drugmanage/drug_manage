@@ -18,38 +18,38 @@
         <tr id="document_tr_${i.index}">
             <td>
                 <input type="hidden" name="itemDocumentId" value="${i.index}"/>
-                <input type="hidden" name="customerDocumentList[${i.index }].id" value="${item.id }"/>
-                <input type="text" class="table-form-control" name="customerDocumentList[${i.index }].name"
+                <input type="hidden" name="customerDocumentTemplateList[${i.index }].id" value="${item.id }"/>
+                <input type="text" class="table-form-control" name="customerDocumentTemplateList[${i.index }].name"
                        value="${item.name }" valid='vtext'/>
             </td>
             <td>
-                <input type="text" class="table-form-control" name="customerDocumentList[${i.index }].certCode"
+                <input type="text" class="table-form-control" name="customerDocumentTemplateList[${i.index }].certCode"
                        value="${item.certCode }"
                        valid='vtext'/>
             </td>
             <td>
-                <input type="text" class="table-form-control" name="customerDocumentList[${i.index }].issuingOrgan"
+                <input type="text" class="table-form-control" name="customerDocumentTemplateList[${i.index }].issuingOrgan"
                        value="${item.issuingOrgan }"
                        valid='vtext'/>
             </td>
             <td>
-                <input type="text" name="customerDocumentList[${i.index }].endDate" class="input-medium Wdate "
+                <input type="text" name="customerDocumentTemplateList[${i.index }].endDate" class="input-medium Wdate "
                        value="<fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd"/>"
                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
             </td>
             <td>
-                <input type="text" name="customerDocumentList[${i.index }].endDate" class="input-medium Wdate "
+                <input type="text" name="customerDocumentTemplateList[${i.index }].endDate" class="input-medium Wdate "
                        value="<fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd"/>"
                        onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
             </td>
             <td>
                 <input type="hidden" id="nameImagefront${i.index }"
-                       name="customerDocumentList[${i.index }].proxyBookImgBook" value="${item.proxyBookImgBook}"/>
+                       name="customerDocumentTemplateList[${i.index }].proxyBookImgBook" value="${item.proxyBookImgBook}"/>
                 <sys:ckfinder input="nameImagefront${i.index }" type="images" uploadPath="/photo/customer/proxy"
                               selectMultiple="false" maxWidth="100" maxHeight="100"/>
             </td>
             <td>
-                <input type="text" class="table-form-control" name="customerDocumentList[${i.index }].contactPhone"
+                <input type="text" class="table-form-control" name="customerDocumentTemplateList[${i.index }].contactPhone"
                        value="${item.remarks }"
                        valid='vnum'/>
             </td>

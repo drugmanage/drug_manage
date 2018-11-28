@@ -304,6 +304,10 @@
                     + '</td>'
 
                     + '<td>'
+                    + '<input type="text" class="table-form-control" name="customerInvoiceInfoList[' + newMaxId + '].dutyParagraph" value="" valid="vtext"/>'
+                    + '</td>'
+
+                    + '<td>'
                     + '<input id="nameImage' + newMaxId + '" name="customerInvoiceInfoList[' + newMaxId + '].invoicePath" type="hidden" >'
                     + '<ol id="nameImage' + newMaxId + 'Preview"><li style="list-style:none;padding-top:5px;">无</li></ol>'
                     + '<a href="javascript:" onclick="nameImage' + newMaxId + 'FinderOpen();" class="btn" id="limitAdd">添加</a>&nbsp;<a href="javascript:" onclick="nameImage' + newMaxId + 'DelAll();" class="btn">清除</a>'
@@ -363,7 +367,7 @@
                     + '</td>'
 
                     + '<td>'
-                    + '<select class="table-form-control" name="customerInvoiceInfoList[' + newMaxId + '].status">'
+                    + '<select class="table-form-control" name="customerInvoiceInfoList[' + newMaxId + '].stopFlag">'
                     + '<c:forEach items="${fns:getDictList('stop_flag')}" var="dict" varStatus="idx">'
                     + '<option value="${dict.value}">${dict.label}</option>'
                     + '</c:forEach>'
@@ -582,15 +586,15 @@
                     + '</td>'
 
                     + '<td>'
-                    + '<input type="text" class="table-form-control" name="customerConsignersList[' + newMaxId + '].remarks" value="" valid="text"/>'
-                    + '</td>'
-
-                    + '<td>'
                     + '<select class="table-form-control" name="customerConsignersList[' + newMaxId + '].stopFlag">'
                     + '<c:forEach items="${fns:getDictList('stop_flag')}" var="dict" varStatus="idx">'
                     + '<option value="${dict.value}">${dict.label}</option>'
                     + '</c:forEach>'
                     + '</select>'
+                    + '</td>'
+
+                    + '<td>'
+                    + '<input type="text" class="table-form-control" name="customerConsignersList[' + newMaxId + '].remarks" value="" valid="text"/>'
                     + '</td>'
 
                     + '<td>'
