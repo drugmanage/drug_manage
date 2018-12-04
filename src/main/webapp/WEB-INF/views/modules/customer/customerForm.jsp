@@ -224,22 +224,22 @@
                 </div>
             </div>
             <div class="control-group">
-                <div class="div-a">
-                    <label class="control-label">是否为单位账客户：</label>
-                    <div class="controls">
-                        <form:radiobuttons path="unitFlag" items="${fns:getDictList('unit_flag')}" itemLabel="label"
-                                           itemValue="value" htmlEscape="false" class=""/>
-                    </div>
-                </div>
-                <div class="div-b">
-                    <label class="control-label">是否为结算对象：</label>
-                    <div class="controls">
-                        <form:radiobuttons path="settlementFlag" items="${fns:getDictList('settlement_flag')}"
-                                           itemLabel="label"
-                                           itemValue="value" htmlEscape="false" class=""/>
-                    </div>
+            <div class="div-a">
+                <label class="control-label">是否为单位账客户：</label>
+                <div class="controls">
+                    <form:radiobuttons path="unitFlag" items="${fns:getDictList('unit_flag')}" itemLabel="label"
+                                       itemValue="value" htmlEscape="false" class=""/>
                 </div>
             </div>
+            <div class="div-b">
+                <label class="control-label">是否为结算对象：</label>
+                <div class="controls">
+                    <form:radiobuttons path="settlementFlag" items="${fns:getDictList('settlement_flag')}"
+                                       itemLabel="label"
+                                       itemValue="value" htmlEscape="false" class=""/>
+                </div>
+            </div>
+        </div>
             <div class="control-group">
                 <div class="div-a">
                     <label class="control-label">备注信息：</label>

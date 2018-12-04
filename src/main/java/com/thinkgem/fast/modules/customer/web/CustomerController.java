@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.thinkgem.fast.common.utils.DateUtils;
+import com.thinkgem.fast.modules.customer.entity.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +19,10 @@ import com.thinkgem.fast.common.config.Global;
 import com.thinkgem.fast.common.persistence.Page;
 import com.thinkgem.fast.common.web.BaseController;
 import com.thinkgem.fast.common.utils.StringUtils;
-import com.thinkgem.fast.modules.customer.entity.Customer;
 import com.thinkgem.fast.modules.customer.service.CustomerService;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 客户资料Controller
@@ -73,11 +77,126 @@ public class CustomerController extends BaseController {
 		if (!beanValidator(model, customer)){
 			return form(customer, model);
 		}
+		this.filterParam(customer);
 		customerService.save(customer);
 		addMessage(redirectAttributes, "保存客户资料成功");
 		return "redirect:"+Global.getAdminPath()+"/customer/customer/?repage";
 	}
-	
+
+	/**
+	 * 过滤customer中的参数
+	 *
+	 * @param customer
+	 */
+	private void filterParam(Customer customer){
+		 List<CustomerAddress> addressList = customer.getCustomerAddressList();
+		 if(CollectionUtils.isNotEmpty(addressList)){
+			 Iterator<CustomerAddress> it = addressList.iterator();
+			 while (it.hasNext()){
+			 	CustomerAddress customerAddress = it.next();
+			 	if (customerAddress == null) {
+			 		it.remove();
+				} else {
+			 		if (customerAddress.getArea() == null ||
+					StringUtils.isBlank(customerAddress.getArea().getId())||
+					StringUtils.isBlank(customerAddress.getContactPhone())||
+					StringUtils.isBlank(customerAddress.getReceivingAddress())||
+					StringUtils.isBlank(customerAddress.getReceivingName())){
+			 			it.remove();
+					}
+				}
+			 }
+		 } else {
+		 	if (CollectionUtils.isNotEmpty(addressList)){
+		 		addressList.clear();
+			}
+		 }
+
+		 List<CustomerBank> bankList = customer.getCustomerBankList();
+		 if(CollectionUtils.isNotEmpty(bankList)){
+		 	Iterator<CustomerBank> it = bankList.iterator();
+		 	while (it.hasNext()){
+		 		CustomerBank customerBank = it.next();
+				if (customerBank == null) {
+					it.remove();
+				} else {
+					if (StringUtils.isBlank(customerBank.getBank())||
+					StringUtils.isBlank(customerBank.getBankNumber())||
+					StringUtils.isBlank(customerBank.getOpenAccountName())) {
+						it.remove();
+					}
+				}
+			}
+		 }
+		 List<CustomerInvoiceInfo> invoiceInfoList = customer.getCustomerInvoiceInfoList();
+		if(CollectionUtils.isNotEmpty(invoiceInfoList)){
+			Iterator<CustomerInvoiceInfo> it = invoiceInfoList.iterator();
+			while (it.hasNext()){
+				CustomerInvoiceInfo customerInvoiceInfo = it.next();
+				if (customerInvoiceInfo == null) {
+					it.remove();
+				} else {
+					if (StringUtils.isBlank(customerInvoiceInfo.getAccountName()) ||
+							StringUtils.isBlank(customerInvoiceInfo.getBankDeposit())||
+							customerInvoiceInfo.getArea() == null ||
+							StringUtils.isBlank(customerInvoiceInfo.getArea().getId())||
+							StringUtils.isBlank(customerInvoiceInfo.getDetailAddress())||
+							StringUtils.isBlank(customerInvoiceInfo.getPhone())||
+							StringUtils.isBlank(customerInvoiceInfo.getAccountNumber())||
+							StringUtils.isBlank(customerInvoiceInfo.getDutyParagraph())||
+							StringUtils.isBlank(customerInvoiceInfo.getInvoicePath())||
+							StringUtils.isBlank(customerInvoiceInfo.getStopFlag())) {
+						it.remove();
+					}
+				}
+			}
+		}
+
+		List<CustomerDocumentTemplate> documentTemplateList = customer.getCustomerDocumentTemplateList();
+		if(CollectionUtils.isNotEmpty(documentTemplateList)){
+			Iterator<CustomerDocumentTemplate> it = documentTemplateList.iterator();
+			while (it.hasNext()){
+				CustomerDocumentTemplate customerDocumentTemplate = it.next();
+				if (customerDocumentTemplate == null) {
+					it.remove();
+				} else {
+					if (StringUtils.isBlank(customerDocumentTemplate.getName()) ||
+							StringUtils.isBlank(customerDocumentTemplate.getCertCode())||
+							StringUtils.isBlank(customerDocumentTemplate.getIssuingOrgan())||
+                            customerDocumentTemplate.getDateIssue() == null||
+                            customerDocumentTemplate.getValidityDate() == null||
+							StringUtils.isBlank(customerDocumentTemplate.getImgPath())) {
+						it.remove();
+					}
+				}
+			}
+		}
+
+		List<CustomerConsigner> consignerList = customer.getCustomerConsignerList();
+		if(CollectionUtils.isNotEmpty(consignerList)){
+			Iterator<CustomerConsigner> it = consignerList.iterator();
+			while (it.hasNext()){
+                CustomerConsigner customerConsigner = it.next();
+				if (customerConsigner == null) {
+					it.remove();
+				} else {
+					if (StringUtils.isBlank(customerConsigner.getContactsName()) ||
+							StringUtils.isBlank(customerConsigner.getSex())||
+							StringUtils.isBlank(customerConsigner.getPhone())||
+							StringUtils.isBlank(customerConsigner.getCertNumber())||
+							StringUtils.isBlank(customerConsigner.getConsignerVali())||
+							StringUtils.isBlank(customerConsigner.getProxyBook())||
+							StringUtils.isBlank(customerConsigner.getProxyBookVali())||
+							StringUtils.isBlank(customerConsigner.getProxyBookImgBook())||
+							StringUtils.isBlank(customerConsigner.getIdCardImgBook())||
+							StringUtils.isBlank(customerConsigner.getStopFlag())) {
+						it.remove();
+					}
+				}
+			}
+		}
+	}
+
 	@RequiresPermissions("customer:customer:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Customer customer, RedirectAttributes redirectAttributes) {
