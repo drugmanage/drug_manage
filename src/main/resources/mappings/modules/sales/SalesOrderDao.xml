@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.sales.dao.SalesOrderDao">
+    
+	<sql id="salesOrderColumns">
+		a.id AS "id",
+		a.document_num AS "documentNum",
+		a.status AS "status",
+		a.order_num AS "orderNum",
+		a.order_time AS "orderTime",
+		a.repo_id AS "repoId",
+		a.customer_name AS "customerName",
+		a.invoice_type AS "invoiceType",
+		a.freight_type AS "freightType",
+		a.settlement_object_id AS "settlementObjectId",
+		a.manage_id AS "manageId",
+		a.saleman_id AS "salemanId",
+		a.document_attr AS "documentAttr",
+		a.unit_flag AS "unitFlag",
+		a.customer_attr AS "customerAttr",
+		a.receiving_address AS "receivingAddress",
+		a.payment_method AS "paymentMethod",
+		a.freight_underwriter AS "freightUnderwriter",
+		a.allocation_flag AS "allocationFlag",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="salesOrderJoins">
+	</sql>
+    
+	<select id="get" resultType="SalesOrder">
+		SELECT 
+			<include refid="salesOrderColumns"/>
+		FROM sales_order a
+		<include refid="salesOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SalesOrder">
+		SELECT 
+			<include refid="salesOrderColumns"/>
+		FROM sales_order a
+		<include refid="salesOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="documentNum != null and documentNum != ''">
+				AND a.document_num = #{documentNum}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="orderNum != null and orderNum != ''">
+				AND a.order_num = #{orderNum}
+			</if>
+			<if test="beginOrderTime != null and endOrderTime != null and beginOrderTime != '' and endOrderTime != ''">
+				AND a.order_time BETWEEN #{beginOrderTime} AND #{endOrderTime}
+			</if>
+			<if test="repoId != null and repoId != ''">
+				AND a.repo_id = #{repoId}
+			</if>
+			<if test="customerName != null and customerName != ''">
+				AND a.customer_name = #{customerName}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SalesOrder">
+		SELECT 
+			<include refid="salesOrderColumns"/>
+		FROM sales_order a
+		<include refid="salesOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sales_order(
+			id,
+			document_num,
+			status,
+			order_num,
+			order_time,
+			repo_id,
+			customer_name,
+			invoice_type,
+			freight_type,
+			settlement_object_id,
+			manage_id,
+			saleman_id,
+			document_attr,
+			unit_flag,
+			customer_attr,
+			receiving_address,
+			payment_method,
+			freight_underwriter,
+			allocation_flag,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{documentNum},
+			#{status},
+			#{orderNum},
+			#{orderTime},
+			#{repoId},
+			#{customerName},
+			#{invoiceType},
+			#{freightType},
+			#{settlementObjectId},
+			#{manageId},
+			#{salemanId},
+			#{documentAttr},
+			#{unitFlag},
+			#{customerAttr},
+			#{receivingAddress},
+			#{paymentMethod},
+			#{freightUnderwriter},
+			#{allocationFlag},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sales_order SET 	
+			document_num = #{documentNum},
+			status = #{status},
+			order_num = #{orderNum},
+			order_time = #{orderTime},
+			repo_id = #{repoId},
+			customer_name = #{customerName},
+			invoice_type = #{invoiceType},
+			freight_type = #{freightType},
+			settlement_object_id = #{settlementObjectId},
+			manage_id = #{manageId},
+			saleman_id = #{salemanId},
+			document_attr = #{documentAttr},
+			unit_flag = #{unitFlag},
+			customer_attr = #{customerAttr},
+			receiving_address = #{receivingAddress},
+			payment_method = #{paymentMethod},
+			freight_underwriter = #{freightUnderwriter},
+			allocation_flag = #{allocationFlag},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sales_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
