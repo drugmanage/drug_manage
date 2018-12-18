@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.purchase.dao.PurchaseOrderDao">
+    
+	<sql id="purchaseOrderColumns">
+		a.id AS "id",
+		a.office_id AS "office.id",
+		a.purchase_number AS "purchaseNumber",
+		a.supplier_id AS "supplierId",
+		a.purchase_id AS "purchaseId",
+		a.order_time AS "orderTime",
+		a.summary AS "summary",
+		a.salesperson_id AS "salespersonId",
+		a.storehouse AS "storehouse",
+		a.biz_group AS "bizGroup",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o2.name AS "office.name"
+	</sql>
+	
+	<sql id="purchaseOrderJoins">
+		LEFT JOIN sys_office o2 ON o2.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="PurchaseOrder">
+		SELECT 
+			<include refid="purchaseOrderColumns"/>
+		FROM purchase_order a
+		<include refid="purchaseOrderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PurchaseOrder">
+		SELECT 
+			<include refid="purchaseOrderColumns"/>
+		FROM purchase_order a
+		<include refid="purchaseOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="purchaseNumber != null and purchaseNumber != ''">
+				AND a.purchase_number LIKE 
+					<if test="dbName == 'oracle'">'%'||#{purchaseNumber}</if>
+					<if test="dbName == 'mssql'">'%'+#{purchaseNumber}</if>
+					<if test="dbName == 'mysql'">concat('%',#{purchaseNumber})</if>
+			</if>
+			<if test="supplierId != null and supplierId != ''">
+				AND a.supplier_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{supplierId}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{supplierId}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{supplierId},'%')</if>
+			</if>
+			<if test="purchaseId != null and purchaseId != ''">
+				AND a.purchase_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{purchaseId}</if>
+					<if test="dbName == 'mssql'">'%'+#{purchaseId}</if>
+					<if test="dbName == 'mysql'">concat('%',#{purchaseId})</if>
+			</if>
+			<if test="orderTime != null and orderTime != ''">
+				AND a.order_time = #{orderTime}
+			</if>
+			<if test="storehouse != null and storehouse != ''">
+				AND a.storehouse = #{storehouse}
+			</if>
+			<if test="bizGroup != null and bizGroup != ''">
+				AND a.biz_group = #{bizGroup}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PurchaseOrder">
+		SELECT 
+			<include refid="purchaseOrderColumns"/>
+		FROM purchase_order a
+		<include refid="purchaseOrderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO purchase_order(
+			id,
+			office_id,
+			purchase_number,
+			supplier_id,
+			purchase_id,
+			order_time,
+			summary,
+			salesperson_id,
+			storehouse,
+			biz_group,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{office.id},
+			#{purchaseNumber},
+			#{supplierId},
+			#{purchaseId},
+			#{orderTime},
+			#{summary},
+			#{salespersonId},
+			#{storehouse},
+			#{bizGroup},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE purchase_order SET 	
+			office_id = #{office.id},
+			purchase_number = #{purchaseNumber},
+			supplier_id = #{supplierId},
+			purchase_id = #{purchaseId},
+			order_time = #{orderTime},
+			summary = #{summary},
+			salesperson_id = #{salespersonId},
+			storehouse = #{storehouse},
+			biz_group = #{bizGroup},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE purchase_order SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
