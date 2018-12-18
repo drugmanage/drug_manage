@@ -47,7 +47,7 @@ public class SupplierController extends BaseController {
 	@RequiresPermissions("supplier:supplier:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Supplier supplier, HttpServletRequest request, HttpServletResponse response, Model model) {
-		Page<Supplier> page = supplierService.findPage(new Page<Supplier>(request, response), supplier); 
+		Page<Supplier> page = supplierService.findPage(new Page<Supplier>(request, response), supplier);
 		model.addAttribute("page", page);
 		return "modules/supplier/supplierList";
 	}
@@ -77,7 +77,7 @@ public class SupplierController extends BaseController {
 		addMessage(redirectAttributes, "保存供应商信息成功");
 		return "redirect:"+Global.getAdminPath()+"/supplier/supplier/?repage";
 	}
-	
+
 	@RequiresPermissions("supplier:supplier:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Supplier supplier, RedirectAttributes redirectAttributes) {
