@@ -30,6 +30,7 @@
 		<li><a href="${ctx}/purchase/purchaseOrder/">采购订单列表</a></li>
 		<li class="active"><a href="${ctx}/purchase/purchaseOrder/form?id=${purchaseOrder.id}">采购订单<shiro:hasPermission name="purchase:purchaseOrder:edit">${not empty purchaseOrder.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="purchase:purchaseOrder:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
+	<h1>江西赣鑫医药有限公司 订货单</h1>
 	<form:form id="inputForm" modelAttribute="purchaseOrder" action="${ctx}/purchase/purchaseOrder/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
@@ -106,6 +107,72 @@
 				</div>
 			</div>
 		</div>
+		<table id="contentTable" class="table table-striped table-bordered table-condensed">
+			<thead>
+			<tr>
+				<th>药品编码</th>
+				<th>品名</th>
+				<th>规格</th>
+				<th>剂型</th>
+				<th>生产企业</th>
+				<th>单位</th>
+				<th>内装数</th>
+				<th>单价</th>
+				<th>采购数量</th>
+				<th>金额</th>
+				<th>当前库存</th>
+				<th>已到货数</th>
+				<shiro:hasPermission name="purchase:purchaseOrder:edit"><th>操作</th></shiro:hasPermission>
+			</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${page.list}" var="purchaseOrder">
+				<tr>
+					<td><a href="${ctx}/purchase/purchaseOrder/form?id=${purchaseOrder.id}">
+							${purchaseOrder.office.name}
+					</a></td>
+					<td>
+							${purchaseOrder.purchaseNumber}
+					</td>
+					<td>
+							${purchaseOrder.supplierId}
+					</td>
+					<td>
+							${purchaseOrder.purchaseId}
+					</td>
+					<td>
+						<fmt:formatDate value="${purchaseOrder.orderTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					</td>
+					<td>
+							${purchaseOrder.summary}
+					</td>
+					<td>
+							${purchaseOrder.salespersonId}
+					</td>
+					<td>
+							${purchaseOrder.storehouse}
+					</td>
+					<td>
+							${purchaseOrder.bizGroup}
+					</td>
+					<td>
+						<fmt:formatDate value="${purchaseOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					</td>
+					<td>
+							${purchaseOrder.remarks}
+					</td>
+					<td>
+							${purchaseOrder.remarks}
+					</td>
+					<shiro:hasPermission name="purchase:purchaseOrder:edit"><td>
+						<a href="${ctx}/purchase/purchaseOrder/form?id=${purchaseOrder.id}">修改</a>
+						<a href="${ctx}/purchase/purchaseOrder/delete?id=${purchaseOrder.id}" onclick="return confirmx('确认要删除该采购订单吗？', this.href)">删除</a>
+					</td></shiro:hasPermission>
+				</tr>
+			</c:forEach>
+			</tbody>
+		</table>
+		<div class="pagination">${page}</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="purchase:purchaseOrder:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
