@@ -17,6 +17,7 @@
 		a.common_name_two AS "commonNameTwo",
 		a.common_logogram_two AS "commonLogogramTwo",
 		a.unit AS "unit",
+		a.content AS "content",
 		a.goods_spec AS "goodsSpec",
 		a.goods_desc AS "goodsDesc",
 		a.entry_tax_rate AS "entryTaxRate",
@@ -42,8 +43,8 @@
 		a.bar_code AS "barCode",
 		a.supervision_code AS "supervisionCode",
 		a.purchase_flag AS "purchaseFlag",
-		a.create_by AS "createBy.id",
 		a.sale_flag AS "saleFlag",
+		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
@@ -128,6 +129,7 @@
 			common_name_two,
 			common_logogram_two,
 			unit,
+			content,
 			goods_spec,
 			goods_desc,
 			entry_tax_rate,
@@ -153,8 +155,8 @@
 			bar_code,
 			supervision_code,
 			purchase_flag,
-			create_by,
 			sale_flag,
+			create_by,
 			create_date,
 			update_by,
 			update_date,
@@ -175,6 +177,7 @@
 			#{commonNameTwo},
 			#{commonLogogramTwo},
 			#{unit},
+			#{content},
 			#{goodsSpec},
 			#{goodsDesc},
 			#{entryTaxRate},
@@ -200,8 +203,8 @@
 			#{barCode},
 			#{supervisionCode},
 			#{purchaseFlag},
-			#{createBy.id},
 			#{saleFlag},
+			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
 			#{updateDate},
@@ -225,6 +228,7 @@
 			common_name_two = #{commonNameTwo},
 			common_logogram_two = #{commonLogogramTwo},
 			unit = #{unit},
+			content = #{content},
 			goods_spec = #{goodsSpec},
 			goods_desc = #{goodsDesc},
 			entry_tax_rate = #{entryTaxRate},
@@ -259,12 +263,5 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-
-	<!--查询商品条数-->
-	<select id="findCount" resultType="int">
-		SELECT
-		count(1)
-		FROM goods a
-	</select>
 	
 </mapper>

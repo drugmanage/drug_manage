@@ -10,7 +10,7 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 商品资料Entity
  * @author 刘海涛
- * @version 2018-11-17
+ * @version 2019-01-04
  */
 public class Goods extends DataEntity<Goods> {
 	
@@ -28,6 +28,7 @@ public class Goods extends DataEntity<Goods> {
 	private String commonNameTwo;		// 俗名二
 	private String commonLogogramTwo;		// 俗名二拼音简码
 	private String unit;		// 基本包装单位
+	private String content;		// 装量
 	private String goodsSpec;		// 规格
 	private String goodsDesc;		// 商品描述
 	private String entryTaxRate;		// 进项税率
@@ -177,6 +178,15 @@ public class Goods extends DataEntity<Goods> {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+	
+	@Length(min=0, max=10, message="装量长度必须介于 0 和 10 之间")
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 	@Length(min=0, max=128, message="规格长度必须介于 0 和 128 之间")

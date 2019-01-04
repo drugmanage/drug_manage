@@ -55,8 +55,9 @@
 				<th>商品名</th>
 				<th>拼音简码</th>
 				<th>商品剂型</th>
+				<th>商品描述</th>
 				<th>进项税率</th>
-				<th>销项税率</th>
+				<th>批文有效期</th>
 				<th>生产厂家</th>
 				<th>批件号</th>
 				<th>核心属性</th>
@@ -95,10 +96,13 @@
 					${fns:getDictLabel(goods.goodsType, 'goods_type', '')}
 				</td>
 				<td>
+					${goods.goodsDesc}
+				</td>
+				<td>
 					${goods.entryTaxRate}
 				</td>
 				<td>
-					${goods.salesRate}
+					${goods.approvalValidity}
 				</td>
 				<td>
 					${goods.manufacturer}

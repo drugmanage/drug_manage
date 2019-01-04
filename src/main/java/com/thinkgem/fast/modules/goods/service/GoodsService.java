@@ -2,7 +2,6 @@ package com.thinkgem.fast.modules.goods.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,14 +13,12 @@ import com.thinkgem.fast.modules.goods.dao.GoodsDao;
 /**
  * 商品资料Service
  * @author 刘海涛
- * @version 2018-11-17
+ * @version 2019-01-04
  */
 @Service
 @Transactional(readOnly = true)
 public class GoodsService extends CrudService<GoodsDao, Goods> {
 
-	@Autowired
-	private GoodsDao goodsDao;
 	public Goods get(String id) {
 		return super.get(id);
 	}
@@ -43,9 +40,5 @@ public class GoodsService extends CrudService<GoodsDao, Goods> {
 	public void delete(Goods goods) {
 		super.delete(goods);
 	}
-
-	public int findCount() {
-
-		return goodsDao.findCount();
-	}
+	
 }
