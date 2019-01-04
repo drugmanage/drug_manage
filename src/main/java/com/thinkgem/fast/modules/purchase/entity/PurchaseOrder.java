@@ -1,5 +1,6 @@
 package com.thinkgem.fast.modules.purchase.entity;
 
+import com.thinkgem.fast.modules.goods.entity.Goods;
 import com.thinkgem.fast.modules.sys.entity.Office;
 import org.hibernate.validator.constraints.Length;
 import java.util.Date;
@@ -27,8 +28,7 @@ public class PurchaseOrder extends DataEntity<PurchaseOrder> {
 	private String storehouse;		// 入库仓库
 	private String bizGroup;		// 业务组
 
-	private List<PurchaseGoods> purchaseGoodsList;		// 采购商品列表
-
+	private List<PurchaseGoodsVo> goodsList;		// 采购商品列表
 
 	public PurchaseOrder() {
 		super();
@@ -118,11 +118,11 @@ public class PurchaseOrder extends DataEntity<PurchaseOrder> {
 		this.bizGroup = bizGroup;
 	}
 
-	public List<PurchaseGoods> getPurchaseGoodsList() {
-		return purchaseGoodsList;
+	public List<PurchaseGoodsVo> getGoodsList() {
+		return goodsList;
 	}
 
-	public void setPurchaseGoodsList(List<PurchaseGoods> purchaseGoodsList) {
-		this.purchaseGoodsList = purchaseGoodsList;
+	public void setGoodsList(List<PurchaseGoodsVo> goodsList) {
+		this.goodsList = goodsList;
 	}
 }

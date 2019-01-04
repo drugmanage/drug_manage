@@ -22,6 +22,25 @@
 					}
 				}
 			});
+    		// Tab页签
+            $('#myTab a:first').tab('show');
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            $("#empName").keyup(function () {
+                var empName = $(this).val();
+                var py = Mtils.utils.makePy(empName);
+                $("#pinyin").val(py);
+            })
+
+            $("#birth").change(function () {
+                alert("1");
+                var birth  = $(this).val();
+                var age = Mtils.utils.calcAge(birth,new Date());
+                $("#age").val(age);
+            })
 		});
 	</script>
 </head>
@@ -30,11 +49,18 @@
 		<li><a href="${ctx}/purchase/purchaseOrder/">采购订单列表</a></li>
 		<li class="active"><a href="${ctx}/purchase/purchaseOrder/form?id=${purchaseOrder.id}">采购订单<shiro:hasPermission name="purchase:purchaseOrder:edit">${not empty purchaseOrder.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="purchase:purchaseOrder:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<h1>江西赣鑫医药有限公司 订货单</h1>
 	<form:form id="inputForm" modelAttribute="purchaseOrder" action="${ctx}/purchase/purchaseOrder/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<sys:message content="${message}"/>		
-		<div class="control-group">
+		<sys:message content="${message}"/>
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#baseInfo">订单基本信息</a></li>
+            <li><a href="#goodsInfo">采购商品列表</a></li>
+        </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="baseInfo">
+
+        <div class="control-group">
 			<div class="div-a">
 				<label class="control-label">机构：</label>
 				<div class="controls">
@@ -107,7 +133,9 @@
 				</div>
 			</div>
 		</div>
-		<table id="contentTable" class="table table-striped table-bordered table-condensed">
+        </div>
+        <div class="tab-pane" id="goodsInfo">
+		<table id="contentTable" class="table table-striped table-bordered table-condensed" width="100%">
 			<thead>
 			<tr>
 				<th>药品编码</th>
@@ -126,53 +154,73 @@
 			</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${page.list}" var="purchaseOrder">
-				<tr>
-					<td><a href="${ctx}/purchase/purchaseOrder/form?id=${purchaseOrder.id}">
-							${purchaseOrder.office.name}
-					</a></td>
+			<c:forEach items="${purchaseOrder.goodsList}" var="item" varStatus="i">
+				<tr id="goods_tr_${i.index}">
 					<td>
-							${purchaseOrder.purchaseNumber}
+                        <input type="hidden" name="itemGoodsId" value="${i.index}"/>
+                        <input type="hidden" name="purchaseGoodsList[${i.index }].id" value="${item.id}"/>
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.goodsCode }" valid='vtext'/>
+                    </td>
+					<td>
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.goodsName }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.supplierId}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.goodsSpec }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.purchaseId}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.goodsType }" valid='vtext'/>
 					</td>
 					<td>
-						<fmt:formatDate value="${purchaseOrder.orderTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.manufacturer }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.summary}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.unit }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.salespersonId}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.content }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.storehouse}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.retailPrice }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.bizGroup}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.number }" valid='vtext'/>
 					</td>
 					<td>
-						<fmt:formatDate value="${purchaseOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.tax }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.remarks}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.stock }" valid='vtext'/>
 					</td>
 					<td>
-							${purchaseOrder.remarks}
+                        <input type="text" class="table-form-control" name="purchaseGoodsList[${i.index }].goodsId"
+                               value="${item.arrivalNum }" valid='vtext'/>
 					</td>
 					<shiro:hasPermission name="purchase:purchaseOrder:edit"><td>
-						<a href="${ctx}/purchase/purchaseOrder/form?id=${purchaseOrder.id}">修改</a>
-						<a href="${ctx}/purchase/purchaseOrder/delete?id=${purchaseOrder.id}" onclick="return confirmx('确认要删除该采购订单吗？', this.href)">删除</a>
-					</td></shiro:hasPermission>
+                        <a href="javascript:void(0)" class="btnDel" onclick="oper.edu.del('${i.index}','${item.id }');">删除</a>
+                    </td></shiro:hasPermission>
 				</tr>
 			</c:forEach>
 			</tbody>
+            <tfoot>
+            <tr>
+                <td colspan="10"><a href="javascript:" onclick="oper.edu.add();" class="btn">新增</a></td>
+            </tr>
+            </tfoot>
 		</table>
 		<div class="pagination">${page}</div>
+        </div>
+        </div>
 		<div class="form-actions">
 			<shiro:hasPermission name="purchase:purchaseOrder:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

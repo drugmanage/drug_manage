@@ -116,5 +116,5 @@ public class PurchaseGoods extends DataEntity<PurchaseGoods> {
 	public void setTaxRate(String taxRate) {
 		this.taxRate = taxRate;
 	}
-	
+
 }
