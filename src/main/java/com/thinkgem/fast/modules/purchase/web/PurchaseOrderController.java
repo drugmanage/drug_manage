@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoods;
+import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import com.thinkgem.fast.modules.purchase.service.PurchaseGoodsService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import com.thinkgem.fast.modules.purchase.entity.PurchaseOrder;
 import com.thinkgem.fast.modules.purchase.service.PurchaseOrderService;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 采购订单Controller
@@ -73,6 +77,8 @@ public class PurchaseOrderController extends BaseController {
         if (!beanValidator(model, purchaseOrder)) {
             return form(purchaseOrder, model);
         }
+        // 判断采购商品列表不为空再保存
+        this.filterParam(purchaseOrder);
         purchaseOrderService.save(purchaseOrder);
         addMessage(redirectAttributes, "保存采购订单成功");
         return "redirect:" + Global.getAdminPath() + "/purchase/purchaseOrder/?repage";
@@ -86,4 +92,26 @@ public class PurchaseOrderController extends BaseController {
         return "redirect:" + Global.getAdminPath() + "/purchase/purchaseOrder/?repage";
     }
 
+    /**
+     * 过滤采购订单中的数据
+     *
+     * @param purchaseOrder
+     */
+    private void filterParam(PurchaseOrder purchaseOrder) {
+        List<PurchaseGoodsVo> purchaseGoodsVoList = purchaseOrder.getGoodsList();
+        if (CollectionUtils.isNotEmpty(purchaseGoodsVoList)) {
+            Iterator<PurchaseGoodsVo> it = purchaseGoodsVoList.iterator();
+            while (it.hasNext()) {
+                PurchaseGoodsVo purchaseGoodsVo = it.next();
+                if (purchaseGoodsVo == null) {
+                    it.remove();
+                } else {
+                    if (StringUtils.isBlank(purchaseGoodsVo.getGoodsId()) ||
+                            StringUtils.isBlank(purchaseGoodsVo.getNumber())) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+    }
 }
