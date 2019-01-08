@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.purchase.dao.PurchaseBackDiffPriceDao">
+    
+	<sql id="purchaseBackDiffPriceColumns">
+		a.id AS "id",
+		a.office_id AS "office.id",
+		a.purchase_id AS "purchaseId",
+		a.goods_id AS "goodsId",
+		a.back_price_unit AS "backPriceUnit",
+		a.back_price_tax_free AS "backPriceTaxFree",
+		a.back_price_total_tax AS "backPriceTotalTax",
+		a.back_price_tax_amount AS "backPriceTaxAmount",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		o2.name AS "office.name"
+	</sql>
+	
+	<sql id="purchaseBackDiffPriceJoins">
+		LEFT JOIN sys_office o2 ON o2.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="PurchaseBackDiffPrice">
+		SELECT 
+			<include refid="purchaseBackDiffPriceColumns"/>
+		FROM purchase_back_diff_price a
+		<include refid="purchaseBackDiffPriceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PurchaseBackDiffPrice">
+		SELECT 
+			<include refid="purchaseBackDiffPriceColumns"/>
+		FROM purchase_back_diff_price a
+		<include refid="purchaseBackDiffPriceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="office != null and office.id != null and office.id != ''">
+				AND a.office_id = #{office.id}
+			</if>
+			<if test="purchaseId != null and purchaseId != ''">
+				AND a.purchase_id = #{purchaseId}
+			</if>
+			<if test="goodsId != null and goodsId != ''">
+				AND a.goods_id = #{goodsId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PurchaseBackDiffPrice">
+		SELECT 
+			<include refid="purchaseBackDiffPriceColumns"/>
+		FROM purchase_back_diff_price a
+		<include refid="purchaseBackDiffPriceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO purchase_back_diff_price(
+			id,
+			office_id,
+			purchase_id,
+			goods_id,
+			back_price_unit,
+			back_price_tax_free,
+			back_price_total_tax,
+			back_price_tax_amount,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{office.id},
+			#{purchaseId},
+			#{goodsId},
+			#{backPriceUnit},
+			#{backPriceTaxFree},
+			#{backPriceTotalTax},
+			#{backPriceTaxAmount},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE purchase_back_diff_price SET 	
+			office_id = #{office.id},
+			purchase_id = #{purchaseId},
+			goods_id = #{goodsId},
+			back_price_unit = #{backPriceUnit},
+			back_price_tax_free = #{backPriceTaxFree},
+			back_price_total_tax = #{backPriceTotalTax},
+			back_price_tax_amount = #{backPriceTaxAmount},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE purchase_back_diff_price SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
