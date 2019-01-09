@@ -35,6 +35,7 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         PurchaseGoods purchaseGoods = new PurchaseGoods();
         purchaseGoods.setPurchaseOrderId(purchaseOrder.getId());
         List<PurchaseGoods> purchaseGoodsList = purchaseGoodsService.findList(purchaseGoods);
+        // ToDo 构造要显示的采购商品订单
         for (PurchaseGoods purchaseGoods1 : purchaseGoodsList) {
             PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo();
             purchaseGoodsVo.setGoodsId(purchaseGoods1.getGoodsId());
@@ -58,6 +59,7 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         List<PurchaseGoodsVo> purchaseGoodsVoList = purchaseOrder.getGoodsList();
         if (CollectionUtils.isNotEmpty(purchaseGoodsVoList)) {
             for (PurchaseGoodsVo purchaseGoodsVo : purchaseGoodsVoList) {
+                // ToDo 通过PurchaseGoodsVo构造PurchaseGoods得到采购商品订单信息
                 PurchaseGoods purchaseGoods = new PurchaseGoods();
                 purchaseGoods.setPurchaseOrderId(purchaseOrder.getId());
                 purchaseGoods.setGoodsId(purchaseGoodsVo.getGoodsId());
