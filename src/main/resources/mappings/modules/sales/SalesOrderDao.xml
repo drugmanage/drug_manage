@@ -57,14 +57,20 @@
 			<if test="orderNum != null and orderNum != ''">
 				AND a.order_num = #{orderNum}
 			</if>
-			<if test="beginOrderTime != null and endOrderTime != null and beginOrderTime != '' and endOrderTime != ''">
-				AND a.order_time BETWEEN #{beginOrderTime} AND #{endOrderTime}
+			<if test="orderTime != null and orderTime != ''">
+				AND a.order_time = #{orderTime}
 			</if>
 			<if test="repoId != null and repoId != ''">
 				AND a.repo_id = #{repoId}
 			</if>
 			<if test="customerName != null and customerName != ''">
 				AND a.customer_name = #{customerName}
+			</if>
+			<if test="invoiceType != null and invoiceType != ''">
+				AND a.invoice_type = #{invoiceType}
+			</if>
+			<if test="freightType != null and freightType != ''">
+				AND a.freight_type = #{freightType}
 			</if>
 		</where>
 		<choose>

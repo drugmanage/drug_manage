@@ -13,7 +13,7 @@ import com.thinkgem.fast.modules.sales.dao.SalesOrderDao;
 /**
  * 销售开票单Service
  * @author shiao
- * @version 2018-12-17
+ * @version 2019-01-09
  */
 @Service
 @Transactional(readOnly = true)
