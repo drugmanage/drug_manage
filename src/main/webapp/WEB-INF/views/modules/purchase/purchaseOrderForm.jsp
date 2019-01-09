@@ -64,7 +64,6 @@
 
     <div class="tab-content">
         <div class="tab-pane active" id="baseInfo">
-
             <div class="control-group">
                 <div class="div-a">
                     <label class="control-label">机构：</label>
