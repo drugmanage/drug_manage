@@ -2,14 +2,14 @@ package com.thinkgem.fast.modules.sales.dao;
 
 import com.thinkgem.fast.common.persistence.CrudDao;
 import com.thinkgem.fast.common.persistence.annotation.MyBatisDao;
-import com.thinkgem.fast.modules.sales.entity.SalesOrder;
+import com.thinkgem.fast.modules.sales.entity.SalesBackDiffPrice;
 
 /**
- * 销售开票单DAO接口
+ * 销售退补差价单DAO接口
  * @author shiao
- * @version 2019-01-09
+ * @version 2019-01-08
  */
 @MyBatisDao
-public interface SalesOrderDao extends CrudDao<SalesOrder> {
+public interface SalesBackDiffPriceDao extends CrudDao<SalesBackDiffPrice> {
 	
 }

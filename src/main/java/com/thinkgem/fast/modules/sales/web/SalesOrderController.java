@@ -22,7 +22,7 @@ import com.thinkgem.fast.modules.sales.service.SalesOrderService;
 /**
  * 销售开票单Controller
  * @author shiao
- * @version 2018-12-17
+ * @version 2019-01-09
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sales/salesOrder")

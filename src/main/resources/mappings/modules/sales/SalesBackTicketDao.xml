@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.sales.dao.SalesBackTicketDao">
+    
+	<sql id="salesBackTicketColumns">
+		a.id AS "id",
+		a.sales_id AS "salesId",
+		a.goods_id AS "goodsId",
+		a.unit_back_number AS "unitBackNumber",
+		a.back_price_tax_free AS "backPriceTaxFree",
+		a.back_price_total_tax AS "backPriceTotalTax",
+		a.back_price_tax_amount AS "backPriceTaxAmount",
+		a.return_reason AS "returnReason",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="salesBackTicketJoins">
+	</sql>
+    
+	<select id="get" resultType="SalesBackTicket">
+		SELECT 
+			<include refid="salesBackTicketColumns"/>
+		FROM sales_back_ticket a
+		<include refid="salesBackTicketJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SalesBackTicket">
+		SELECT 
+			<include refid="salesBackTicketColumns"/>
+		FROM sales_back_ticket a
+		<include refid="salesBackTicketJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="salesId != null and salesId != ''">
+				AND a.sales_id LIKE 
+					<if test="dbName == 'oracle'">'%'||#{salesId}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{salesId}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{salesId},'%')</if>
+			</if>
+			<if test="createDate != null and createDate != ''">
+				AND a.create_date = #{createDate}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SalesBackTicket">
+		SELECT 
+			<include refid="salesBackTicketColumns"/>
+		FROM sales_back_ticket a
+		<include refid="salesBackTicketJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sales_back_ticket(
+			id,
+			sales_id,
+			goods_id,
+			unit_back_number,
+			back_price_tax_free,
+			back_price_total_tax,
+			back_price_tax_amount,
+			return_reason,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{salesId},
+			#{goodsId},
+			#{unitBackNumber},
+			#{backPriceTaxFree},
+			#{backPriceTotalTax},
+			#{backPriceTaxAmount},
+			#{returnReason},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sales_back_ticket SET 	
+			sales_id = #{salesId},
+			goods_id = #{goodsId},
+			unit_back_number = #{unitBackNumber},
+			back_price_tax_free = #{backPriceTaxFree},
+			back_price_total_tax = #{backPriceTotalTax},
+			back_price_tax_amount = #{backPriceTaxAmount},
+			return_reason = #{returnReason},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sales_back_ticket SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
