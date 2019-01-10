@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.valuation.dao.ManageValuationDao">
+    
+	<sql id="manageValuationColumns">
+		a.id AS "id",
+		a.manage_id AS "manageId",
+		a.valuation_id AS "valuationId",
+		a.markup_price AS "markupPrice",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="manageValuationJoins">
+	</sql>
+    
+	<select id="get" resultType="ManageValuation">
+		SELECT 
+			<include refid="manageValuationColumns"/>
+		FROM manage_valuation a
+		<include refid="manageValuationJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ManageValuation">
+		SELECT 
+			<include refid="manageValuationColumns"/>
+		FROM manage_valuation a
+		<include refid="manageValuationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ManageValuation">
+		SELECT 
+			<include refid="manageValuationColumns"/>
+		FROM manage_valuation a
+		<include refid="manageValuationJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO manage_valuation(
+			id,
+			manage_id,
+			valuation_id,
+			markup_price,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{manageId},
+			#{valuationId},
+			#{markupPrice},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE manage_valuation SET 	
+			manage_id = #{manageId},
+			valuation_id = #{valuationId},
+			markup_price = #{markupPrice},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE manage_valuation SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
