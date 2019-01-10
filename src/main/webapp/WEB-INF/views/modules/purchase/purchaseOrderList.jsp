@@ -33,7 +33,10 @@
 				<form:input path="purchaseNumber" htmlEscape="false" maxlength="10" class="input-medium"/>
 			</li>
 			<li><label>供应商：</label>
-				<form:input path="supplierId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:select path="supplier" class="input-xlselect ">
+					<form:option value="" label=""/>
+					<form:options items="${purchaseOrder.suppliers}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li><label>采购员：</label>
 				<form:input path="purchaseId" htmlEscape="false" maxlength="64" class="input-medium"/>

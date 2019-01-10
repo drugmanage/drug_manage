@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoods;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import com.thinkgem.fast.modules.purchase.service.PurchaseGoodsService;
+import com.thinkgem.fast.modules.supplier.entity.Supplier;
+import com.thinkgem.fast.modules.supplier.service.SupplierService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,9 @@ public class PurchaseOrderController extends BaseController {
     private PurchaseOrderService purchaseOrderService;
 
     @Autowired
+    private SupplierService supplierService;
+
+    @Autowired
     private PurchaseGoodsService purchaseGoodsService;
 
     @ModelAttribute
@@ -51,7 +56,7 @@ public class PurchaseOrderController extends BaseController {
         }
         if (entity == null) {
             entity = new PurchaseOrder();
-            entity.setOrderTime(new Date());
+            entity.setSuppliers(supplierService.findList(new Supplier()));
         }
         return entity;
     }

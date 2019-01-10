@@ -6,7 +6,7 @@
 		a.id AS "id",
 		a.office_id AS "office.id",
 		a.purchase_number AS "purchaseNumber",
-		a.supplier_id AS "supplierId",
+		a.supplier_id AS "supplier.id",
 		a.purchase_id AS "purchaseId",
 		a.order_time AS "orderTime",
 		a.summary AS "summary",
@@ -19,11 +19,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		o2.name AS "office.name"
+		o2.name AS "office.name",
+		o3.name AS "supplier.name"
 	</sql>
 	
 	<sql id="purchaseOrderJoins">
 		LEFT JOIN sys_office o2 ON o2.id = a.office_id
+		LEFT JOIN supplier o3 ON o3.id = a.supplier_id
 	</sql>
     
 	<select id="get" resultType="PurchaseOrder">
@@ -50,17 +52,11 @@
 					<if test="dbName == 'mssql'">'%'+#{purchaseNumber}</if>
 					<if test="dbName == 'mysql'">concat('%',#{purchaseNumber})</if>
 			</if>
-			<if test="supplierId != null and supplierId != ''">
-				AND a.supplier_id LIKE 
-					<if test="dbName == 'oracle'">'%'||#{supplierId}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{supplierId}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{supplierId},'%')</if>
+			<if test="supplier != null and supplier.id != null and supplier.id != ''">
+				AND a.supplier_id = #{supplier.id}
 			</if>
 			<if test="purchaseId != null and purchaseId != ''">
-				AND a.purchase_id LIKE 
-					<if test="dbName == 'oracle'">'%'||#{purchaseId}</if>
-					<if test="dbName == 'mssql'">'%'+#{purchaseId}</if>
-					<if test="dbName == 'mysql'">concat('%',#{purchaseId})</if>
+				AND a.purchase_id = #{purchaseId}
 			</if>
 			<if test="orderTime != null and orderTime != ''">
 				AND a.order_time = #{orderTime}
@@ -122,7 +118,7 @@
 			#{id},
 			#{office.id},
 			#{purchaseNumber},
-			#{supplierId},
+			#{supplier.id},
 			#{purchaseId},
 			#{orderTime},
 			#{summary},
@@ -142,7 +138,7 @@
 		UPDATE purchase_order SET 	
 			office_id = #{office.id},
 			purchase_number = #{purchaseNumber},
-			supplier_id = #{supplierId},
+			supplier_id = #{supplier.id},
 			purchase_id = #{purchaseId},
 			order_time = #{orderTime},
 			summary = #{summary},

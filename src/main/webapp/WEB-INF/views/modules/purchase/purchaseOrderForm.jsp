@@ -85,7 +85,11 @@
                 <div class="div-a">
                     <label class="control-label">供应商：</label>
                     <div class="controls">
-                        <form:input path="supplierId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+                        <form:select path="supplier" class="input-xlselect ">
+                            <form:option value="" label=""/>
+                            <form:options items="${purchaseOrder.suppliers}" itemLabel="name" itemValue="id"
+                                          htmlEscape="false"/>
+                        </form:select>
                     </div>
                 </div>
                 <div class="div-b">
