@@ -156,5 +156,15 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
+	<select id="findTodayList" resultType="PurchaseOrder">
+		SELECT
+			a.purchase_number AS "purchaseNumber"
+		FROM purchase_order a
+		<where>
+			a.create_date > #{createDate}
+		</where>
+		ORDER BY a.purchase_number DESC
+	</select>
+
 </mapper>

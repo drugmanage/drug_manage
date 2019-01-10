@@ -1,6 +1,7 @@
 package com.thinkgem.fast.modules.purchase.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoods;
@@ -75,7 +76,7 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         super.delete(purchaseOrder);
     }
 
-    public void setCollInfo(PurchaseOrder purchaseOrder) {
-
+    public List<PurchaseOrder> findTodayList(PurchaseOrder purchaseOrder){
+        return  super.findList(purchaseOrder);
     }
 }
