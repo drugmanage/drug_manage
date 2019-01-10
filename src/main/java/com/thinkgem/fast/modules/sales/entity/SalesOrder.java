@@ -9,7 +9,7 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 销售开票单Entity
  * @author shiao
- * @version 2018-12-17
+ * @version 2019-01-09
  */
 public class SalesOrder extends DataEntity<SalesOrder> {
 	
@@ -32,8 +32,6 @@ public class SalesOrder extends DataEntity<SalesOrder> {
 	private String paymentMethod;		// 付款方式
 	private String freightUnderwriter;		// 运费承担方
 	private String allocationFlag;		// 是否调拨
-	private Date beginOrderTime;		// 开始 制单日期
-	private Date endOrderTime;		// 结束 制单日期
 	
 	public SalesOrder() {
 		super();
@@ -205,20 +203,4 @@ public class SalesOrder extends DataEntity<SalesOrder> {
 		this.allocationFlag = allocationFlag;
 	}
 	
-	public Date getBeginOrderTime() {
-		return beginOrderTime;
-	}
-
-	public void setBeginOrderTime(Date beginOrderTime) {
-		this.beginOrderTime = beginOrderTime;
-	}
-	
-	public Date getEndOrderTime() {
-		return endOrderTime;
-	}
-
-	public void setEndOrderTime(Date endOrderTime) {
-		this.endOrderTime = endOrderTime;
-	}
-		
 }

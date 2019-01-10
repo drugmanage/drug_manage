@@ -31,7 +31,7 @@
 
             $("#empName").keyup(function () {
                 var empName = $(this).val();
-                var py = Mtils.utils.makePy(empName);
+                var py = Mtils.utils.makePy(empName,true);
                 $("#pinyin").val(py);
             })
 

@@ -35,12 +35,9 @@
 				<form:input path="orderNum" htmlEscape="false" maxlength="32" class="input-medium"/>
 			</li>
 			<li><label>制单日期：</label>
-				<input name="beginOrderTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${salesOrder.beginOrderTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
-				<input name="endOrderTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${salesOrder.endOrderTime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				<input name="orderTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${salesOrder.orderTime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li><label>出货仓库：</label>
 				<form:input path="repoId" htmlEscape="false" maxlength="64" class="input-medium"/>
@@ -65,9 +62,13 @@
 				<th>发票类型</th>
 				<th>货运类型</th>
 				<th>结算对象</th>
-				<th>是否调拨</th>
-				<th>更新者</th>
-				<th>更新时间</th>
+				<th>区域经理</th>
+				<th>业务员</th>
+				<th>单据属性</th>
+				<th>是否单位账客户</th>
+				<th>客户属性</th>
+				<th>创建者</th>
+				<th>创建时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="sales:salesOrder:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -103,13 +104,25 @@
 					${salesOrder.settlementObjectId}
 				</td>
 				<td>
-					${fns:getDictLabel(salesOrder.allocationFlag, 'allocation_flag', '')}
+					${salesOrder.manageId}
 				</td>
 				<td>
-					${salesOrder.updateBy.id}
+					${salesOrder.salemanId}
 				</td>
 				<td>
-					<fmt:formatDate value="${salesOrder.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					${fns:getDictLabel(salesOrder.documentAttr, 'document_attr', '')}
+				</td>
+				<td>
+					${fns:getDictLabel(salesOrder.unitFlag, 'unit_flag', '')}
+				</td>
+				<td>
+					${fns:getDictLabel(salesOrder.customerAttr, 'customer_attr', '')}
+				</td>
+				<td>
+					${salesOrder.createBy.id}
+				</td>
+				<td>
+					<fmt:formatDate value="${salesOrder.createDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${salesOrder.remarks}
