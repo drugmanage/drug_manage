@@ -19,11 +19,11 @@ import com.thinkgem.fast.modules.sys.entity.Dict;
  * @version 2013-5-29
  */
 public class DictUtils {
-	
+
 	private static DictDao dictDao = SpringContextHolder.getBean(DictDao.class);
 
 	public static final String CACHE_DICT_MAP = "dictMap";
-	
+
 	public static String getDictLabel(String value, String type, String defaultValue){
 		if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(value)){
 			for (Dict dict : getDictList(type)){
@@ -34,7 +34,7 @@ public class DictUtils {
 		}
 		return defaultValue;
 	}
-	
+
 	public static String getDictLabels(String values, String type, String defaultValue){
 		if (StringUtils.isNotBlank(type) && StringUtils.isNotBlank(values)){
 			List<String> valueList = Lists.newArrayList();
@@ -56,7 +56,7 @@ public class DictUtils {
 		}
 		return defaultLabel;
 	}
-	
+
 	public static List<Dict> getDictList(String type){
 		@SuppressWarnings("unchecked")
 		Map<String, List<Dict>> dictMap = (Map<String, List<Dict>>)CacheUtils.get(CACHE_DICT_MAP);
@@ -78,7 +78,7 @@ public class DictUtils {
 		}
 		return dictList;
 	}
-	
+
 	/**
 	 * 返回字典列表（JSON）
 	 * @param type
@@ -87,5 +87,5 @@ public class DictUtils {
 	public static String getDictListJson(String type){
 		return JsonMapper.toJsonString(getDictList(type));
 	}
-	
+
 }

@@ -144,7 +144,7 @@
     <function-signature>java.lang.String getDictListJson(java.lang.String)</function-signature>
     <example>${fns:getDictListJson(type)}</example>  
   </function>
-  
+
   <!-- Encodes -->
   <function>
     <description>URL编码</description>
