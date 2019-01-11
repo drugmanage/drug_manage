@@ -39,7 +39,10 @@
 				</form:select>
 			</li>
 			<li><label>采购员：</label>
-				<form:input path="purchaseId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:select path="hrmUser" class="input-xlselect ">
+					<form:option value="" label=""/>
+					<form:options items="${purchaseOrder.purchases}" itemLabel="empName" itemValue="id" htmlEscape="false"/>
+				</form:select>
 			</li>
 			<li><label>订单日期：</label>
 				<input name="orderTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
@@ -84,10 +87,10 @@
 					${purchaseOrder.purchaseNumber}
 				</td>
 				<td>
-					${purchaseOrder.supplierId}
+					${purchaseOrder.supplier.name}
 				</td>
 				<td>
-					${purchaseOrder.purchaseId}
+					${purchaseOrder.hrmUser.empName}
 				</td>
 				<td>
 					<fmt:formatDate value="${purchaseOrder.orderTime}" pattern="yyyy-MM-dd HH:mm:ss"/>

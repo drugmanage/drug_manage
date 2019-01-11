@@ -46,9 +46,6 @@ public class PurchaseOrderController extends BaseController {
     @Autowired
     private SupplierService supplierService;
 
-    @Autowired
-    private PurchaseGoodsService purchaseGoodsService;
-
     @ModelAttribute
     public PurchaseOrder get(@RequestParam(required = false) String id) {
         PurchaseOrder entity = null;
@@ -56,7 +53,6 @@ public class PurchaseOrderController extends BaseController {
             entity = purchaseOrderService.get(id);
             // 供应商列表
             entity.setSuppliers(supplierService.findList(new Supplier()));
-            // 订单编号
         }
         if (entity == null) {
             entity = new PurchaseOrder();
@@ -64,6 +60,8 @@ public class PurchaseOrderController extends BaseController {
             entity.setSuppliers(supplierService.findList(new Supplier()));
             // 订单编号
             entity.setPurchaseNumber(this.getNewPurchaseNumber());
+            // 订单日期
+            entity.setOrderTime(new Date());
         }
         return entity;
     }

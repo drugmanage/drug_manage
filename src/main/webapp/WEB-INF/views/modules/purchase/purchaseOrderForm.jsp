@@ -95,7 +95,11 @@
                 <div class="div-b">
                     <label class="control-label">采购员：</label>
                     <div class="controls">
-                        <form:input path="purchaseId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+                        <form:select path="hrmUser" class="input-xlselect ">
+                            <form:option value="" label=""/>
+                            <form:options items="${purchaseOrder.purchases}" itemLabel="empName" itemValue="id"
+                                          htmlEscape="false"/>
+                        </form:select>
                     </div>
                 </div>
             </div>

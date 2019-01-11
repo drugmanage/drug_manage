@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thinkgem.fast.modules.purchase.dao.PurchaseOrderDao">
-    
-	<sql id="purchaseOrderColumns">
+
+    <sql id="purchaseOrderColumns">
 		a.id AS "id",
 		a.office_id AS "office.id",
 		a.purchase_number AS "purchaseNumber",
 		a.supplier_id AS "supplier.id",
-		a.purchase_id AS "purchaseId",
+		a.purchase_id AS "hrm.id",
 		a.order_time AS "orderTime",
 		a.summary AS "summary",
 		a.salesperson_id AS "salespersonId",
@@ -22,81 +22,82 @@
 		o2.name AS "office.name",
 		o3.name AS "supplier.name"
 	</sql>
-	
-	<sql id="purchaseOrderJoins">
+
+    <sql id="purchaseOrderJoins">
 		LEFT JOIN sys_office o2 ON o2.id = a.office_id
 		LEFT JOIN supplier o3 ON o3.id = a.supplier_id
+		LEFT JOIN hrm_user o4 ON o4.id = a.purchase_id
 	</sql>
-    
-	<select id="get" resultType="PurchaseOrder">
-		SELECT 
-			<include refid="purchaseOrderColumns"/>
-		FROM purchase_order a
-		<include refid="purchaseOrderJoins"/>
-		WHERE a.id = #{id}
-	</select>
-	
-	<select id="findList" resultType="PurchaseOrder">
-		SELECT 
-			<include refid="purchaseOrderColumns"/>
-		FROM purchase_order a
-		<include refid="purchaseOrderJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="office != null and office.id != null and office.id != ''">
-				AND a.office_id = #{office.id}
-			</if>
-			<if test="purchaseNumber != null and purchaseNumber != ''">
-				AND a.purchase_number LIKE 
-					<if test="dbName == 'oracle'">'%'||#{purchaseNumber}</if>
-					<if test="dbName == 'mssql'">'%'+#{purchaseNumber}</if>
-					<if test="dbName == 'mysql'">concat('%',#{purchaseNumber})</if>
-			</if>
-			<if test="supplier != null and supplier.id != null and supplier.id != ''">
-				AND a.supplier_id = #{supplier.id}
-			</if>
-			<if test="purchaseId != null and purchaseId != ''">
-				AND a.purchase_id = #{purchaseId}
-			</if>
-			<if test="orderTime != null and orderTime != ''">
-				AND a.order_time = #{orderTime}
-			</if>
-			<if test="storehouse != null and storehouse != ''">
-				AND a.storehouse = #{storehouse}
-			</if>
-			<if test="bizGroup != null and bizGroup != ''">
-				AND a.biz_group = #{bizGroup}
-			</if>
-		</where>
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<select id="findAllList" resultType="PurchaseOrder">
-		SELECT 
-			<include refid="purchaseOrderColumns"/>
-		FROM purchase_order a
-		<include refid="purchaseOrderJoins"/>
-		<where>
-			a.del_flag = #{DEL_FLAG_NORMAL}
-		</where>		
-		<choose>
-			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
-				ORDER BY ${page.orderBy}
-			</when>
-			<otherwise>
-				ORDER BY a.update_date DESC
-			</otherwise>
-		</choose>
-	</select>
-	
-	<insert id="insert">
+
+    <select id="get" resultType="PurchaseOrder">
+        SELECT
+        <include refid="purchaseOrderColumns"/>
+        FROM purchase_order a
+        <include refid="purchaseOrderJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="PurchaseOrder">
+        SELECT
+        <include refid="purchaseOrderColumns"/>
+        FROM purchase_order a
+        <include refid="purchaseOrderJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="office != null and office.id != null and office.id != ''">
+                AND a.office_id = #{office.id}
+            </if>
+            <if test="purchaseNumber != null and purchaseNumber != ''">
+                AND a.purchase_number LIKE
+                <if test="dbName == 'oracle'">'%'||#{purchaseNumber}</if>
+                <if test="dbName == 'mssql'">'%'+#{purchaseNumber}</if>
+                <if test="dbName == 'mysql'">concat('%',#{purchaseNumber})</if>
+            </if>
+            <if test="supplier != null and supplier.id != null and supplier.id != ''">
+                AND a.supplier_id = #{supplier.id}
+            </if>
+            <if test="hrmUser != null and hrmUser.id != null and hrmUser.id != ''">
+                AND a.purchase_id = #{hrmUser.id}
+            </if>
+            <if test="orderTime != null and orderTime != ''">
+                AND a.order_time = #{orderTime}
+            </if>
+            <if test="storehouse != null and storehouse != ''">
+                AND a.storehouse = #{storehouse}
+            </if>
+            <if test="bizGroup != null and bizGroup != ''">
+                AND a.biz_group = #{bizGroup}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="PurchaseOrder">
+        SELECT
+        <include refid="purchaseOrderColumns"/>
+        FROM purchase_order a
+        <include refid="purchaseOrderJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
 		INSERT INTO purchase_order(
 			id,
 			office_id,
@@ -119,7 +120,7 @@
 			#{office.id},
 			#{purchaseNumber},
 			#{supplier.id},
-			#{purchaseId},
+			#{hrmUser.id},
 			#{orderTime},
 			#{summary},
 			#{salespersonId},
@@ -133,13 +134,13 @@
 			#{delFlag}
 		)
 	</insert>
-	
-	<update id="update">
+
+    <update id="update">
 		UPDATE purchase_order SET 	
 			office_id = #{office.id},
 			purchase_number = #{purchaseNumber},
 			supplier_id = #{supplier.id},
-			purchase_id = #{purchaseId},
+			purchase_id = #{hrmUser.id},
 			order_time = #{orderTime},
 			summary = #{summary},
 			salesperson_id = #{salespersonId},
@@ -150,21 +151,21 @@
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
-	
-	<update id="delete">
+
+    <update id="delete">
 		UPDATE purchase_order SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
 
-	<select id="findTodayList" resultType="PurchaseOrder">
-		SELECT
-			a.purchase_number AS "purchaseNumber"
-		FROM purchase_order a
-		<where>
-			a.create_date > #{createDate}
-		</where>
-		ORDER BY a.purchase_number DESC
-	</select>
+    <select id="findTodayList" resultType="PurchaseOrder">
+        SELECT
+        a.purchase_number AS "purchaseNumber"
+        FROM purchase_order a
+        <where>
+            a.create_date > #{createDate}
+        </where>
+        ORDER BY a.purchase_number DESC
+    </select>
 
 </mapper>

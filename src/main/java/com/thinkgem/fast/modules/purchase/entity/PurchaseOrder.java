@@ -1,5 +1,6 @@
 package com.thinkgem.fast.modules.purchase.entity;
 
+import com.thinkgem.fast.modules.hrmuser.entity.HrmUser;
 import com.thinkgem.fast.modules.supplier.entity.Supplier;
 import com.thinkgem.fast.modules.sys.entity.Office;
 import org.hibernate.validator.constraints.Length;
@@ -23,7 +24,7 @@ public class PurchaseOrder extends DataEntity<PurchaseOrder> {
     private Office office;        // 机构id,从当前登录用户获取
     private String purchaseNumber;        // 单据编号
     private Supplier supplier;        // 供应商
-    private String purchaseId;        // 采购员id 内部员工的id（hrm_user的id）
+    private HrmUser hrmUser;        // 采购员id 内部员工的id（hrm_user的id）
     private Date orderTime;        // 订单日期
     private String summary;        // 摘要
     private String salespersonId;        // 对方业务员id
@@ -33,6 +34,8 @@ public class PurchaseOrder extends DataEntity<PurchaseOrder> {
     private List<PurchaseGoodsVo> goodsList;        // 采购商品列表
 
     private List<Supplier> suppliers;       // 供应商列表
+    private List<HrmUser> purchases;
+    // Todo 仓库列表、对方业务员、业务组选择
 
     public PurchaseOrder() {
         super();
@@ -67,13 +70,12 @@ public class PurchaseOrder extends DataEntity<PurchaseOrder> {
         this.supplier = supplier;
     }
 
-    @Length(min = 0, max = 64, message = "采购员id 内部员工的id（hrm_user的id）长度必须介于 0 和 64 之间")
-    public String getPurchaseId() {
-        return purchaseId;
+    public HrmUser getHrmUser() {
+        return hrmUser;
     }
 
-    public void setPurchaseId(String purchaseId) {
-        this.purchaseId = purchaseId;
+    public void setHrmUser(HrmUser hrmUser) {
+        this.hrmUser = hrmUser;
     }
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -135,5 +137,13 @@ public class PurchaseOrder extends DataEntity<PurchaseOrder> {
 
     public void setSuppliers(List<Supplier> suppliers) {
         this.suppliers = suppliers;
+    }
+
+    public List<HrmUser> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(List<HrmUser> purchases) {
+        this.purchases = purchases;
     }
 }
