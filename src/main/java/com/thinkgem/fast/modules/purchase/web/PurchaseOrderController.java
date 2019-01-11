@@ -3,7 +3,6 @@ package com.thinkgem.fast.modules.purchase.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.thinkgem.fast.modules.purchase.entity.PurchaseGoods;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import com.thinkgem.fast.modules.purchase.service.PurchaseGoodsService;
 import com.thinkgem.fast.modules.supplier.entity.Supplier;
@@ -25,6 +24,7 @@ import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseOrder;
 import com.thinkgem.fast.modules.purchase.service.PurchaseOrderService;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -127,7 +127,12 @@ public class PurchaseOrderController extends BaseController {
         }
     }
 
-    private String getNewPurchaseNumber(){
+    /**
+     * 拼接订单编号
+     *
+     * @return
+     */
+    private String getNewPurchaseNumber() {
         String purchaseNumber = "";
 
         // 获取一天的最早时间
@@ -139,17 +144,17 @@ public class PurchaseOrderController extends BaseController {
 
         PurchaseOrder purchaseOrder = new PurchaseOrder();
         purchaseOrder.setCreateDate(today.getTime());
-        List<PurchaseOrder> list =  purchaseOrderService.findTodayList(purchaseOrder);
+        List<PurchaseOrder> list = purchaseOrderService.findTodayList(purchaseOrder);
         if (list.isEmpty()) {
-            String year = today.get(Calendar.YEAR) + "";
-            String month = today.get(Calendar.MONTH) + 1 + "";
-            String day = today.get(Calendar.DAY_OF_MONTH) + "";
-            purchaseNumber = year+month+day + "00001";
-        }else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            String date = sdf.format(new Date());
+
+            purchaseNumber = date + "00001";
+        } else {
             PurchaseOrder purchaseOrderFromDB = list.get(0);
             String oldPurchaseNumber = purchaseOrderFromDB.getPurchaseNumber();
-            String newNum = String.format("%05d",Integer.parseInt(oldPurchaseNumber.substring(7)) + 1);
-            purchaseNumber = oldPurchaseNumber.substring(0,8) + newNum;
+            String newNum = String.format("%05d", Integer.parseInt(oldPurchaseNumber.substring(7)) + 1);
+            purchaseNumber = oldPurchaseNumber.substring(0, 8) + newNum;
         }
 
         return purchaseNumber;
