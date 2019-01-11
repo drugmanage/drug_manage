@@ -93,7 +93,7 @@ public class PurchaseGoodsController extends BaseController {
      * @return
      */
     @RequiresPermissions("goods:goods:view")
-    @RequestMapping(value = {"list", ""})
+//    @RequestMapping(value = {"list", ""})
     public String getGoodsList(Goods goods, HttpServletRequest request, HttpServletResponse response, Model model) {
         Page<Goods> page = goodsService.findPage(new Page<Goods>(request, response), goods);
         model.addAttribute("page", page);
