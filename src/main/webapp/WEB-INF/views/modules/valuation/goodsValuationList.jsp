@@ -25,11 +25,11 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>机构id：</label>
+			<li><label>机构：</label>
 				<sys:treeselect id="office" name="office.id" value="${goodsValuation.office.id}" labelName="office.name" labelValue="${goodsValuation.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
-			<li><label>商品id：</label>
+			<li><label>商品：</label>
 				<form:input path="goodsId" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>

@@ -263,5 +263,12 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
+
+	<!--查询总供应商条数-->
+	<select id="findCount" resultType="int">
+		SELECT
+		count(1)
+		FROM goods a
+	</select>
 	
 </mapper>

@@ -15,6 +15,9 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 	private static final long serialVersionUID = 1L;
 	private Office office;		// 机构id
 	private String goodsId;		// 商品id
+
+	private String goodsName;
+
 	private String thirdQueryPriceFlag;		// 第三方查看价格标识            1、可以查看            0、不可以查看
 	private String notThirdQueryPriceFlag;		// 除第三方外客户标识            1、可以查看            0、不可以查看
 	private String onePrice;		// 一类价格
@@ -39,7 +42,15 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 	public void setOffice(Office office) {
 		this.office = office;
 	}
-	
+
+	public String getGoodsName() {
+		return goodsName;
+	}
+
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+
 	@Length(min=0, max=64, message="商品id长度必须介于 0 和 64 之间")
 	public String getGoodsId() {
 		return goodsId;

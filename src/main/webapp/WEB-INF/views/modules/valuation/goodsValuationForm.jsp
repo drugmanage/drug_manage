@@ -44,9 +44,8 @@
 			<div class="div-b">
 				<label class="control-label">商品：</label>
 				<div class="controls">
-					<form:input path="goodsId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 					<sys:treeselect id="goods" name="goodsId" value="${goodsValuation.goodsId }" labelName="goodsName" labelValue="${goodsValuation.goodsName }" dataMsgRequired="必填信息"
-									title="商品" url="/valuation/goodsValuation/list"  cssClass="input-large required" allowClear="true" notAllowSelectParent="true"/>
+									title="商品" url="/goods/goods/treeData"  cssClass="input-large required" allowClear="true" notAllowSelectParent="true"/>
 				</div>
 			</div>
 		</div>
