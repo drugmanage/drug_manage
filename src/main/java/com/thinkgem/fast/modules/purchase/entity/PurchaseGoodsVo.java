@@ -3,7 +3,7 @@ package com.thinkgem.fast.modules.purchase.entity;
 import com.thinkgem.fast.modules.goods.entity.Goods;
 
 /**
- * 采购商品Entity
+ * 采购商品展示Entity
  * @author 刘海涛
  * @version 2019-1-4
  */
@@ -17,11 +17,47 @@ public class PurchaseGoodsVo {
     private String manufacturer;		// 生产厂家
     private String unit;		// 基本包装单位
     private String content;		// 装量
-    private String retailPrice;		// 零售价
+    private String purchasePrice;		// 采购价格
     private String number;		// 数量
+    private String wholeNumber;		// 整件件数
+    private String piecesNumber;		// 零散件数
     private String tax;		// 含税金额
+    private String taxFree;		// 不含税金额
+    private String taxAmount;		// 税额
+    private String taxRate;		// 税率
     private String stock;   // 库存
     private String arrivalNum;       // 已到货数
+
+    public PurchaseGoodsVo(){
+        // do nothing
+    }
+
+    /**
+     * 构造方法用于构造显示的订单商品列表内容
+     *
+     * @param purchaseGoods
+     */
+    public PurchaseGoodsVo(PurchaseGoods purchaseGoods){
+        this.goodsId = purchaseGoods.getGoods().getId();
+        this.goodsCode = purchaseGoods.getGoods().getGoodsCode();
+        this.goodsName = purchaseGoods.getGoods().getGoodsName();
+        this.goodsSpec = purchaseGoods.getGoods().getGoodsSpec();
+        this.goodsType = purchaseGoods.getGoods().getGoodsType();
+        this.manufacturer = purchaseGoods.getGoods().getManufacturer();
+        this.unit = purchaseGoods.getGoods().getUnit();
+        this.content = purchaseGoods.getGoods().getContent();
+        this.purchasePrice = purchaseGoods.getPurchasePrice();
+        this.number = purchaseGoods.getNumber();
+        this.wholeNumber = purchaseGoods.getWholeNumber();
+        this.piecesNumber = purchaseGoods.getPiecesNumber();
+        this.tax = purchaseGoods.getTax();
+        this.taxFree = purchaseGoods.getTaxFree();
+        this.taxAmount = purchaseGoods.getTaxAmount();
+        this.taxRate = purchaseGoods.getTaxRate();
+        // Todo 库存跟已到货数暂时置空等库存表做完再回头补充
+        this.stock = "";
+        this.arrivalNum = "";
+    }
 
     public String getGoodsId() {
         return goodsId;
@@ -87,12 +123,12 @@ public class PurchaseGoodsVo {
         this.content = content;
     }
 
-    public String getRetailPrice() {
-        return retailPrice;
+    public String getPurchasePrice() {
+        return purchasePrice;
     }
 
-    public void setRetailPrice(String retailPrice) {
-        this.retailPrice = retailPrice;
+    public void setPurchasePrice(String purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public String getNumber() {
@@ -125,5 +161,45 @@ public class PurchaseGoodsVo {
 
     public void setArrivalNum(String arrivalNum) {
         this.arrivalNum = arrivalNum;
+    }
+
+    public String getWholeNumber() {
+        return wholeNumber;
+    }
+
+    public void setWholeNumber(String wholeNumber) {
+        this.wholeNumber = wholeNumber;
+    }
+
+    public String getPiecesNumber() {
+        return piecesNumber;
+    }
+
+    public void setPiecesNumber(String piecesNumber) {
+        this.piecesNumber = piecesNumber;
+    }
+
+    public String getTaxFree() {
+        return taxFree;
+    }
+
+    public void setTaxFree(String taxFree) {
+        this.taxFree = taxFree;
+    }
+
+    public String getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(String taxAmount) {
+        this.taxAmount = taxAmount;
+    }
+
+    public String getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(String taxRate) {
+        this.taxRate = taxRate;
     }
 }

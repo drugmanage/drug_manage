@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.thinkgem.fast.modules.goods.entity.Goods;
+import com.thinkgem.fast.modules.goods.service.GoodsService;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoods;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import org.apache.commons.collections.CollectionUtils;
@@ -29,17 +31,19 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
     @Autowired
     private PurchaseGoodsService purchaseGoodsService;
 
+    @Autowired
+    private GoodsService goodsService;
+
     public PurchaseOrder get(String id) {
         PurchaseOrder purchaseOrder = super.get(id);
 
         List<PurchaseGoodsVo> purchaseGoodsVoList = new ArrayList<PurchaseGoodsVo>();
         PurchaseGoods purchaseGoods = new PurchaseGoods();
-        purchaseGoods.setPurchaseOrderId(purchaseOrder.getId());
+        purchaseGoods.setPurchaseOrder(purchaseOrder);
         List<PurchaseGoods> purchaseGoodsList = purchaseGoodsService.findList(purchaseGoods);
-        // ToDo 构造要显示的采购商品订单
+        // 构造要显示的采购商品订单
         for (PurchaseGoods purchaseGoods1 : purchaseGoodsList) {
-            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo();
-            purchaseGoodsVo.setGoodsId(purchaseGoods1.getGoodsId());
+            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo(purchaseGoods1);
             purchaseGoodsVoList.add(purchaseGoodsVo);
         }
         purchaseOrder.setGoodsList(purchaseGoodsVoList);
@@ -60,12 +64,10 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         List<PurchaseGoodsVo> purchaseGoodsVoList = purchaseOrder.getGoodsList();
         if (CollectionUtils.isNotEmpty(purchaseGoodsVoList)) {
             for (PurchaseGoodsVo purchaseGoodsVo : purchaseGoodsVoList) {
-                // ToDo 通过PurchaseGoodsVo构造PurchaseGoods得到采购商品订单信息
-                PurchaseGoods purchaseGoods = new PurchaseGoods();
-                purchaseGoods.setPurchaseOrderId(purchaseOrder.getId());
-                purchaseGoods.setGoodsId(purchaseGoodsVo.getGoodsId());
-                purchaseGoods.setNumber(purchaseGoods.getNumber());
-
+                // 通过PurchaseGoodsVo构造PurchaseGoods得到采购商品订单信息
+                PurchaseGoods purchaseGoods = new PurchaseGoods(purchaseGoodsVo);
+                purchaseGoods.setPurchaseOrder(purchaseOrder);
+                purchaseGoods.setGoods(goodsService.get(purchaseGoodsVo.getGoodsId()));
                 purchaseGoodsService.save(purchaseGoods);
             }
         }

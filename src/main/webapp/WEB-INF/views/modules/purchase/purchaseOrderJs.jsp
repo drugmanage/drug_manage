@@ -8,7 +8,7 @@
                 var width = $("#mainFrame", top.window.document).width();
                 var height = $("#mainFrame", top.window.document).height() - 80;
 
-                top.$.jBox.open("iframe:${ctx}/goods/goods", "记录", width, height, {
+                top.$.jBox.open("iframe:${ctx}/purchase/purchaseGoods/getGoodsList", "商品筛选", width, height, {
                     buttons: {}, submit: function (v, h, f) {
                         if (v == "ok") {
                         }

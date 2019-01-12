@@ -17,7 +17,7 @@
 	</script>
 </head>
 <body>
-	<form:form id="searchForm" modelAttribute="goods" action="${ctx}/purchase/purchaseGoods/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="goods" action="${ctx}/purchase/purchaseGoods/getGoodsList" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">

@@ -1,5 +1,6 @@
 package com.thinkgem.fast.modules.purchase.entity;
 
+import com.thinkgem.fast.modules.goods.entity.Goods;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
@@ -12,9 +13,10 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 public class PurchaseGoods extends DataEntity<PurchaseGoods> {
 	
 	private static final long serialVersionUID = 1L;
-	private String purchaseOrderId;		// 采购订单id
-	private String goodsId;		// 商品id
+	private PurchaseOrder purchaseOrder;		// 采购订单
+	private Goods goods;		// 商品
 	private String storeroomName;		// 库房名称
+	private String purchasePrice;		// 采购价格
 	private String number;		// 数量
 	private String wholeNumber;		// 整件件数
 	private String piecesNumber;		// 零散件数
@@ -22,7 +24,7 @@ public class PurchaseGoods extends DataEntity<PurchaseGoods> {
 	private String taxFree;		// 不含税金额
 	private String taxAmount;		// 税额
 	private String taxRate;		// 税率
-	
+
 	public PurchaseGoods() {
 		super();
 	}
@@ -31,24 +33,33 @@ public class PurchaseGoods extends DataEntity<PurchaseGoods> {
 		super(id);
 	}
 
-	@Length(min=0, max=64, message="采购订单id长度必须介于 0 和 64 之间")
-	public String getPurchaseOrderId() {
-		return purchaseOrderId;
+	public PurchaseGoods(PurchaseGoodsVo purchaseGoodsVo){
+		this.purchasePrice = purchaseGoodsVo.getPurchasePrice();
+		this.number = purchaseGoodsVo.getNumber();
+		this.wholeNumber = purchaseGoodsVo.getWholeNumber();
+		this.piecesNumber = purchaseGoodsVo.getPiecesNumber();
+		this.tax = purchaseGoodsVo.getTax();
+		this.taxFree = purchaseGoodsVo.getTaxFree();
+		this.taxAmount = purchaseGoodsVo.getTaxAmount();
+		this.taxRate = purchaseGoodsVo.getTaxRate();
 	}
 
-	public void setPurchaseOrderId(String purchaseOrderId) {
-		this.purchaseOrderId = purchaseOrderId;
-	}
-	
-	@Length(min=0, max=64, message="商品id长度必须介于 0 和 64 之间")
-	public String getGoodsId() {
-		return goodsId;
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
 	}
 
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
 	}
-	
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
 	@Length(min=0, max=64, message="库房名称长度必须介于 0 和 64 之间")
 	public String getStoreroomName() {
 		return storeroomName;
@@ -117,4 +128,11 @@ public class PurchaseGoods extends DataEntity<PurchaseGoods> {
 		this.taxRate = taxRate;
 	}
 
+	public String getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(String purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
 }

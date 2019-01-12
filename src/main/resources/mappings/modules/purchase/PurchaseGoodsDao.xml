@@ -4,8 +4,8 @@
     
 	<sql id="purchaseGoodsColumns">
 		a.id AS "id",
-		a.purchase_order_id AS "purchaseOrderId",
-		a.goods_id AS "goodsId",
+		a.purchase_order_id AS "purchaseOrder.id",
+		a.goods_id AS "goods.id",
 		a.storeroom_name AS "storeroomName",
 		a.number AS "number",
 		a.whole_number AS "wholeNumber",
@@ -23,6 +23,8 @@
 	</sql>
 	
 	<sql id="purchaseGoodsJoins">
+		LEFT JOIN purchase_order o ON o.id = a.purchase_order_id
+		LEFT JOIN goods g ON g.id = a.goods_id
 	</sql>
     
 	<select id="get" resultType="PurchaseGoods">
@@ -90,8 +92,8 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{purchaseOrderId},
-			#{goodsId},
+			#{purchaseOrder.id},
+			#{goods.id},
 			#{storeroomName},
 			#{number},
 			#{wholeNumber},
@@ -111,8 +113,8 @@
 	
 	<update id="update">
 		UPDATE purchase_goods SET 	
-			purchase_order_id = #{purchaseOrderId},
-			goods_id = #{goodsId},
+			purchase_order_id = #{purchaseOrder.id},
+			goods_id = #{goods.id},
 			storeroom_name = #{storeroomName},
 			number = #{number},
 			whole_number = #{wholeNumber},

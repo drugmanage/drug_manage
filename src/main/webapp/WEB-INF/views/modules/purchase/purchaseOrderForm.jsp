@@ -161,9 +161,12 @@
                     <th>生产企业</th>
                     <th>单位</th>
                     <th>内装数</th>
-                    <th>单价</th>
+                    <th>采购价格</th>
                     <th>采购数量</th>
-                    <th>金额</th>
+                    <th>含税金额</th>
+                    <th>不含税金额</th>
+                    <th>税额</th>
+                    <th>税率</th>
                     <th>当前库存</th>
                     <th>已到货数</th>
                     <shiro:hasPermission name="purchase:purchaseOrder:edit">
@@ -206,7 +209,7 @@
                         </td>
                         <td>
                             <input type="text" class="table-form-control" name="goodsList[${i.index }].retailPrice"
-                                   value="${item.retailPrice }" valid='vtext'/>
+                                   value="${item.purchasePrice }" valid='vtext'/>
                         </td>
                         <td>
                             <input type="text" class="table-form-control" name="goodsList[${i.index }].number"
@@ -215,6 +218,18 @@
                         <td>
                             <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
                                    value="${item.tax }" valid='vtext'/>
+                        </td>
+                        <td>
+                            <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
+                                   value="${item.taxFree }" valid='vtext'/>
+                        </td>
+                        <td>
+                            <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
+                                   value="${item.taxAmount }" valid='vtext'/>
+                        </td>
+                        <td>
+                            <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
+                                   value="${item.taxRate }" valid='vtext'/>
                         </td>
                         <td>
                             <input type="text" class="table-form-control" name="goodsList[${i.index }].stock"
