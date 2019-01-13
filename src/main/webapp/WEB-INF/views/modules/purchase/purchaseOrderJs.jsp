@@ -4,13 +4,23 @@
     var oper = {
         goods: {
             socpName: "goods_",
-            add: function showSaveDiv(deviceId) {
+            viewGoods: function () {
                 var width = $("#mainFrame", top.window.document).width();
                 var height = $("#mainFrame", top.window.document).height() - 80;
 
                 top.$.jBox.open("iframe:${ctx}/purchase/purchaseGoods/getGoodsList", "商品筛选", width, height, {
-                    buttons: {}, submit: function (v, h, f) {
+                    buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
                         if (v == "ok") {
+                            // var goods = null;
+                            var goods = h.find("iframe")[0].contentWindow.goods;
+                            // for (var i = 0; i < chks.length; i++) {
+                            //     if (chks[i].checked == true) {
+                            //         goods = chks[i].value;
+                            //     }
+                            // }
+                            console.log(goods)
+                            // var html = this.appendHtml(newMaxId);
+                            // $("#" + this.socpName + "tr_" + maxId).after(html);
                         }
                         else if (v == "clear") {
                         }
@@ -18,6 +28,27 @@
                         $(".jbox-content", top.document).css("overflow-y", "hidden");
                     }
                 });
+            },
+            add: function showSaveDiv(deviceId) {
+                if ($("input[name='itemGoodsId']") && $("input[name='itemGoodsId']").length != 0) {
+                    var itemGoodsId = [];
+                    $("input[name='itemGoodsId']").each(function () {
+                        itemGoodsId.push(parseInt($(this).val()));
+                    });
+                    if (itemGoodsId.length != 0) {
+                        var maxId = Math.max.apply(null, itemGoodsId);
+                        if (maxId != undefined) {
+                            var newMaxId = maxId + 1;
+                            var html = this.appendHtml(newMaxId);
+                            $("#" + this.socpName + "tr_" + maxId).after(html);
+                        }
+                    }
+                } else {
+                    var newMaxId = 0;
+                    var html = this.appendHtml(newMaxId);
+                    $("#" + oper.edu.socpName + "contentField").html(html);
+                }
+
             },
             del: function (itemGoodsId, entityId) {
                 if (entityId) {

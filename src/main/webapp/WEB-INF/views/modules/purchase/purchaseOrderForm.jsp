@@ -250,7 +250,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="10"><a href="javascript:" onclick="oper.goods.add();" class="btn">新增</a></td>
+                    <td colspan="10"><a href="javascript:" onclick="oper.goods.viewGoods();" class="btn">新增</a></td>
                 </tr>
                 </tfoot>
             </table>
