@@ -23,6 +23,14 @@
                 }
             });
 
+            //Tab页签
+            $('#myTab a:first').tab('show');
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+
             $("#goodsName").keyup(function () {
                 var empName = $(this).val();
                 var py = Mtils.utils.makePy(empName, true);
@@ -379,18 +387,37 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane active" id="goodsImage">
-
+        <div class="tab-pane " id="goodsImage">
+            <div class="control-group">
+                <label class="control-label">商品图片</label>
+                <div class="controls">
+                    <form:hidden id="nameGoodsImage" path="pathGoodsImage" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+                    <sys:ckfinder input="nameGoodsImage" type="images" uploadPath="/goods/baseImg" selectMultiple="true"/>
+                </div>
+            </div>
         </div>
-        <div class="tab-pane active" id="goodsCode">
+        <div class="tab-pane " id="goodsCode">
+            <div class="control-group">
+                <label class="control-label">商品编码图片</label>
+                <div class="controls">
+                    <form:hidden id="nameGoodsCodeImage" path="pathGoodsCodeImage" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+                    <sys:ckfinder input="nameGoodsCodeImage" type="images" uploadPath="/goods/codeImg" selectMultiple="true"/>
+                </div>
+            </div>
         </div>
-        <div class="tab-pane active" id="goodsRegulatory">
+        <div class="tab-pane " id="goodsRegulatory">
+            <div class="control-group">
+                <label class="control-label">商品电子监管码图片</label>
+                <div class="controls">
+                    <form:hidden id="nameGoodsRegulatoryImage" path="pathGoodsRegulatoryImage" htmlEscape="false" maxlength="255" class="input-xlarge"/>
+                    <sys:ckfinder input="nameGoodsRegulatoryImage" type="images" uploadPath="/goods/regulatoryImg" selectMultiple="true"/>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="form-actions">
-        <shiro:hasPermission name="goods:goods:edit"><input id="btnSubmit" class="btn btn-primary" type="submit"
-                                                            value="保 存"/>&nbsp;</shiro:hasPermission>
+        <shiro:hasPermission name="goods:goods:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
         <input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
     </div>
 </form:form>

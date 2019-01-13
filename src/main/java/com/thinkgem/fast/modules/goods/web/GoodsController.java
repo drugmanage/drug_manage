@@ -113,7 +113,7 @@ public class GoodsController extends BaseController {
 		if (!beanValidator(model, goods)){
 			return form(goods, model);
 		}
-		goodsService.save(goods);
+		goodsService.saveAndImg(goods);
 		addMessage(redirectAttributes, "保存商品资料成功");
 		return "redirect:"+Global.getAdminPath()+"/goods/goods/?repage";
 	}

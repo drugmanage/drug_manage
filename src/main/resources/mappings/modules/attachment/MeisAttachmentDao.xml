@@ -188,14 +188,23 @@
     <!-- 查询附件列表 -->
     <select id="findAttchList" resultType="MeisAttachment">
         SELECT
-        a.id AS "id",
-        a.create_date2 AS "createDate2",
-        a.biz_type AS "bizType",
-        a.type AS "type",
-        a.path AS "path",
-        a.title AS "title",
-        a.size AS "size",
-        a.biz_id AS "bizId"
+		a.id AS "id",
+		a.office_id AS "office.id",
+		a.title AS "title",
+		a.biz_type AS "bizType",
+		a.biz_id AS "bizId",
+		a.path AS "path",
+		a.mime_type AS "mimeType",
+		a.suffix AS "suffix",
+		a.type AS "type",
+		a.order_number AS "orderNumber",
+		a.virtual_path AS "virtualPath",
+		a.create_by AS "createBy.id",
+		a.create_date2 AS "createDate2",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
         FROM
         meis_attachment a
         <where>
