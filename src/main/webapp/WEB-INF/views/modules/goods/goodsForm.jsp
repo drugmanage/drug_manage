@@ -64,8 +64,8 @@
     <ul class="nav nav-tabs" id="myTab">
         <li class="active"><a href="#baseInfo">基本信息</a></li>
         <li><a href="#goodsImage">商品图片</a></li>
-        <li><a href="#goodsCode">商品编码</a></li>
-        <li><a href="#goodsRegulatory">商品电子监管码</a></li>
+        <li><a href="#goodsCodeImage">商品编码</a></li>
+        <li><a href="#goodsRegulatoryImage">商品电子监管码</a></li>
     </ul>
 
     <div class="tab-content">
@@ -396,7 +396,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane " id="goodsCode">
+        <div class="tab-pane " id="goodsCodeImage">
             <div class="control-group">
                 <label class="control-label">商品编码图片</label>
                 <div class="controls">
@@ -405,7 +405,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane " id="goodsRegulatory">
+        <div class="tab-pane " id="goodsRegulatoryImage">
             <div class="control-group">
                 <label class="control-label">商品电子监管码图片</label>
                 <div class="controls">

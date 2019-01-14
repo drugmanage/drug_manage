@@ -40,14 +40,24 @@ public class GoodsService extends CrudService<GoodsDao, Goods> {
 		String pathGoodsCode="";
 		String pathGoodsRegulatory="";
 		for (MeisAttachment meisAttachment : attchList) {
-			if(StringUtils.isNotBlank(pathGoods) && "pathGoods".equals(meisAttachment.getBizType())){
-				pathGoods+="|"+meisAttachment.getPath();
+
+			if ("pathGoods".equals(meisAttachment.getBizType())) {
+				if (StringUtils.isNotBlank(pathGoods)) {
+					pathGoods += "|";
+				}
+				pathGoods += meisAttachment.getPath();
 			}
-			if(StringUtils.isNotBlank(pathGoodsCode) && "pathGoodsCode".equals(meisAttachment.getBizType())){
-				pathGoodsCode+="|"+meisAttachment.getPath();
+			if ("pathGoodsCode".equals(meisAttachment.getBizType())) {
+				if (StringUtils.isNotBlank(pathGoodsCode)) {
+					pathGoodsCode += "|";
+				}
+				pathGoodsCode += meisAttachment.getPath();
 			}
-			if(StringUtils.isNotBlank(pathGoodsRegulatory) && "pathGoodsRegulatory".equals(meisAttachment.getBizType())){
-				pathGoodsRegulatory+="|"+meisAttachment.getPath();
+			if ("pathGoodsRegulatory".equals(meisAttachment.getBizType())) {
+				if (StringUtils.isNotBlank(pathGoodsRegulatory)) {
+					pathGoodsRegulatory += "|";
+				}
+				pathGoodsRegulatory += meisAttachment.getPath();
 			}
 		}
 		if(StringUtils.isNotBlank(pathGoods) ){
