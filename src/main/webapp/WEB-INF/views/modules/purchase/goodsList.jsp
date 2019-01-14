@@ -34,6 +34,67 @@
 
         var goodsArr = [];
 
+        function appendHtml(newMaxId, goods) {
+            var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
+                + '<td>'
+                + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
+                + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsCode"'
+                + 'value="' + goods.goodsCode + '" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsName"'
+                + 'value="' + goods.goodsName + '" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsSpec"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsType"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].manufacturer"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].unit"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].content"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].retailPrice"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].tax"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].stock"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].arrivalNum"'
+                + 'value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<a href="javascript:void(0)" class="btnDel" onclick="oper.goods.del(' + newMaxId + ');">删除</a>'
+                + '</td>'
+                + '</tr>';
+            var html = trStr;
+            return html;
+        }
+
+
         function boxClick(goods) {
             goodsArr.push(goods);
         }

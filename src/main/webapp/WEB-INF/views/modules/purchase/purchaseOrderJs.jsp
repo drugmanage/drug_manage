@@ -12,15 +12,15 @@
                     buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
                         if (v == "ok") {
                             // var goods = null;
-                            var goods = h.find("iframe")[0].contentWindow.goods;
-                            // for (var i = 0; i < chks.length; i++) {
-                            //     if (chks[i].checked == true) {
-                            //         goods = chks[i].value;
-                            //     }
-                            // }
-                            console.log(goods)
-                            // var html = this.appendHtml(newMaxId);
-                            // $("#" + this.socpName + "tr_" + maxId).after(html);
+                            var goodsArr = h.find("iframe")[0].contentWindow.goodsArr;
+                            var goods = goodsArr[0];
+                            console.log(h);
+                            console.log(f);
+                            // h.appendHtml(1, goods);
+                            var iframeName = h.children(0).attr("name");
+                            var iframeHtml = window.frames[iframeName];               //获取子窗口的句柄
+                            iframeHtml.appendHtml(1, goods);
+                            // window.parent.page.appendHtml(newMaxId,goods);
                         }
                         else if (v == "clear") {
                         }
@@ -75,17 +75,17 @@
                     $("#" + this.socpName + "tr_" + itemGoodsId).remove();
                 }
             },
-            appendHtml: function (newMaxId) {
+            appendHtml: function (newMaxId, goods) {
                 var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                     + '<td>'
                     + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
-                    + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value=""/>'
+                    + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
                     + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsCode"'
-                    + 'value="" valid="vtext"/>'
+                    + 'value="' + goods.goodsCode + '" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
                     + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsName"'
-                    + 'value="" valid="vtext"/>'
+                    + 'value="' + goods.goodsName + '" valid="vtext"/>'
                     + '</td>'
                     + '<td>'
                     + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsSpec"'
