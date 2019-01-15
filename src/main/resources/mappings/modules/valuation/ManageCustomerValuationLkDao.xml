@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.valuation.dao.ManageCustomerValuationLkDao">
+    
+	<sql id="manageCustomerValuationLkColumns">
+		a.id AS "id",
+		a.price_lk_id AS "priceLkId",
+		a.customer_id AS "customerId"
+	</sql>
+	
+	<sql id="manageCustomerValuationLkJoins">
+	</sql>
+    
+	<select id="get" resultType="ManageCustomerValuationLk">
+		SELECT 
+			<include refid="manageCustomerValuationLkColumns"/>
+		FROM manage_customer_valuation_lk a
+		<include refid="manageCustomerValuationLkJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="ManageCustomerValuationLk">
+		SELECT 
+			<include refid="manageCustomerValuationLkColumns"/>
+		FROM manage_customer_valuation_lk a
+		<include refid="manageCustomerValuationLkJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="ManageCustomerValuationLk">
+		SELECT 
+			<include refid="manageCustomerValuationLkColumns"/>
+		FROM manage_customer_valuation_lk a
+		<include refid="manageCustomerValuationLkJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO manage_customer_valuation_lk(
+			id,
+			price_lk_id,
+			customer_id
+		) VALUES (
+			#{id},
+			#{priceLkId},
+			#{customerId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE manage_customer_valuation_lk SET 	
+			price_lk_id = #{priceLkId},
+			customer_id = #{customerId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM manage_customer_valuation_lk
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

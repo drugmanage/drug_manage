@@ -7,7 +7,7 @@ import com.thinkgem.fast.modules.valuation.entity.SaleValuation;
 /**
  * 业务员定价DAO接口
  * @author renshuo
- * @version 2019-01-10
+ * @version 2019-01-15
  */
 @MyBatisDao
 public interface SaleValuationDao extends CrudDao<SaleValuation> {

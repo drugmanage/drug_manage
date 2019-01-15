@@ -6,7 +6,12 @@
 		a.id AS "id",
 		a.sale_id AS "saleId",
 		a.manage_valuation_id AS "manageValuationId",
-		a.markup_price AS "markupPrice",
+		a.one_price AS "onePrice",
+		a.one_price_customer_lk_id AS "onePriceCustomerLkId",
+		a.two_price AS "twoPrice",
+		a.two_price_customer_lk_id AS "twoPriceCustomerLkId",
+		a.three_price AS "threePrice",
+		a.three_price_customer_lk_id AS "threePriceCustomerLkId",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -33,9 +38,6 @@
 		<include refid="saleValuationJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="saleId != null and saleId != ''">
-				AND a.sale_id = #{saleId}
-			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -70,7 +72,12 @@
 			id,
 			sale_id,
 			manage_valuation_id,
-			markup_price,
+			one_price,
+			one_price_customer_lk_id,
+			two_price,
+			two_price_customer_lk_id,
+			three_price,
+			three_price_customer_lk_id,
 			create_by,
 			create_date,
 			update_by,
@@ -81,7 +88,12 @@
 			#{id},
 			#{saleId},
 			#{manageValuationId},
-			#{markupPrice},
+			#{onePrice},
+			#{onePriceCustomerLkId},
+			#{twoPrice},
+			#{twoPriceCustomerLkId},
+			#{threePrice},
+			#{threePriceCustomerLkId},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -95,7 +107,12 @@
 		UPDATE sale_valuation SET 	
 			sale_id = #{saleId},
 			manage_valuation_id = #{manageValuationId},
-			markup_price = #{markupPrice},
+			one_price = #{onePrice},
+			one_price_customer_lk_id = #{onePriceCustomerLkId},
+			two_price = #{twoPrice},
+			two_price_customer_lk_id = #{twoPriceCustomerLkId},
+			three_price = #{threePrice},
+			three_price_customer_lk_id = #{threePriceCustomerLkId},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},
 			remarks = #{remarks}

@@ -35,23 +35,51 @@
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">区域经理id：</label>
+				<label class="control-label">定价表：</label>
 				<div class="controls">
-					<form:input path="manageId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+					<form:input path="valuationId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
 			<div class="div-b">
-				<label class="control-label">定价表id：</label>
+				<label class="control-label">一类价格：</label>
 				<div class="controls">
-					<form:input path="valuationId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+					<form:input path="onePrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
 			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">加价价格：</label>
+				<label class="control-label">设置客户一类价格关联id：</label>
 				<div class="controls">
-					<form:input path="markupPrice" htmlEscape="false" class="input-xlarge  number"/>
+					<form:input path="onePriceCustomerLkId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				</div>
+			</div>
+			<div class="div-b">
+				<label class="control-label">二类价格：</label>
+				<div class="controls">
+					<form:input path="twoPrice" htmlEscape="false" class="input-xlarge  number"/>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="div-a">
+				<label class="control-label">设置客户二类价格关联id：</label>
+				<div class="controls">
+					<form:input path="twoPriceCustomerLkId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				</div>
+			</div>
+			<div class="div-b">
+				<label class="control-label">二类价格：</label>
+				<div class="controls">
+					<form:input path="threePrice" htmlEscape="false" class="input-xlarge  number"/>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="div-a">
+				<label class="control-label">设置客户三类价格关联id：</label>
+				<div class="controls">
+					<form:input path="threePriceCustomerLkId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
 			<div class="div-b">

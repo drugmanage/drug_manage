@@ -49,18 +49,53 @@
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">加价价格：</label>
+				<label class="control-label">一类价格：</label>
 				<div class="controls">
-					<form:input path="markupPrice" htmlEscape="false" class="input-xlarge  number"/>
+					<form:input path="onePrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
 			</div>
 			<div class="div-b">
+				<label class="control-label">设置客户一类价格关联id：</label>
+				<div class="controls">
+					<form:input path="onePriceCustomerLkId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="div-a">
+				<label class="control-label">二类价格：</label>
+				<div class="controls">
+					<form:input path="twoPrice" htmlEscape="false" class="input-xlarge  number"/>
+				</div>
+			</div>
+			<div class="div-b">
+				<label class="control-label">设置客户二类价格关联id：</label>
+				<div class="controls">
+					<form:input path="twoPriceCustomerLkId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="div-a">
+				<label class="control-label">二类价格：</label>
+				<div class="controls">
+					<form:input path="threePrice" htmlEscape="false" class="input-xlarge  number"/>
+				</div>
+			</div>
+			<div class="div-b">
+				<label class="control-label">设置客户三类价格关联id：</label>
+				<div class="controls">
+					<form:input path="threePriceCustomerLkId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">备注信息：</label>
 				<div class="controls">
 					<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
 		<div class="form-actions">
 			<shiro:hasPermission name="valuation:saleValuation:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
