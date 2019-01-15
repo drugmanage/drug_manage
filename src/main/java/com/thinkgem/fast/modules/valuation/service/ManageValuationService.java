@@ -13,7 +13,7 @@ import com.thinkgem.fast.modules.valuation.dao.ManageValuationDao;
 /**
  * 区域经理定价Service
  * @author renshuo
- * @version 2019-01-10
+ * @version 2019-01-15
  */
 @Service
 @Transactional(readOnly = true)

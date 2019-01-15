@@ -33,12 +33,11 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>区域经理id</th>
-				<th>定价表id</th>
-				<th>加价价格</th>
-				<th>创建者</th>
-				<th>创建时间</th>
-				<th>更新者</th>
+				<th>区域经理</th>
+				<th>定价表</th>
+				<th>一类价格</th>
+				<th>二类价格</th>
+				<th>二类价格</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="valuation:manageValuation:edit"><th>操作</th></shiro:hasPermission>
@@ -54,16 +53,13 @@
 					${manageValuation.valuationId}
 				</td>
 				<td>
-					${manageValuation.markupPrice}
+					${manageValuation.onePrice}
 				</td>
 				<td>
-					${manageValuation.createBy.id}
+					${manageValuation.twoPrice}
 				</td>
 				<td>
-					<fmt:formatDate value="${manageValuation.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${manageValuation.updateBy.id}
+					${manageValuation.threePrice}
 				</td>
 				<td>
 					<fmt:formatDate value="${manageValuation.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

@@ -25,9 +25,6 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>业务员id：</label>
-				<form:input path="saleId" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -38,11 +35,11 @@
 			<tr>
 				<th>业务员id</th>
 				<th>区域经理加价表id</th>
-				<th>加价价格</th>
-				<th>创建者</th>
-				<th>创建时间</th>
-				<th>更新者</th>
+				<th>一类价格</th>
+				<th>二类价格</th>
+				<th>二类价格</th>
 				<th>更新时间</th>
+				<th>备注信息</th>
 				<shiro:hasPermission name="valuation:saleValuation:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -56,19 +53,19 @@
 					${saleValuation.manageValuationId}
 				</td>
 				<td>
-					${saleValuation.markupPrice}
+					${saleValuation.onePrice}
 				</td>
 				<td>
-					${saleValuation.createBy.id}
+					${saleValuation.twoPrice}
 				</td>
 				<td>
-					<fmt:formatDate value="${saleValuation.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${saleValuation.updateBy.id}
+					${saleValuation.threePrice}
 				</td>
 				<td>
 					<fmt:formatDate value="${saleValuation.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+					${saleValuation.remarks}
 				</td>
 				<shiro:hasPermission name="valuation:saleValuation:edit"><td>
     				<a href="${ctx}/valuation/saleValuation/form?id=${saleValuation.id}">修改</a>

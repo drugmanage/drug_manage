@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.valuation.dao.SaleCustomerValuationLkDao">
+    
+	<sql id="saleCustomerValuationLkColumns">
+		a.id AS "id",
+		a.sale_price_lk_id AS "salePriceLkId",
+		a.customer_id AS "customerId"
+	</sql>
+	
+	<sql id="saleCustomerValuationLkJoins">
+	</sql>
+    
+	<select id="get" resultType="SaleCustomerValuationLk">
+		SELECT 
+			<include refid="saleCustomerValuationLkColumns"/>
+		FROM sale_customer_valuation_lk a
+		<include refid="saleCustomerValuationLkJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SaleCustomerValuationLk">
+		SELECT 
+			<include refid="saleCustomerValuationLkColumns"/>
+		FROM sale_customer_valuation_lk a
+		<include refid="saleCustomerValuationLkJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SaleCustomerValuationLk">
+		SELECT 
+			<include refid="saleCustomerValuationLkColumns"/>
+		FROM sale_customer_valuation_lk a
+		<include refid="saleCustomerValuationLkJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sale_customer_valuation_lk(
+			id,
+			sale_price_lk_id,
+			customer_id
+		) VALUES (
+			#{id},
+			#{salePriceLkId},
+			#{customerId}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sale_customer_valuation_lk SET 	
+			sale_price_lk_id = #{salePriceLkId},
+			customer_id = #{customerId}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM sale_customer_valuation_lk
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
