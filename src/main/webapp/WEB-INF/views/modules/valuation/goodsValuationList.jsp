@@ -25,7 +25,7 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>机构：</label>
+			<li><label>部门：</label>
 				<sys:treeselect id="office" name="office.id" value="${goodsValuation.office.id}" labelName="office.name" labelValue="${goodsValuation.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
@@ -40,8 +40,8 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>机构id</th>
-				<th>商品id</th>
+				<th>部门</th>
+				<th>商品名称</th>
 				<th>第三方查看价格标识</th>
 				<th>除第三方外客户标识</th>
 				<th>一类价格</th>
@@ -51,7 +51,6 @@
 				<th>五类价格</th>
 				<th>公营价</th>
 				<th>更新时间</th>
-				<th>备注信息</th>
 				<shiro:hasPermission name="valuation:goodsValuation:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
