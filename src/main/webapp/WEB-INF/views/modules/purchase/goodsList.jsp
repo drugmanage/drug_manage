@@ -16,87 +16,17 @@
             return false;
         }
 
-        function allcheck() {
-            var nn = $("#allboxs").is(":checked"); //判断th中的checkbox是否被选中，如果被选中则nn为true，反之为false
-            if (nn == true) {
-                var namebox = $("input[name^='boxs']");  //获取name值为boxs的所有input
-                for (i = 0; i < namebox.length; i++) {
-                    namebox[i].checked = true;    //js操作选中checkbox
-                }
-            }
-            if (nn == false) {
-                var namebox = $("input[name^='boxs']");
-                for (i = 0; i < namebox.length; i++) {
-                    namebox[i].checked = false;
-                }
-            }
-        }
-
+        // jbox要获取的数组
         var goodsArr = [];
 
-        function appendHtml(newMaxId, goods) {
-            var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
-                + '<td>'
-                + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
-                + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsCode"'
-                + 'value="' + goods.goodsCode + '" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsName"'
-                + 'value="' + goods.goodsName + '" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsSpec"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsType"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].manufacturer"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].unit"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].content"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].retailPrice"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].tax"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].stock"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].arrivalNum"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<a href="javascript:void(0)" class="btnDel" onclick="oper.goods.del(' + newMaxId + ');">删除</a>'
-                + '</td>'
-                + '</tr>';
-            var html = trStr;
-            return html;
-        }
+        // function boxClick(goods) {
+        //     goodsArr.push(goods);
+        // }
 
-
-        function boxClick(goods) {
-            goodsArr.push(goods);
+        function getChecked() {
+            $('input[name="goodsbox"]:checked').each(function () {      //遍历每一个名字为interest的复选框，其中选中的执行函数
+                goodsArr.push($(this).val());
+            });
         }
 
     </script>
@@ -154,7 +84,7 @@
     <c:forEach items="${page.list}" var="goods">
         <tr>
             <td>
-                <input name="boxs" type="checkbox" value="${goods}" onclick="boxClick(this.value)"/>
+                <input name="goodsbox" type="checkbox" value="${goods}"/>
             </td>
             <td>
                     ${fns:getDictLabel(goods.goodsCategory, 'goods_category', '')}

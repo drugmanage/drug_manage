@@ -100,4 +100,10 @@ public class PurchaseGoodsController extends BaseController {
         return "modules/purchase/goodsList";
     }
 
+//    public String getGoodsVoList(Goods goods, HttpServletRequest request, HttpServletResponse response, Model model){
+//        Page<PurchaseOrder> page = purchaseOrderService.findPage(new Page<PurchaseOrder>(request, response), purchaseOrder);
+//        model.addAttribute("page", page);
+//        return "modules/purchase/purchaseOrderList";
+//    }
+
 }

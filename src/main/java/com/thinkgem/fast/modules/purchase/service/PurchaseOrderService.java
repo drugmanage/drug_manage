@@ -36,26 +36,28 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
 
     public PurchaseOrder get(String id) {
         PurchaseOrder purchaseOrder = super.get(id);
-
-        List<PurchaseGoodsVo> purchaseGoodsVoList = new ArrayList<PurchaseGoodsVo>();
-        PurchaseGoods purchaseGoods = new PurchaseGoods();
-        purchaseGoods.setPurchaseOrder(purchaseOrder);
-        List<PurchaseGoods> purchaseGoodsList = purchaseGoodsService.findList(purchaseGoods);
-        // 构造要显示的采购商品订单
-        for (PurchaseGoods purchaseGoods1 : purchaseGoodsList) {
-            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo(purchaseGoods1);
-            purchaseGoodsVoList.add(purchaseGoodsVo);
-        }
-        purchaseOrder.setGoodsList(purchaseGoodsVoList);
+        // set要显示的订单商品
+        purchaseOrder.setGoodsList(this.getPurchaseGoodsVoList(purchaseOrder));
         return purchaseOrder;
     }
 
     public List<PurchaseOrder> findList(PurchaseOrder purchaseOrder) {
-        return super.findList(purchaseOrder);
+        List<PurchaseOrder> purchaseOrderList = super.findList(purchaseOrder);
+        for (PurchaseOrder purchaseOrder1 : purchaseOrderList) {
+            purchaseOrder1.setGoodsList(this.getPurchaseGoodsVoList(purchaseOrder1));
+        }
+
+        return purchaseOrderList;
     }
 
     public Page<PurchaseOrder> findPage(Page<PurchaseOrder> page, PurchaseOrder purchaseOrder) {
-        return super.findPage(page, purchaseOrder);
+        Page<PurchaseOrder> purchaseOrderPage = super.findPage(page, purchaseOrder);
+        List<PurchaseOrder> purchaseOrderList = purchaseOrderPage.getList();
+        for (PurchaseOrder purchaseOrder1 : purchaseOrderList) {
+            purchaseOrder1.setGoodsList(this.getPurchaseGoodsVoList(purchaseOrder1));
+        }
+
+        return purchaseOrderPage;
     }
 
     @Transactional(readOnly = false)
@@ -78,7 +80,28 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         super.delete(purchaseOrder);
     }
 
-    public List<PurchaseOrder> findTodayList(PurchaseOrder purchaseOrder){
-        return  super.findList(purchaseOrder);
+    public List<PurchaseOrder> findTodayList(PurchaseOrder purchaseOrder) {
+        return super.findList(purchaseOrder);
+    }
+
+
+    /**
+     * 构造页面显示的采购商品列表
+     *
+     * @param purchaseOrder
+     * @return
+     */
+    public List<PurchaseGoodsVo> getPurchaseGoodsVoList(PurchaseOrder purchaseOrder) {
+
+        List<PurchaseGoodsVo> purchaseGoodsVoList = new ArrayList<PurchaseGoodsVo>();
+        PurchaseGoods purchaseGoods = new PurchaseGoods();
+        purchaseGoods.setPurchaseOrder(purchaseOrder);
+        List<PurchaseGoods> purchaseGoodsList = purchaseGoodsService.findList(purchaseGoods);
+        // 构造要显示的采购商品
+        for (PurchaseGoods purchaseGoods1 : purchaseGoodsList) {
+            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo(purchaseGoods1);
+            purchaseGoodsVoList.add(purchaseGoodsVo);
+        }
+        return purchaseGoodsVoList;
     }
 }
