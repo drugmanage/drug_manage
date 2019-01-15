@@ -7,20 +7,27 @@
             viewGoods: function () {
                 let width = $("#mainFrame", top.window.document).width();
                 let height = $("#mainFrame", top.window.document).height() - 80;
-                var html = "";
                 top.$.jBox.open("iframe:${ctx}/purchase/purchaseGoods/getGoodsList", "商品筛选", width, height, {
                     buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
                         if (v == "ok") {
-                            var iframeName = h.children(0).attr("name");
-                            var iframeHtml = window.frames[iframeName];               //获取子窗口的句柄
-                            iframeHtml.getChecked();
-
-                            let goodsArr = h.find("iframe")[0].contentWindow.goodsArr;
-                            if (goodsArr.length != 0) {
-                                for (let i = 0; i < goodsArr.length; i++) {
-                                    const goods = goodsArr[i];
-                                    console.log(goods)
-                                    html = window.appendHtml(1, goods);
+                            let goods = h.find("iframe")[0].contentWindow.goodsData;
+                            if (goods != null) {
+                                if ($("input[name='itemGoodsId']") && $("input[name='itemGoodsId']").length != 0) {
+                                    let itemGoodsId = [];
+                                    $("input[name='itemGoodsId']").each(function () {
+                                        itemGoodsId.push(parseInt($(this).val()));
+                                    });
+                                    if (itemGoodsId.length != 0) {
+                                        let maxId = Math.max.apply(null, itemGoodsId);
+                                        if (maxId != undefined) {
+                                            let newMaxId = maxId + 1;
+                                            let html = window.appendHtml(newMaxId, goods);
+                                            $("#" + this.socpName + "tr_" + maxId).after(html);
+                                        }
+                                    }
+                                } else {
+                                    let newMaxId = 0;
+                                    let html = window.appendHtml(newMaxId, goods);
                                     $("#" + oper.goods.socpName + "contentField").html(html);
                                 }
                             }

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
+
 <head>
     <title>采购订单管理</title>
     <meta name="decorator" content="default"/>
@@ -43,58 +44,92 @@
             })
         });
 
-        function appendHtml(newMaxId, goods) {
+        function appendHtml(newMaxId, goodsStr) {
+            var goods = {
+                "id": "",
+                "goodsCode": "",
+                "goodsName": "",
+                "goodsSpec": "",
+                "goodsType": "",
+                "manufacturer": "",
+                "unit": "",
+                "content": "",
+                "purchasePrice": "",
+                "number": "",
+                "wholeNumber": "",
+                "piecesNumber": "",
+                "tax": "",
+                "taxFree": "",
+                "taxAmount": "",
+                "taxRate": "",
+                "stock": "",
+                "arrivalNum": ""
+            };
+            var goodsAttr = goodsStr.split(",")
+            for (let i = 0; i < goodsAttr.length; i++) {
+                const element = goodsAttr[i];
+                var attr = element.split("=");
+                // 为需要的属性赋值
+                if (attr[0] == "goodsCode") {
+                    goods.goodsCode = attr[1];
+                } else if (attr[0] == "goodsName") {
+                    goods.goodsName = attr[1];
+                } else if (attr[0] == "goodsSpec") {
+                    goods.goodsSpec = attr[1];
+                } else if (attr[0] == "goodsType") {
+                    goods.goodsType = attr[1];
+                } else if (attr[0] == "manufacturer") {
+                    goods.manufacturer = attr[1];
+                } else if (attr[0] == "unit") {
+                    goods.unit = attr[1];
+                } else if (attr[0] == "content") {
+                    goods.content = attr[1];
+                } else if (attr[0] == "purchasePrice") {
+                    goods.purchasePrice = attr[1];
+                } else if (attr[0] == "number") {
+                    goods.number = attr[1];
+                } else if (attr[0] == "wholeNumber") {
+                    goods.wholeNumber = attr[1];
+                } else if (attr[0] == "piecesNumber") {
+                    goods.piecesNumber = attr[1];
+                } else if (attr[0] == "tax") {
+                    goods.tax = attr[1];
+                } else if (attr[0] == "taxFree") {
+                    goods.taxFree = attr[1];
+                } else if (attr[0] == "taxAmount") {
+                    goods.taxAmount = attr[1];
+                } else if (attr[0] == "taxRate") {
+                    goods.taxRate = attr[1];
+                } else if (attr[0] == "stock") {
+                    goods.stock = attr[1];
+                } else if (attr[0] == "arrivalNum") {
+                    goods.arrivalNum = attr[1];
+                }
+            }
+
             var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
                 + '<td>'
                 + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
                 + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsCode"'
-                + 'value="' + goods.goodsCode + '" valid="vtext"/>'
+                + goods.goodsCode + '</td>'
+                + '<td>' + goods.goodsName + '</td>'
+                + '<td>' + goods.goodsSpec + '</td>'
+                + '<td>' + goods.goodsType + '</td>'
+                + '<td>' + goods.manufacturer + '</td>'
+                + '<td>' + goods.unit + '</td>'
+                + '<td>' + goods.content + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList["' + newMaxId + '"].purchasePrice" value="" valid="vtext"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsName"'
-                + 'value="' + goods.goodsName + '" valid="vtext"/>'
+                + '<input type="text" class="table-form-control" name="goodsList["' + newMaxId + '"].number" value="" valid="vtext"/>'
                 + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsSpec"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsType"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].manufacturer"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].unit"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].content"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].retailPrice"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].tax"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].stock"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].arrivalNum"'
-                + 'value="" valid="vtext"/>'
-                + '</td>'
+                + '<td>' + goods.tax + '</td>'
+                + '<td>' + goods.taxFree + '</td>'
+                + '<td>' + goods.taxAmount + '</td>'
+                + '<td>' + goods.taxRate + '</td>'
+                + '<td>' + goods.stock + '</td>'
+                + '<td>' + goods.arrivalNum + '</td>'
                 + '<td>'
                 + '<a href="javascript:void(0)" class="btnDel" onclick="oper.goods.del(' + newMaxId + ');">删除</a>'
                 + '</td>'
@@ -105,12 +140,14 @@
     </script>
     <%@include file="/WEB-INF/views/modules/purchase/purchaseOrderJs.jsp" %>
 </head>
+
 <body>
 <ul class="nav nav-tabs">
     <li><a href="${ctx}/purchase/purchaseOrder/">采购订单列表</a></li>
     <li class="active"><a href="${ctx}/purchase/purchaseOrder/form?id=${purchaseOrder.id}">采购订单<shiro:hasPermission
-            name="purchase:purchaseOrder:edit">${not empty purchaseOrder.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission
-            name="purchase:purchaseOrder:edit">查看</shiro:lacksPermission></a></li>
+            name="purchase:purchaseOrder:edit">${not empty purchaseOrder.id?'修改':'添加'}</shiro:hasPermission>
+        <shiro:lacksPermission name="purchase:purchaseOrder:edit">查看</shiro:lacksPermission>
+    </a></li>
 </ul>
 <br/>
 <form:form id="inputForm" modelAttribute="purchaseOrder" action="${ctx}/purchase/purchaseOrder/save" method="post"
@@ -129,9 +166,10 @@
                     <label class="control-label">机构：</label>
                     <div class="controls">
                         <sys:treeselect id="office" name="office.id" value="${purchaseOrder.office.id}"
-                                        labelName="office.name" labelValue="${purchaseOrder.office.name}"
-                                        title="部门" url="/sys/office/treeData?type=2" cssClass="input-large "
-                                        allowClear="true" notAllowSelectParent="true"/>
+                                        labelName="office.name"
+                                        labelValue="${purchaseOrder.office.name}" title="部门"
+                                        url="/sys/office/treeData?type=2"
+                                        cssClass="input-large " allowClear="true" notAllowSelectParent="true"/>
                     </div>
                 </div>
                 <div class="div-b">
@@ -268,7 +306,7 @@
                                    value="${item.content }" valid='vtext'/>
                         </td>
                         <td>
-                            <input type="text" class="table-form-control" name="goodsList[${i.index }].retailPrice"
+                            <input type="text" class="table-form-control" name="goodsList[${i.index }].purchasePrice"
                                    value="${item.purchasePrice }" valid='vtext'/>
                         </td>
                         <td>
@@ -324,4 +362,5 @@
     </div>
 </form:form>
 </body>
+
 </html>

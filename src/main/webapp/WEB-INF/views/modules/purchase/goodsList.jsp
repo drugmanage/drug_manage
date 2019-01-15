@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
+
 <head>
     <title>商品资料管理</title>
     <meta name="decorator" content="default"/>
@@ -16,21 +17,24 @@
             return false;
         }
 
-        // jbox要获取的数组
-        var goodsArr = [];
+        // jbox要获取的数据
+        var goodsData = null;
 
-        // function boxClick(goods) {
-        //     goodsArr.push(goods);
-        // }
-
-        function getChecked() {
-            $('input[name="goodsbox"]:checked').each(function () {      //遍历每一个名字为interest的复选框，其中选中的执行函数
-                goodsArr.push($(this).val());
+        function goodsOnclick(goods) {
+            goodsData = null;
+            var goodsRadio = document.getElementsByName("goodsCheck");
+            goodsRadio.forEach(element => {
+                if (element.checked) {
+                    var regex = /\[(.+?)\]/g;
+                    var result = regex.exec(goods);
+                    goodsData = result[1];
+                }
             });
         }
 
     </script>
 </head>
+
 <body>
 <form:form id="searchForm" modelAttribute="goods" action="${ctx}/purchase/purchaseGoods/getGoodsList" method="post"
            class="breadcrumb form-search">
@@ -84,7 +88,7 @@
     <c:forEach items="${page.list}" var="goods">
         <tr>
             <td>
-                <input name="goodsbox" type="checkbox" value="${goods}"/>
+                <input name="goodsCheck" type="radio" value="${goods}" onclick="goodsOnclick(this.value)"/>
             </td>
             <td>
                     ${fns:getDictLabel(goods.goodsCategory, 'goods_category', '')}
@@ -140,4 +144,5 @@
 </table>
 <div class="pagination">${page}</div>
 </body>
+
 </html>
