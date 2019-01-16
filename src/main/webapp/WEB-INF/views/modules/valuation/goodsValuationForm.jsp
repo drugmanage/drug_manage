@@ -35,78 +35,68 @@
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">机构：</label>
+				<label class="control-label">商品id：</label>
 				<div class="controls">
-					<sys:treeselect id="office" name="office.id" value="${goodsValuation.office.id}" labelName="office.name" labelValue="${goodsValuation.office.name}"
-						title="部门" url="/sys/office/treeData?type=2" cssClass="input-large " allowClear="true" notAllowSelectParent="true"/>
+					<form:input path="goodsId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
 			<div class="div-b">
-				<label class="control-label">商品：</label>
-				<div class="controls">
-					<sys:treeselect id="goods" name="goodsId" value="${goodsValuation.goodsId }" labelName="goodsName" labelValue="${goodsValuation.goodsName }" dataMsgRequired="必填信息"
-									title="商品" url="/goods/goods/treeData"  cssClass="input-large required" allowClear="true" notAllowSelectParent="true"/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
 				<label class="control-label">第三方查看价格标识：</label>
 				<div class="controls">
-					<form:checkboxes path="thirdQueryPriceFlag" items="${fns:getDictList('stop_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
+					<form:input path="thirdQueryPriceFlag" htmlEscape="false" maxlength="1" class="input-xlarge "/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">除第三方外客户标识：</label>
 				<div class="controls">
-					<form:checkboxes path="notThirdQueryPriceFlag" items="${fns:getDictList('stop_flag')}" itemLabel="label" itemValue="value" htmlEscape="false" class=""/>
+					<form:input path="notThirdQueryPriceFlag" htmlEscape="false" maxlength="1" class="input-xlarge "/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">一类价格：</label>
 				<div class="controls">
-					<form:input path="onePrice" htmlEscape="false" class="input-xlarge "/>
+					<form:input path="onePrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">二类价格：</label>
 				<div class="controls">
-					<form:input path="twoPrice" htmlEscape="false" class="input-xlarge "/>
+					<form:input path="twoPrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
 			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
+			<div class="div-b">
 				<label class="control-label">三类价格：</label>
 				<div class="controls">
-					<form:input path="threePrice" htmlEscape="false" class="input-xlarge "/>
+					<form:input path="threePrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
 			</div>
-			<div class="div-b">
+		</div>
+		<div class="control-group">
+			<div class="div-a">
 				<label class="control-label">四类价格：</label>
 				<div class="controls">
-					<form:input path="fourPrice" htmlEscape="false" class="input-xlarge "/>
-				</div>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="div-a">
-				<label class="control-label">五类价格：</label>
-				<div class="controls">
-					<form:input path="fivePrice" htmlEscape="false" class="input-xlarge "/>
+					<form:input path="fourPrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
 			</div>
 			<div class="div-b">
-				<label class="control-label">公营价：</label>
+				<label class="control-label">五类价格：</label>
 				<div class="controls">
-					<form:input path="publicPrice" htmlEscape="false" class="input-xlarge "/>
+					<form:input path="fivePrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
 			</div>
 		</div>
 		<div class="control-group">
 			<div class="div-a">
+				<label class="control-label">公营价：</label>
+				<div class="controls">
+					<form:input path="publicPrice" htmlEscape="false" class="input-xlarge  number"/>
+				</div>
+			</div>
+			<div class="div-b">
 				<label class="control-label">备注信息：</label>
 				<div class="controls">
 					<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xlarge "/>

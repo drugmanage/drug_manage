@@ -22,7 +22,7 @@ import com.thinkgem.fast.modules.valuation.service.GoodsValuationService;
 /**
  * 商品定价Controller
  * @author renshuo
- * @version 2019-01-10
+ * @version 2019-01-16
  */
 @Controller
 @RequestMapping(value = "${adminPath}/valuation/goodsValuation")

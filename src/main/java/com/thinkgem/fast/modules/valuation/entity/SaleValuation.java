@@ -7,18 +7,18 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 业务员定价Entity
  * @author renshuo
- * @version 2019-01-15
+ * @version 2019-01-16
  */
 public class SaleValuation extends DataEntity<SaleValuation> {
 	
 	private static final long serialVersionUID = 1L;
 	private String saleId;		// 业务员id
-	private String manageValuationId;		// 区域经理加价表id
+	private String goodsId;		// 商品id
 	private Double onePrice;		// 一类价格
 	private String onePriceCustomerLkId;		// 设置客户一类价格关联id
 	private Double twoPrice;		// 二类价格
 	private String twoPriceCustomerLkId;		// 设置客户二类价格关联id
-	private Double threePrice;		// 二类价格
+	private Double threePrice;		// 三类价格
 	private String threePriceCustomerLkId;		// 设置客户三类价格关联id
 	
 	public SaleValuation() {
@@ -38,13 +38,13 @@ public class SaleValuation extends DataEntity<SaleValuation> {
 		this.saleId = saleId;
 	}
 	
-	@Length(min=0, max=64, message="区域经理加价表id长度必须介于 0 和 64 之间")
-	public String getManageValuationId() {
-		return manageValuationId;
+	@Length(min=0, max=64, message="商品id长度必须介于 0 和 64 之间")
+	public String getGoodsId() {
+		return goodsId;
 	}
 
-	public void setManageValuationId(String manageValuationId) {
-		this.manageValuationId = manageValuationId;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 	
 	public Double getOnePrice() {

@@ -25,11 +25,7 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>部门：</label>
-				<sys:treeselect id="office" name="office.id" value="${goodsValuation.office.id}" labelName="office.name" labelValue="${goodsValuation.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
-			</li>
-			<li><label>商品：</label>
+			<li><label>商品id：</label>
 				<form:input path="goodsId" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -40,8 +36,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>部门</th>
-				<th>商品名称</th>
+				<th>商品id</th>
 				<th>第三方查看价格标识</th>
 				<th>除第三方外客户标识</th>
 				<th>一类价格</th>
@@ -51,6 +46,7 @@
 				<th>五类价格</th>
 				<th>公营价</th>
 				<th>更新时间</th>
+				<th>备注信息</th>
 				<shiro:hasPermission name="valuation:goodsValuation:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -58,16 +54,13 @@
 		<c:forEach items="${page.list}" var="goodsValuation">
 			<tr>
 				<td><a href="${ctx}/valuation/goodsValuation/form?id=${goodsValuation.id}">
-					${goodsValuation.office.name}
+					${goodsValuation.goodsId}
 				</a></td>
 				<td>
-					${goodsValuation.goodsId}
+					${goodsValuation.thirdQueryPriceFlag}
 				</td>
 				<td>
-					${fns:getDictLabel(goodsValuation.thirdQueryPriceFlag, 'stop_flag', '')}
-				</td>
-				<td>
-					${fns:getDictLabel(goodsValuation.notThirdQueryPriceFlag, 'stop_flag', '')}
+					${goodsValuation.notThirdQueryPriceFlag}
 				</td>
 				<td>
 					${goodsValuation.onePrice}

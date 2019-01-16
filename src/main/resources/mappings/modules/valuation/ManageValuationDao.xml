@@ -5,7 +5,7 @@
 	<sql id="manageValuationColumns">
 		a.id AS "id",
 		a.manage_id AS "manageId",
-		a.valuation_id AS "valuationId",
+		a.goods_id AS "goodsId",
 		a.one_price AS "onePrice",
 		a.one_price_customer_lk_id AS "onePriceCustomerLkId",
 		a.two_price AS "twoPrice",
@@ -38,6 +38,12 @@
 		<include refid="manageValuationJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="manageId != null and manageId != ''">
+				AND a.manage_id = #{manageId}
+			</if>
+			<if test="goodsId != null and goodsId != ''">
+				AND a.goods_id = #{goodsId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -71,7 +77,7 @@
 		INSERT INTO manage_valuation(
 			id,
 			manage_id,
-			valuation_id,
+			goods_id,
 			one_price,
 			one_price_customer_lk_id,
 			two_price,
@@ -87,7 +93,7 @@
 		) VALUES (
 			#{id},
 			#{manageId},
-			#{valuationId},
+			#{goodsId},
 			#{onePrice},
 			#{onePriceCustomerLkId},
 			#{twoPrice},
@@ -105,7 +111,8 @@
 	
 	<update id="update">
 		UPDATE manage_valuation SET 	
-			valuation_id = #{valuationId},
+			manage_id = #{manageId},
+			goods_id = #{goodsId},
 			one_price = #{onePrice},
 			one_price_customer_lk_id = #{onePriceCustomerLkId},
 			two_price = #{twoPrice},

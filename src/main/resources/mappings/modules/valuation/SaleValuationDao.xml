@@ -5,7 +5,7 @@
 	<sql id="saleValuationColumns">
 		a.id AS "id",
 		a.sale_id AS "saleId",
-		a.manage_valuation_id AS "manageValuationId",
+		a.goods_id AS "goodsId",
 		a.one_price AS "onePrice",
 		a.one_price_customer_lk_id AS "onePriceCustomerLkId",
 		a.two_price AS "twoPrice",
@@ -71,7 +71,7 @@
 		INSERT INTO sale_valuation(
 			id,
 			sale_id,
-			manage_valuation_id,
+			goods_id,
 			one_price,
 			one_price_customer_lk_id,
 			two_price,
@@ -87,7 +87,7 @@
 		) VALUES (
 			#{id},
 			#{saleId},
-			#{manageValuationId},
+			#{goodsId},
 			#{onePrice},
 			#{onePriceCustomerLkId},
 			#{twoPrice},
@@ -106,15 +106,13 @@
 	<update id="update">
 		UPDATE sale_valuation SET 	
 			sale_id = #{saleId},
-			manage_valuation_id = #{manageValuationId},
+			goods_id = #{goodsId},
 			one_price = #{onePrice},
 			one_price_customer_lk_id = #{onePriceCustomerLkId},
 			two_price = #{twoPrice},
 			two_price_customer_lk_id = #{twoPriceCustomerLkId},
 			three_price = #{threePrice},
 			three_price_customer_lk_id = #{threePriceCustomerLkId},
-			update_by = #{updateBy.id},
-			update_date = #{updateDate},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>

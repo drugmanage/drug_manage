@@ -13,7 +13,7 @@ import com.thinkgem.fast.modules.valuation.dao.GoodsValuationDao;
 /**
  * 商品定价Service
  * @author renshuo
- * @version 2019-01-10
+ * @version 2019-01-16
  */
 @Service
 @Transactional(readOnly = true)

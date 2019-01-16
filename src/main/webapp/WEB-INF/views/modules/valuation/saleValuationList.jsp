@@ -34,10 +34,10 @@
 		<thead>
 			<tr>
 				<th>业务员id</th>
-				<th>区域经理加价表id</th>
+				<th>商品id</th>
 				<th>一类价格</th>
 				<th>二类价格</th>
-				<th>二类价格</th>
+				<th>三类价格</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="valuation:saleValuation:edit"><th>操作</th></shiro:hasPermission>
@@ -50,7 +50,7 @@
 					${saleValuation.saleId}
 				</a></td>
 				<td>
-					${saleValuation.manageValuationId}
+					${saleValuation.goodsId}
 				</td>
 				<td>
 					${saleValuation.onePrice}

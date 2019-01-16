@@ -4,7 +4,6 @@
     
 	<sql id="goodsValuationColumns">
 		a.id AS "id",
-		a.office_id AS "office.id",
 		a.goods_id AS "goodsId",
 		a.third_query_price_flag AS "thirdQueryPriceFlag",
 		a.not_third_query_price_flag AS "notThirdQueryPriceFlag",
@@ -19,12 +18,10 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag",
-		o2.name AS "office.name"
+		a.del_flag AS "delFlag"
 	</sql>
 	
 	<sql id="goodsValuationJoins">
-		LEFT JOIN sys_office o2 ON o2.id = a.office_id
 	</sql>
     
 	<select id="get" resultType="GoodsValuation">
@@ -42,9 +39,6 @@
 		<include refid="goodsValuationJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="office != null and office.id != null and office.id != ''">
-				AND a.office_id = #{office.id}
-			</if>
 			<if test="goodsId != null and goodsId != ''">
 				AND a.goods_id = #{goodsId}
 			</if>
@@ -80,7 +74,6 @@
 	<insert id="insert">
 		INSERT INTO goods_valuation(
 			id,
-			office_id,
 			goods_id,
 			third_query_price_flag,
 			not_third_query_price_flag,
@@ -98,7 +91,6 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{office.id},
 			#{goodsId},
 			#{thirdQueryPriceFlag},
 			#{notThirdQueryPriceFlag},
@@ -119,7 +111,6 @@
 	
 	<update id="update">
 		UPDATE goods_valuation SET 	
-			office_id = #{office.id},
 			goods_id = #{goodsId},
 			third_query_price_flag = #{thirdQueryPriceFlag},
 			not_third_query_price_flag = #{notThirdQueryPriceFlag},

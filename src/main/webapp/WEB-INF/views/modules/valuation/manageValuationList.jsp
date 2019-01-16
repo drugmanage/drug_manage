@@ -25,6 +25,12 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
+			<li><label>区域经理：</label>
+				<form:input path="manageId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
+			<li><label>商品id：</label>
+				<form:input path="goodsId" htmlEscape="false" maxlength="64" class="input-medium"/>
+			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
 		</ul>
@@ -34,10 +40,10 @@
 		<thead>
 			<tr>
 				<th>区域经理</th>
-				<th>定价表</th>
+				<th>商品id</th>
 				<th>一类价格</th>
 				<th>二类价格</th>
-				<th>二类价格</th>
+				<th>三类价格</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="valuation:manageValuation:edit"><th>操作</th></shiro:hasPermission>
@@ -50,7 +56,7 @@
 					${manageValuation.manageId}
 				</a></td>
 				<td>
-					${manageValuation.valuationId}
+					${manageValuation.goodsId}
 				</td>
 				<td>
 					${manageValuation.onePrice}

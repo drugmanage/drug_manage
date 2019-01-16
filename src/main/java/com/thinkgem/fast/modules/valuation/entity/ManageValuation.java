@@ -7,18 +7,18 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 区域经理定价Entity
  * @author renshuo
- * @version 2019-01-15
+ * @version 2019-01-16
  */
 public class ManageValuation extends DataEntity<ManageValuation> {
 	
 	private static final long serialVersionUID = 1L;
 	private String manageId;		// 区域经理
-	private String valuationId;		// 定价表
+	private String goodsId;		// 商品id
 	private Double onePrice;		// 一类价格
-	private String onePriceCustomerLkId;		// 设置客户一类价格关联id
+	private String onePriceCustomerLkId;		// 设置客户一类价格关联
 	private Double twoPrice;		// 二类价格
-	private String twoPriceCustomerLkId;		// 设置客户二类价格关联id
-	private Double threePrice;		// 二类价格
+	private String twoPriceCustomerLkId;		// 设置客户二类价格关联
+	private Double threePrice;		// 三类价格
 	private String threePriceCustomerLkId;		// 设置客户三类价格关联id
 	
 	public ManageValuation() {
@@ -38,13 +38,13 @@ public class ManageValuation extends DataEntity<ManageValuation> {
 		this.manageId = manageId;
 	}
 	
-	@Length(min=0, max=64, message="定价表长度必须介于 0 和 64 之间")
-	public String getValuationId() {
-		return valuationId;
+	@Length(min=0, max=64, message="商品id长度必须介于 0 和 64 之间")
+	public String getGoodsId() {
+		return goodsId;
 	}
 
-	public void setValuationId(String valuationId) {
-		this.valuationId = valuationId;
+	public void setGoodsId(String goodsId) {
+		this.goodsId = goodsId;
 	}
 	
 	public Double getOnePrice() {
@@ -55,7 +55,7 @@ public class ManageValuation extends DataEntity<ManageValuation> {
 		this.onePrice = onePrice;
 	}
 	
-	@Length(min=0, max=64, message="设置客户一类价格关联id长度必须介于 0 和 64 之间")
+	@Length(min=0, max=64, message="设置客户一类价格关联长度必须介于 0 和 64 之间")
 	public String getOnePriceCustomerLkId() {
 		return onePriceCustomerLkId;
 	}
@@ -72,7 +72,7 @@ public class ManageValuation extends DataEntity<ManageValuation> {
 		this.twoPrice = twoPrice;
 	}
 	
-	@Length(min=0, max=64, message="设置客户二类价格关联id长度必须介于 0 和 64 之间")
+	@Length(min=0, max=64, message="设置客户二类价格关联长度必须介于 0 和 64 之间")
 	public String getTwoPriceCustomerLkId() {
 		return twoPriceCustomerLkId;
 	}

@@ -1,6 +1,5 @@
 package com.thinkgem.fast.modules.valuation.entity;
 
-import com.thinkgem.fast.modules.sys.entity.Office;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
@@ -8,24 +7,20 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 /**
  * 商品定价Entity
  * @author renshuo
- * @version 2019-01-10
+ * @version 2019-01-16
  */
 public class GoodsValuation extends DataEntity<GoodsValuation> {
 	
 	private static final long serialVersionUID = 1L;
-	private Office office;		// 机构id
 	private String goodsId;		// 商品id
-
-	private String goodsName;
-
-	private String thirdQueryPriceFlag;		// 第三方查看价格标识            1、可以查看            0、不可以查看
-	private String notThirdQueryPriceFlag;		// 除第三方外客户标识            1、可以查看            0、不可以查看
-	private String onePrice;		// 一类价格
-	private String twoPrice;		// 二类价格
-	private String threePrice;		// 三类价格
-	private String fourPrice;		// 四类价格
-	private String fivePrice;		// 五类价格
-	private String publicPrice;		// 公营价
+	private String thirdQueryPriceFlag;		// 第三方查看价格标识
+	private String notThirdQueryPriceFlag;		// 除第三方外客户标识
+	private Double onePrice;		// 一类价格
+	private Double twoPrice;		// 二类价格
+	private Double threePrice;		// 三类价格
+	private Double fourPrice;		// 四类价格
+	private Double fivePrice;		// 五类价格
+	private Double publicPrice;		// 公营价
 	
 	public GoodsValuation() {
 		super();
@@ -33,22 +28,6 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 
 	public GoodsValuation(String id){
 		super(id);
-	}
-
-	public Office getOffice() {
-		return office;
-	}
-
-	public void setOffice(Office office) {
-		this.office = office;
-	}
-
-	public String getGoodsName() {
-		return goodsName;
-	}
-
-	public void setGoodsName(String goodsName) {
-		this.goodsName = goodsName;
 	}
 
 	@Length(min=0, max=64, message="商品id长度必须介于 0 和 64 之间")
@@ -60,7 +39,7 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 		this.goodsId = goodsId;
 	}
 	
-	@Length(min=0, max=1, message="第三方查看价格标识            1、可以查看            0、不可以查看长度必须介于 0 和 1 之间")
+	@Length(min=0, max=1, message="第三方查看价格标识长度必须介于 0 和 1 之间")
 	public String getThirdQueryPriceFlag() {
 		return thirdQueryPriceFlag;
 	}
@@ -69,7 +48,7 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 		this.thirdQueryPriceFlag = thirdQueryPriceFlag;
 	}
 	
-	@Length(min=0, max=1, message="除第三方外客户标识            1、可以查看            0、不可以查看长度必须介于 0 和 1 之间")
+	@Length(min=0, max=1, message="除第三方外客户标识长度必须介于 0 和 1 之间")
 	public String getNotThirdQueryPriceFlag() {
 		return notThirdQueryPriceFlag;
 	}
@@ -78,51 +57,51 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 		this.notThirdQueryPriceFlag = notThirdQueryPriceFlag;
 	}
 	
-	public String getOnePrice() {
+	public Double getOnePrice() {
 		return onePrice;
 	}
 
-	public void setOnePrice(String onePrice) {
+	public void setOnePrice(Double onePrice) {
 		this.onePrice = onePrice;
 	}
 	
-	public String getTwoPrice() {
+	public Double getTwoPrice() {
 		return twoPrice;
 	}
 
-	public void setTwoPrice(String twoPrice) {
+	public void setTwoPrice(Double twoPrice) {
 		this.twoPrice = twoPrice;
 	}
 	
-	public String getThreePrice() {
+	public Double getThreePrice() {
 		return threePrice;
 	}
 
-	public void setThreePrice(String threePrice) {
+	public void setThreePrice(Double threePrice) {
 		this.threePrice = threePrice;
 	}
 	
-	public String getFourPrice() {
+	public Double getFourPrice() {
 		return fourPrice;
 	}
 
-	public void setFourPrice(String fourPrice) {
+	public void setFourPrice(Double fourPrice) {
 		this.fourPrice = fourPrice;
 	}
 	
-	public String getFivePrice() {
+	public Double getFivePrice() {
 		return fivePrice;
 	}
 
-	public void setFivePrice(String fivePrice) {
+	public void setFivePrice(Double fivePrice) {
 		this.fivePrice = fivePrice;
 	}
 	
-	public String getPublicPrice() {
+	public Double getPublicPrice() {
 		return publicPrice;
 	}
 
-	public void setPublicPrice(String publicPrice) {
+	public void setPublicPrice(Double publicPrice) {
 		this.publicPrice = publicPrice;
 	}
 	

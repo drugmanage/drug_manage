@@ -41,9 +41,9 @@
 				</div>
 			</div>
 			<div class="div-b">
-				<label class="control-label">区域经理加价表id：</label>
+				<label class="control-label">商品id：</label>
 				<div class="controls">
-					<form:input path="manageValuationId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+					<form:input path="goodsId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
 		</div>
@@ -77,7 +77,7 @@
 		</div>
 		<div class="control-group">
 			<div class="div-a">
-				<label class="control-label">二类价格：</label>
+				<label class="control-label">三类价格：</label>
 				<div class="controls">
 					<form:input path="threePrice" htmlEscape="false" class="input-xlarge  number"/>
 				</div>
