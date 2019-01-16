@@ -70,7 +70,7 @@
                 const element = goodsAttr[i];
                 var attr = element.split("=");
                 // 为需要的属性赋值
-                if (attr[0] == "goodsId") {
+                if (attr[0] == "id") {
                     goods.id = attr[1];
                 } else if (attr[0] == "goodsCode") {
                     goods.goodsCode = attr[1];

@@ -154,8 +154,8 @@ public class PurchaseOrderController extends BaseController {
         } else {
             PurchaseOrder purchaseOrderFromDB = list.get(0);
             String oldPurchaseNumber = purchaseOrderFromDB.getPurchaseNumber();
-            String newNum = String.format("%05d", Integer.parseInt(oldPurchaseNumber.substring(7)) + 1);
-            purchaseNumber = oldPurchaseNumber.substring(0, 8) + newNum;
+            String newNum = String.format("%05d", Integer.parseInt(oldPurchaseNumber.substring(6)) + 1);
+            purchaseNumber = oldPurchaseNumber.substring(0, 6) + newNum;
         }
 
         return purchaseNumber;
