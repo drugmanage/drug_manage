@@ -22,6 +22,8 @@
 <script src="${ctxStatic}/common/fast.js" type="text/javascript"></script>
 <!--获取拼音-->
 <script src="${ctxStatic}/common/Mtils.js" type="text/javascript"></script>
+<link href="${ctxStatic}/resizable-columns/jquery.resizableColumns.css" type="text/css" rel="stylesheet" />
+<script src="${ctxStatic}/resizable-columns/jquery.resizableColumns.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>
 
@@ -33,5 +35,7 @@
     .table-form-control{
         width:90%;
     }
-
+    
+    table td{word-break: keep-all;white-space:nowrap;}
+	table th{word-break: keep-all;white-space:nowrap;}
 </style>

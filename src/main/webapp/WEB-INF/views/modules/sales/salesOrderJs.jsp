@@ -110,24 +110,4 @@
             }
         }
     };
-
-    $(function () {
-        $("input[name='companyType']").click(function () {
-            var com = $(this).val();
-            if (com == "2") {
-                $("#addressTableDiv").show();
-            } else {
-                $("#addressTableDiv").hide();
-                $("#address_contentField").html("");
-            }
-        })
-
-        var comType = $("input[name='companyType']").val();
-        if (comType == "2") {
-            $("#addressTableDiv").show();
-        } else {
-            $("#addressTableDiv").hide();
-            $("#address_contentField").html("");
-        }
-    })
 </script>

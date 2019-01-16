@@ -189,4 +189,12 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="findFirstByOrderNumLikeOrderByOrderNumDesc" resultType="SalesOrder">
+		SELECT 
+			<include refid="salesOrderColumns"/>
+		FROM sales_order a
+		<include refid="salesOrderJoins"/>
+		order by order_num desc
+		limit 1
+	</select>
 </mapper>

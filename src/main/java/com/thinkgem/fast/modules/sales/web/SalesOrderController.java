@@ -1,8 +1,14 @@
 package com.thinkgem.fast.modules.sales.web;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.thinkgem.fast.common.config.Global;
 import com.thinkgem.fast.common.persistence.Page;
-import com.thinkgem.fast.common.web.BaseController;
+import com.thinkgem.fast.common.utils.DateUtils;
 import com.thinkgem.fast.common.utils.StringUtils;
+import com.thinkgem.fast.common.web.BaseController;
+import com.thinkgem.fast.modules.sales.entity.SalesGoodsVo;
 import com.thinkgem.fast.modules.sales.entity.SalesOrder;
 import com.thinkgem.fast.modules.sales.service.SalesOrderService;
 
@@ -27,7 +35,9 @@ import com.thinkgem.fast.modules.sales.service.SalesOrderService;
 @Controller
 @RequestMapping(value = "${adminPath}/sales/salesOrder")
 public class SalesOrderController extends BaseController {
-
+	
+	private static String orderNumberMain="000000";
+	
 	@Autowired
 	private SalesOrderService salesOrderService;
 	
@@ -39,6 +49,10 @@ public class SalesOrderController extends BaseController {
 		}
 		if (entity == null){
 			entity = new SalesOrder();
+			// 订单编号
+            entity.setOrderNum(this.getOrderNumber());
+            // 订单日期
+            entity.setOrderTime(new Date());
 		}
 		return entity;
 	}
@@ -64,6 +78,8 @@ public class SalesOrderController extends BaseController {
 		if (!beanValidator(model, salesOrder)){
 			return form(salesOrder, model);
 		}
+		// 判断销售商品列表不为空再保存
+        this.filterParam(salesOrder);
 		salesOrderService.save(salesOrder);
 		addMessage(redirectAttributes, "保存销售开票单成功");
 		return "redirect:"+Global.getAdminPath()+"/sales/salesOrder/?repage";
@@ -76,5 +92,60 @@ public class SalesOrderController extends BaseController {
 		addMessage(redirectAttributes, "删除销售开票单成功");
 		return "redirect:"+Global.getAdminPath()+"/sales/salesOrder/?repage";
 	}
+	
+	/**
+	 * 过滤销售订单中的数据
+     *
+     * @param purchaseOrder
+     */
+    private void filterParam(SalesOrder salesOrder) {
+        List<SalesGoodsVo> salesGoodsVoList = salesOrder.getGoodsList();
+        if (CollectionUtils.isNotEmpty(salesGoodsVoList)) {
+            Iterator<SalesGoodsVo> it = salesGoodsVoList.iterator();
+            while (it.hasNext()) {
+                SalesGoodsVo salesGoodsVo = it.next();
+                if (salesGoodsVo == null) {
+                    it.remove();
+                } else {
+                    if (StringUtils.isBlank(salesGoodsVo.getGoodsId()) ||
+                            StringUtils.isBlank(salesGoodsVo.getNumber())) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+    }
 
+	/**
+	* 拼接订单编号
+     *
+     * @return
+     */
+    private String getOrderNumber() {
+    	synchronized(orderNumberMain){
+    		String nowDate = DateUtils.getDate();
+    		String preCode = "SX";
+	        if("000000".equals(orderNumberMain)){
+	        	SalesOrder salesOrder = salesOrderService.findFirstByOrderNumLikeOrderByOrderNumDesc();
+	        	if(salesOrder != null){
+	        		orderNumberMain = salesOrder.getOrderNum();
+	        	}
+	        }
+	        if(orderNumberMain != null && !"".equals(orderNumberMain)){
+	        	Integer code = Integer.valueOf(orderNumberMain.substring(10))+1;
+	        	String codeNum = String.format("%06d", code);
+	        	Calendar calendar = Calendar.getInstance();
+	        	int today = calendar.get(Calendar.DAY_OF_MONTH);
+	        	if(today == 1){//每个月重新计算
+        			orderNumberMain=preCode+nowDate+"000001";
+	        	}else{
+	        		orderNumberMain = preCode+nowDate+codeNum;
+	        	}
+	        }else{
+	        	orderNumberMain=preCode+nowDate+"00001";
+	        }
+	    	String orderNumber = new String(orderNumberMain);
+	    	return orderNumber;
+    	}
+    }
 }

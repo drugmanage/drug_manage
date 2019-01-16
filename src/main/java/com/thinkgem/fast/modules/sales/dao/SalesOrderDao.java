@@ -12,4 +12,5 @@ import com.thinkgem.fast.modules.sales.entity.SalesOrder;
 @MyBatisDao
 public interface SalesOrderDao extends CrudDao<SalesOrder> {
 	
+	SalesOrder findFirstByOrderNumLikeOrderByOrderNumDesc();
 }

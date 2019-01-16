@@ -1,9 +1,11 @@
 package com.thinkgem.fast.modules.sales.entity;
 
-import org.hibernate.validator.constraints.Length;
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thinkgem.fast.common.persistence.DataEntity;
 
 /**
@@ -32,6 +34,8 @@ public class SalesOrder extends DataEntity<SalesOrder> {
 	private String paymentMethod;		// 付款方式
 	private String freightUnderwriter;		// 运费承担方
 	private String allocationFlag;		// 是否调拨
+	
+	private List<SalesGoodsVo> goodsList;        // 销售商品列表
 	
 	public SalesOrder() {
 		super();
@@ -201,6 +205,14 @@ public class SalesOrder extends DataEntity<SalesOrder> {
 
 	public void setAllocationFlag(String allocationFlag) {
 		this.allocationFlag = allocationFlag;
+	}
+
+	public List<SalesGoodsVo> getGoodsList() {
+		return goodsList;
+	}
+
+	public void setGoodsList(List<SalesGoodsVo> goodsList) {
+		this.goodsList = goodsList;
 	}
 	
 }
