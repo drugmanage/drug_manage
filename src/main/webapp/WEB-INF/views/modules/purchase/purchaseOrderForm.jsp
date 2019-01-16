@@ -165,16 +165,6 @@
             return html;
         }
 
-        // $('input[type=text]').on('keyup', function () {
-        //     var val = $(this).val();
-        //     console.log(val);
-        //     if (val.length < 1) {
-        //         $(".submit-btn").prop("disabled", true);
-        //     } else {
-        //         $(".submit-btn").prop("disabled", false);
-        //     }
-        // });
-
     </script>
     <%@include file="/WEB-INF/views/modules/purchase/purchaseOrderJs.jsp" %>
 </head>

@@ -4,31 +4,33 @@ import com.thinkgem.fast.modules.goods.entity.Goods;
 
 /**
  * 采购商品展示Entity
+ *
  * @author 刘海涛
  * @version 2019-1-4
  */
 public class PurchaseGoodsVo {
 
-    private String goodsId;		// 商品Id
-    private String goodsCode;		// 商品编码
-    private String goodsName;		// 商品名
-    private String goodsSpec;		// 规格
-    private String goodsType;		// 商品剂型
-    private String manufacturer;		// 生产厂家
-    private String unit;		// 基本包装单位
-    private String content;		// 装量
-    private String purchasePrice;		// 采购价格
-    private String number;		// 数量
-    private String wholeNumber;		// 整件件数
-    private String piecesNumber;		// 零散件数
-    private String tax;		// 含税金额
-    private String taxFree;		// 不含税金额
-    private String taxAmount;		// 税额
-    private String taxRate;		// 税率
+    private String id;      // 订单商品的ID
+    private String goodsId;        // 商品Id
+    private String goodsCode;        // 商品编码
+    private String goodsName;        // 商品名
+    private String goodsSpec;        // 规格
+    private String goodsType;        // 商品剂型
+    private String manufacturer;        // 生产厂家
+    private String unit;        // 基本包装单位
+    private String content;        // 装量
+    private String purchasePrice;        // 采购价格
+    private String number;        // 数量
+    private String wholeNumber;        // 整件件数
+    private String piecesNumber;        // 零散件数
+    private String tax;        // 含税金额
+    private String taxFree;        // 不含税金额
+    private String taxAmount;        // 税额
+    private String taxRate;        // 税率
     private String stock;   // 库存
     private String arrivalNum;       // 已到货数
 
-    public PurchaseGoodsVo(){
+    public PurchaseGoodsVo() {
         // do nothing
     }
 
@@ -37,15 +39,16 @@ public class PurchaseGoodsVo {
      *
      * @param purchaseGoods
      */
-    public PurchaseGoodsVo(PurchaseGoods purchaseGoods){
-        this.goodsId = purchaseGoods.getGoods().getId();
-        this.goodsCode = purchaseGoods.getGoods().getGoodsCode();
-        this.goodsName = purchaseGoods.getGoods().getGoodsName();
-        this.goodsSpec = purchaseGoods.getGoods().getGoodsSpec();
-        this.goodsType = purchaseGoods.getGoods().getGoodsType();
-        this.manufacturer = purchaseGoods.getGoods().getManufacturer();
-        this.unit = purchaseGoods.getGoods().getUnit();
-        this.content = purchaseGoods.getGoods().getContent();
+    public PurchaseGoodsVo(PurchaseGoods purchaseGoods, Goods goods) {
+        this.id = purchaseGoods.getId();
+        this.goodsId = goods.getId();
+        this.goodsCode = goods.getGoodsCode();
+        this.goodsName = goods.getGoodsName();
+        this.goodsSpec = goods.getGoodsSpec();
+        this.goodsType = goods.getGoodsType();
+        this.manufacturer = goods.getManufacturer();
+        this.unit = goods.getUnit();
+        this.content = goods.getContent();
         this.purchasePrice = purchaseGoods.getPurchasePrice();
         this.number = purchaseGoods.getNumber();
         this.wholeNumber = purchaseGoods.getWholeNumber();
@@ -57,6 +60,14 @@ public class PurchaseGoodsVo {
         // Todo 库存跟已到货数暂时置空等库存表做完再回头补充
         this.stock = "";
         this.arrivalNum = "";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getGoodsId() {

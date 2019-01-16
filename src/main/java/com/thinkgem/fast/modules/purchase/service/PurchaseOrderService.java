@@ -72,6 +72,11 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
                 // 订单商品的库房与订单库房保持一致
                 purchaseGoods.setStoreroomName(purchaseOrder.getStorehouse());
                 purchaseGoods.setGoods(goodsService.get(purchaseGoodsVo.getGoodsId()));
+                // 暂时将税相关字段置空
+                purchaseGoods.setTax(null);
+                purchaseGoods.setTaxFree(null);
+                purchaseGoods.setTaxAmount(null);
+                purchaseGoods.setTaxRate(null);
                 purchaseGoodsService.save(purchaseGoods);
             }
         }
@@ -99,9 +104,10 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         PurchaseGoods purchaseGoods = new PurchaseGoods();
         purchaseGoods.setPurchaseOrder(purchaseOrder);
         List<PurchaseGoods> purchaseGoodsList = purchaseGoodsService.findList(purchaseGoods);
-        // 构造要显示的采购商品
+        // 构造要显示的订单商品
         for (PurchaseGoods purchaseGoods1 : purchaseGoodsList) {
-            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo(purchaseGoods1);
+            Goods goods = goodsService.get(purchaseGoods1.getGoods().getId());
+            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo(purchaseGoods1,goods);
             purchaseGoodsVoList.add(purchaseGoodsVo);
         }
         return purchaseGoodsVoList;
