@@ -58,10 +58,6 @@ public class PurchaseOrderController extends BaseController {
             entity = new PurchaseOrder();
             // 供应商列表
             entity.setSuppliers(supplierService.findList(new Supplier()));
-            // 订单编号
-            entity.setPurchaseNumber(this.getNewPurchaseNumber());
-            // 订单日期
-            entity.setOrderTime(new Date());
         }
         return entity;
     }
@@ -77,6 +73,12 @@ public class PurchaseOrderController extends BaseController {
     @RequiresPermissions("purchase:purchaseOrder:view")
     @RequestMapping(value = "form")
     public String form(PurchaseOrder purchaseOrder, Model model) {
+        if (StringUtils.isBlank(purchaseOrder.getId())) {
+            //订单编号
+            purchaseOrder.setPurchaseNumber(this.getNewPurchaseNumber());
+            //订单日期
+            purchaseOrder.setOrderTime(new Date());
+        }
         model.addAttribute("purchaseOrder", purchaseOrder);
         return "modules/purchase/purchaseOrderForm";
     }
@@ -117,7 +119,8 @@ public class PurchaseOrderController extends BaseController {
                     it.remove();
                 } else {
                     if (StringUtils.isBlank(purchaseGoodsVo.getGoodsId()) ||
-                            StringUtils.isBlank(purchaseGoodsVo.getNumber())) {
+                            StringUtils.isBlank(purchaseGoodsVo.getNumber()) ||
+                            StringUtils.isBlank(purchaseGoodsVo.getPurchasePrice())) {
                         it.remove();
                     }
                 }
@@ -144,7 +147,7 @@ public class PurchaseOrderController extends BaseController {
         purchaseOrder.setCreateDate(today.getTime());
         List<PurchaseOrder> list = purchaseOrderService.findTodayList(purchaseOrder);
         if (list.isEmpty()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
             String date = sdf.format(new Date());
 
             purchaseNumber = date + "00001";

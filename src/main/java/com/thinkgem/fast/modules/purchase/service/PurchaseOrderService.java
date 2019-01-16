@@ -69,6 +69,8 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
                 // 通过PurchaseGoodsVo构造PurchaseGoods得到采购商品订单信息
                 PurchaseGoods purchaseGoods = new PurchaseGoods(purchaseGoodsVo);
                 purchaseGoods.setPurchaseOrder(purchaseOrder);
+                // 订单商品的库房与订单库房保持一致
+                purchaseGoods.setStoreroomName(purchaseOrder.getStorehouse());
                 purchaseGoods.setGoods(goodsService.get(purchaseGoodsVo.getGoodsId()));
                 purchaseGoodsService.save(purchaseGoods);
             }

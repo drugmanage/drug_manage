@@ -70,7 +70,9 @@
                 const element = goodsAttr[i];
                 var attr = element.split("=");
                 // 为需要的属性赋值
-                if (attr[0] == "goodsCode") {
+                if (attr[0] == "goodsId") {
+                    goods.id = attr[1];
+                } else if (attr[0] == "goodsCode") {
                     goods.goodsCode = attr[1];
                 } else if (attr[0] == "goodsName") {
                     goods.goodsName = attr[1];
@@ -107,29 +109,54 @@
                 }
             }
 
-            var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
+            var trStr = '<tr id="goods_tr_' + newMaxId + '">'
                 + '<td>'
                 + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
                 + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
-                + goods.goodsCode + '</td>'
-                + '<td>' + goods.goodsName + '</td>'
-                + '<td>' + goods.goodsSpec + '</td>'
-                + '<td>' + goods.goodsType + '</td>'
-                + '<td>' + goods.manufacturer + '</td>'
-                + '<td>' + goods.unit + '</td>'
-                + '<td>' + goods.content + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList["' + newMaxId + '"].purchasePrice" value="" valid="vtext"/>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsCode" value="' + goods.goodsCode + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList["' + newMaxId + '"].number" value="" valid="vtext"/>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsName" value="' + goods.goodsName + '" readonly="readonly"/>'
                 + '</td>'
-                + '<td>' + goods.tax + '</td>'
-                + '<td>' + goods.taxFree + '</td>'
-                + '<td>' + goods.taxAmount + '</td>'
-                + '<td>' + goods.taxRate + '</td>'
-                + '<td>' + goods.stock + '</td>'
-                + '<td>' + goods.arrivalNum + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsSpec" value="' + goods.goodsSpec + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsType" value="' + goods.goodsType + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].manufacturer" value="' + goods.manufacturer + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].unit" value="' + goods.unit + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].content" value="' + goods.content + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].purchasePrice" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].tax" value="' + goods.tax + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxFree" value="' + goods.taxFree + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxAmount" value="' + goods.taxAmount + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxRate" value="' + goods.taxRate + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].stock" value="' + goods.stock + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].arrivalNum" value="' + goods.arrivalNum + '" readonly="readonly"/>'
+                + '</td>'
                 + '<td>'
                 + '<a href="javascript:void(0)" class="btnDel" onclick="oper.goods.del(' + newMaxId + ');">删除</a>'
                 + '</td>'
@@ -137,6 +164,17 @@
             var html = trStr;
             return html;
         }
+
+        // $('input[type=text]').on('keyup', function () {
+        //     var val = $(this).val();
+        //     console.log(val);
+        //     if (val.length < 1) {
+        //         $(".submit-btn").prop("disabled", true);
+        //     } else {
+        //         $(".submit-btn").prop("disabled", false);
+        //     }
+        // });
+
     </script>
     <%@include file="/WEB-INF/views/modules/purchase/purchaseOrderJs.jsp" %>
 </head>
@@ -175,7 +213,7 @@
                 <div class="div-b">
                     <label class="control-label">单据编号：</label>
                     <div class="controls">
-                        <form:input path="purchaseNumber" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+                        <form:input path="purchaseNumber" htmlEscape="false" maxlength="11" class="input-xlarge "/>
                     </div>
                 </div>
             </div>
@@ -340,7 +378,7 @@
                         <shiro:hasPermission name="purchase:purchaseOrder:edit">
                             <td>
                                 <a href="javascript:void(0)" class="btnDel"
-                                   onclick="oper.edu.del('${i.index}','${item.id }');">删除</a>
+                                   onclick="oper.goods.del('${i.index}','${item.id }');">删除</a>
                             </td>
                         </shiro:hasPermission>
                     </tr>

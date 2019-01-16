@@ -41,7 +41,7 @@
             del: function (itemGoodsId, entityId) {
                 if (entityId) {
                     var url = "${ctx}/purchase/purchaseGoods/delete";
-                    tips = "确定删除商品信息？";
+                    tips = "确定删除订单商品信息？";
                     top.$.jBox.confirm(tips, "清除确认", function (v) {
                         if (v == "ok") {
                             $.ajax({

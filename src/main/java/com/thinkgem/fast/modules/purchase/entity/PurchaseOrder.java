@@ -53,7 +53,7 @@ public class PurchaseOrder extends DataEntity<PurchaseOrder> {
         this.office = office;
     }
 
-    @Length(min = 0, max = 10, message = "单据编号长度必须介于 0 和 10 之间")
+    @Length(min = 0, max = 11, message = "单据编号长度必须介于 0 和 10 之间")
     public String getPurchaseNumber() {
         return purchaseNumber;
     }

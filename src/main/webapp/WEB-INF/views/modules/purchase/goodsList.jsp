@@ -28,6 +28,7 @@
                     var regex = /\[(.+?)\]/g;
                     var result = regex.exec(goods);
                     goodsData = result[1];
+                    console.log(goodsData)
                 }
             });
         }
