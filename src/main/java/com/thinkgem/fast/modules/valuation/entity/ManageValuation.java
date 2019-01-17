@@ -1,5 +1,6 @@
 package com.thinkgem.fast.modules.valuation.entity;
 
+import com.thinkgem.fast.modules.goods.entity.Goods;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
@@ -14,6 +15,9 @@ public class ManageValuation extends DataEntity<ManageValuation> {
 	private static final long serialVersionUID = 1L;
 	private String manageId;		// 区域经理
 	private String goodsId;		// 商品id
+
+	private Goods goods;
+
 	private Double onePrice;		// 一类价格
 	private String onePriceCustomerLkId;		// 设置客户一类价格关联
 	private Double twoPrice;		// 二类价格
@@ -27,6 +31,14 @@ public class ManageValuation extends DataEntity<ManageValuation> {
 
 	public ManageValuation(String id){
 		super(id);
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
 	}
 
 	@Length(min=0, max=64, message="区域经理长度必须介于 0 和 64 之间")

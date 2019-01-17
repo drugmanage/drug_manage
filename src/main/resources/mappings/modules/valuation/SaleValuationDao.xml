@@ -22,20 +22,45 @@
 	
 	<sql id="saleValuationJoins">
 	</sql>
+
+	<sql id="goodsColumns">
+		g.office_id AS "goods.office.id",
+		g.goods_category AS "goods.goodsCategory",
+		g.goods_code AS "goods.goodsCode",
+		g.goods_name AS "goods.goodsName",
+		g.goods_type AS "goods.goodsType",
+		g.unit AS "goods.unit",
+		g.goods_spec AS "goods.goodsSpec",
+		g.approval_number AS "goods.approvalNumber",
+		g.manufacturer AS "goods.manufacturer",
+		o2.name AS "goods.office.name"
+	</sql>
+
+	<sql id="goodsJoins">
+		LEFT JOIN sys_office o2 ON o2.id = g.office_id
+	</sql>
     
 	<select id="get" resultType="SaleValuation">
 		SELECT 
-			<include refid="saleValuationColumns"/>
+			<include refid="saleValuationColumns"/>,
+			<include refid="goodsColumns"/>
 		FROM sale_valuation a
-		<include refid="saleValuationJoins"/>
+		left join goods g
+		on g.id=a.goods_id
+			<include refid="saleValuationJoins"/>
+			<include refid="goodsJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
 	<select id="findList" resultType="SaleValuation">
 		SELECT 
-			<include refid="saleValuationColumns"/>
-		FROM sale_valuation a
+			<include refid="saleValuationColumns"/>,
+			<include refid="goodsColumns"/>
+		FROM goods g
+		left join sale_valuation a
+		on g.id=a.goods_id
 		<include refid="saleValuationJoins"/>
+		<include refid="goodsJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>

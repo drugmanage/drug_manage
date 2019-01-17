@@ -1,5 +1,6 @@
 package com.thinkgem.fast.modules.valuation.entity;
 
+import com.thinkgem.fast.modules.goods.entity.Goods;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
@@ -13,6 +14,9 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 	
 	private static final long serialVersionUID = 1L;
 	private String goodsId;		// 商品id
+
+	private Goods goods;
+
 	private String thirdQueryPriceFlag;		// 第三方查看价格标识
 	private String notThirdQueryPriceFlag;		// 除第三方外客户标识
 	private Double onePrice;		// 一类价格
@@ -28,6 +32,14 @@ public class GoodsValuation extends DataEntity<GoodsValuation> {
 
 	public GoodsValuation(String id){
 		super(id);
+	}
+
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
 	}
 
 	@Length(min=0, max=64, message="商品id长度必须介于 0 和 64 之间")
