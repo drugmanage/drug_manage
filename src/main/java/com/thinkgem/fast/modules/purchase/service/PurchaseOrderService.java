@@ -34,6 +34,9 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
     @Autowired
     private GoodsService goodsService;
 
+    @Autowired
+    private PurchaseOrderDao purchaseOrderDao;
+
     public PurchaseOrder get(String id) {
         PurchaseOrder purchaseOrder = super.get(id);
         // set要显示的订单商品
@@ -107,9 +110,13 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         // 构造要显示的订单商品
         for (PurchaseGoods purchaseGoods1 : purchaseGoodsList) {
             Goods goods = goodsService.get(purchaseGoods1.getGoods().getId());
-            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo(purchaseGoods1,goods);
+            PurchaseGoodsVo purchaseGoodsVo = new PurchaseGoodsVo(purchaseGoods1, goods);
             purchaseGoodsVoList.add(purchaseGoodsVo);
         }
         return purchaseGoodsVoList;
+    }
+
+    public PurchaseOrder findFirstByOrderNumLikeOrderByOrderNumDesc() {
+        return purchaseOrderDao.findFirstByOrderNumLikeOrderByOrderNumDesc();
     }
 }

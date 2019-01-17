@@ -3,6 +3,7 @@ package com.thinkgem.fast.modules.purchase.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.fast.common.utils.DateUtils;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import com.thinkgem.fast.modules.purchase.service.PurchaseGoodsService;
 import com.thinkgem.fast.modules.supplier.entity.Supplier;
@@ -46,6 +47,8 @@ public class PurchaseOrderController extends BaseController {
     @Autowired
     private SupplierService supplierService;
 
+    private static String orderNumberMain = "000000";
+
     @ModelAttribute
     public PurchaseOrder get(@RequestParam(required = false) String id) {
         PurchaseOrder entity = null;
@@ -75,7 +78,7 @@ public class PurchaseOrderController extends BaseController {
     public String form(PurchaseOrder purchaseOrder, Model model) {
         if (StringUtils.isBlank(purchaseOrder.getId())) {
             //订单编号
-            purchaseOrder.setPurchaseNumber(this.getNewPurchaseNumber());
+            purchaseOrder.setPurchaseNumber(this.getOrderNumber());
             //订单日期
             purchaseOrder.setOrderTime(new Date());
         }
@@ -133,31 +136,32 @@ public class PurchaseOrderController extends BaseController {
      *
      * @return
      */
-    private String getNewPurchaseNumber() {
-        String purchaseNumber = "";
+    private String getOrderNumber() {
+        synchronized (orderNumberMain) {
+            String nowDate = DateUtils.getDate("yyMMdd");
 
-        // 获取一天的最早时间
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
-
-        PurchaseOrder purchaseOrder = new PurchaseOrder();
-        purchaseOrder.setCreateDate(today.getTime());
-        List<PurchaseOrder> list = purchaseOrderService.findTodayList(purchaseOrder);
-        if (list.isEmpty()) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-            String date = sdf.format(new Date());
-
-            purchaseNumber = date + "00001";
-        } else {
-            PurchaseOrder purchaseOrderFromDB = list.get(0);
-            String oldPurchaseNumber = purchaseOrderFromDB.getPurchaseNumber();
-            String newNum = String.format("%05d", Integer.parseInt(oldPurchaseNumber.substring(6)) + 1);
-            purchaseNumber = oldPurchaseNumber.substring(0, 6) + newNum;
+            String preCode = "CG";
+            if ("000000".equals(orderNumberMain)) {
+                PurchaseOrder purchaseOrder = purchaseOrderService.findFirstByOrderNumLikeOrderByOrderNumDesc();
+                if (purchaseOrder != null) {
+                    orderNumberMain = purchaseOrder.getPurchaseNumber();
+                }
+            }
+            if (orderNumberMain != null && !"".equals(orderNumberMain)) {
+                Integer code = Integer.valueOf(orderNumberMain.substring(8)) + 1;
+                String codeNum = String.format("%06d", code);
+                Calendar calendar = Calendar.getInstance();
+                int today = calendar.get(Calendar.DAY_OF_MONTH);
+                if (today == 1) {//每个月重新计算
+                    orderNumberMain = preCode + nowDate + "000001";
+                } else {
+                    orderNumberMain = preCode + nowDate + codeNum;
+                }
+            } else {
+                orderNumberMain = preCode + nowDate + "00001";
+            }
+            String orderNumber = new String(orderNumberMain);
+            return orderNumber;
         }
-
-        return purchaseNumber;
     }
 }

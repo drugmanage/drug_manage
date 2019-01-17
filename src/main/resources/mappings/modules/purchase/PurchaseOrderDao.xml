@@ -168,4 +168,12 @@
         ORDER BY a.purchase_number DESC
     </select>
 
+    <select id="findFirstByOrderNumLikeOrderByOrderNumDesc" resultType="PurchaseOrder">
+        SELECT
+        <include refid="purchaseOrderColumns"/>
+        FROM purchase_order a
+        <include refid="purchaseOrderJoins"/>
+        order by purchase_number desc
+        limit 1
+    </select>
 </mapper>
