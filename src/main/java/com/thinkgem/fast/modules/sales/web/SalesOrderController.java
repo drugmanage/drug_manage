@@ -49,10 +49,6 @@ public class SalesOrderController extends BaseController {
 		}
 		if (entity == null){
 			entity = new SalesOrder();
-			// 订单编号
-            entity.setOrderNum(this.getOrderNumber());
-            // 订单日期
-            entity.setOrderTime(new Date());
 		}
 		return entity;
 	}
@@ -68,6 +64,12 @@ public class SalesOrderController extends BaseController {
 	@RequiresPermissions("sales:salesOrder:view")
 	@RequestMapping(value = "form")
 	public String form(SalesOrder salesOrder, Model model) {
+		if (StringUtils.isBlank(salesOrder.getId())) {
+			// 订单编号
+			salesOrder.setOrderNum(this.getOrderNumber());
+			// 订单日期
+			salesOrder.setOrderTime(new Date());
+		}
 		model.addAttribute("salesOrder", salesOrder);
 		return "modules/sales/salesOrderForm";
 	}
@@ -123,7 +125,7 @@ public class SalesOrderController extends BaseController {
      */
     private String getOrderNumber() {
     	synchronized(orderNumberMain){
-    		String nowDate = DateUtils.getDate();
+    		String nowDate = DateUtils.getDate("yyMMdd");
     		String preCode = "SX";
 	        if("000000".equals(orderNumberMain)){
 	        	SalesOrder salesOrder = salesOrderService.findFirstByOrderNumLikeOrderByOrderNumDesc();
@@ -131,8 +133,8 @@ public class SalesOrderController extends BaseController {
 	        		orderNumberMain = salesOrder.getOrderNum();
 	        	}
 	        }
-	        if(orderNumberMain != null && !"".equals(orderNumberMain)){
-	        	Integer code = Integer.valueOf(orderNumberMain.substring(10))+1;
+	        if(orderNumberMain != null && !"".equals(orderNumberMain)&&orderNumberMain.length()>6){
+	        	Integer code = Integer.valueOf(orderNumberMain.substring(8))+1;
 	        	String codeNum = String.format("%06d", code);
 	        	Calendar calendar = Calendar.getInstance();
 	        	int today = calendar.get(Calendar.DAY_OF_MONTH);
@@ -142,7 +144,7 @@ public class SalesOrderController extends BaseController {
 	        		orderNumberMain = preCode+nowDate+codeNum;
 	        	}
 	        }else{
-	        	orderNumberMain=preCode+nowDate+"00001";
+	        	orderNumberMain=preCode+nowDate+"000001";
 	        }
 	    	String orderNumber = new String(orderNumberMain);
 	    	return orderNumber;

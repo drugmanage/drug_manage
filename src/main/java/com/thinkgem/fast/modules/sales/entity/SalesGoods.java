@@ -14,7 +14,7 @@ import com.thinkgem.fast.modules.repo.entity.Repo;
 public class SalesGoods extends DataEntity<SalesGoods> {
 	
 	private static final long serialVersionUID = 1L;
-	private String salesId;		// 销售订单
+	private SalesOrder salesOrder;		// 销售订单
 	private Goods goods;		// 商品
 	private Repo repo;		// 库房
 	private String cargoNumber;		// 货位号
@@ -36,13 +36,27 @@ public class SalesGoods extends DataEntity<SalesGoods> {
 	public SalesGoods(String id){
 		super(id);
 	}
-
-	public String getSalesId() {
-		return salesId;
+	
+	public SalesGoods(SalesGoodsVo salesGoodsVo) {
+        this.cargoNumber = salesGoodsVo.getCargoNumber();
+        this.lotNumber = salesGoodsVo.getLotNumber();
+        this.validDateUntil = salesGoodsVo.getValidDateUntil();
+        this.number = salesGoodsVo.getNumber();
+        this.billingPrice = salesGoodsVo.getBillingPrice();
+        this.settlementPrice = salesGoodsVo.getSettlementPrice();
+        this.highPrice = salesGoodsVo.getHighPrice();
+        this.tax = salesGoodsVo.getTax();
+        this.taxFree = salesGoodsVo.getTaxFree();
+        this.taxAmount = salesGoodsVo.getTaxAmount();
+        this.taxRate = salesGoodsVo.getTaxRate();
+    }
+	
+	public SalesOrder getSalesOrder() {
+		return salesOrder;
 	}
 
-	public void setSalesId(String salesId) {
-		this.salesId = salesId;
+	public void setSalesOrder(SalesOrder salesOrder) {
+		this.salesOrder = salesOrder;
 	}
 
 	public Goods getGoods() {

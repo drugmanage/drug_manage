@@ -2,6 +2,8 @@ package com.thinkgem.fast.modules.sales.entity;
 
 import java.util.Date;
 
+import com.thinkgem.fast.modules.goods.entity.Goods;
+
 /**
  *销售商品展示Entity
  * @author shiao
@@ -30,23 +32,15 @@ public class SalesGoodsVo {
 	private String taxRate;		// 税率
 	private String taxAmount;		// 税额
 
-    public SalesGoodsVo(){
-    }
-
-    /**
-	* 构造方法用于构造显示的订单商品列表内容
-     *
-     * @param purchaseGoods
-     */
-    public SalesGoodsVo(SalesGoods salesGoods){
-        this.goodsId = salesGoods.getGoods().getId();
-        this.goodsCode = salesGoods.getGoods().getGoodsCode();
-        this.goodsName = salesGoods.getGoods().getGoodsName();
-        this.goodsSpec = salesGoods.getGoods().getGoodsSpec();
-        this.goodsType = salesGoods.getGoods().getGoodsType();
-        this.manufacturer = salesGoods.getGoods().getManufacturer();
-        this.unit = salesGoods.getGoods().getUnit();
-        this.content = salesGoods.getGoods().getContent();
+    public SalesGoodsVo(SalesGoods salesGoods, Goods goods){
+    	this.goodsId = goods.getId();
+        this.goodsCode = goods.getGoodsCode();
+        this.goodsName = goods.getGoodsName();
+        this.goodsSpec = goods.getGoodsSpec();
+        this.goodsType = goods.getGoodsType();
+        this.manufacturer = goods.getManufacturer();
+        this.unit = goods.getUnit();
+        this.content = goods.getContent();
         this.repoId = salesGoods.getRepo().getId();
         this.cargoNumber = salesGoods.getCargoNumber();
         this.lotNumber = salesGoods.getLotNumber();
@@ -61,7 +55,7 @@ public class SalesGoodsVo {
         this.taxRate = salesGoods.getTaxRate();
     }
 
-	public String getGoodsId() {
+    public String getGoodsId() {
 		return goodsId;
 	}
 
