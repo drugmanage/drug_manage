@@ -173,6 +173,7 @@
         <include refid="purchaseOrderColumns"/>
         FROM purchase_order a
         <include refid="purchaseOrderJoins"/>
+        where del_flag = '0'
         order by purchase_number desc
         limit 1
     </select>
