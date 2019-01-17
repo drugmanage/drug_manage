@@ -133,7 +133,7 @@ public class SalesOrderController extends BaseController {
 	        		orderNumberMain = salesOrder.getOrderNum();
 	        	}
 	        }
-	        if(orderNumberMain != null && !"".equals(orderNumberMain)){
+	        if(orderNumberMain != null && !"".equals(orderNumberMain)&&orderNumberMain.length()>6){
 	        	Integer code = Integer.valueOf(orderNumberMain.substring(8))+1;
 	        	String codeNum = String.format("%06d", code);
 	        	Calendar calendar = Calendar.getInstance();
@@ -144,7 +144,7 @@ public class SalesOrderController extends BaseController {
 	        		orderNumberMain = preCode+nowDate+codeNum;
 	        	}
 	        }else{
-	        	orderNumberMain=preCode+nowDate+"00001";
+	        	orderNumberMain=preCode+nowDate+"000001";
 	        }
 	    	String orderNumber = new String(orderNumberMain);
 	    	return orderNumber;
