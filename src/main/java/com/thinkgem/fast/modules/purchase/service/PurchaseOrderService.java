@@ -90,11 +90,6 @@ public class PurchaseOrderService extends CrudService<PurchaseOrderDao, Purchase
         super.delete(purchaseOrder);
     }
 
-    public List<PurchaseOrder> findTodayList(PurchaseOrder purchaseOrder) {
-        return super.findList(purchaseOrder);
-    }
-
-
     /**
      * 构造页面显示的采购商品列表
      *

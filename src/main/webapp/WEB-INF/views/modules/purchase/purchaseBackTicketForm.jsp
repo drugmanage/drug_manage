@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <html>
 <head>
-    <title>采购退款开票单管理</title>
+    <title>采购退回开票单管理</title>
     <meta name="decorator" content="default"/>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -22,26 +22,22 @@
                     }
                 }
             });
-            // //Tab页签
-            // $('#myTab a:first').tab('show');
-            // $('#myTab a').click(function (e) {
-            //     e.preventDefault();
-            //     $(this).tab('show');
-            // });
-            //
-            // $("#empName").keyup(function () {
-            //     var empName = $(this).val();
-            //     var py = Mtils.utils.makePy(empName);
-            //     $("#pinyin").val(py);
-            // })
-            //
-            // $("#birth").change(function () {
-            //     alert("1");
-            //     var birth = $(this).val();
-            //     var age = Mtils.utils.calcAge(birth, new Date());
-            //     $("#age").val(age);
-            // })
         });
+
+        // 添加退回单商品
+        function addPurchaseGoods() {
+            let width = $("#mainFrame", top.window.document).width();
+            let height = $("#mainFrame", top.window.document).height() - 80;
+            top.$.jBox.open("iframe:${ctx}/purchase/purchaseBackTicket/toPurchaseGoodsList", "采购订单商品筛选", width, height, {
+                buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
+                    if (v == "ok") {
+                    }
+                }, loaded: function (h) {
+                    $(".jbox-content", top.document).css("overflow-y", "hidden");
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -57,10 +53,6 @@
            method="post" class="form-horizontal">
     <form:hidden path="id"/>
     <sys:message content="${message}"/>
-    <%--<ul class="nav nav-tabs" id="myTab">--%>
-    <%--<li class="active"><a href="#baseInfo">退回开票单基本信息</a></li>--%>
-    <%--<li><a href="#goodsInfo">待退商品列表</a></li>--%>
-    <%--</ul>--%>
     <div class="tab-content">
         <div class="tab-pane active" id="baseInfo">
             <div class="control-group">
@@ -168,7 +160,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td colspan="10"><a href="javascript:" onclick="oper.goods.add();" class="btn">新增</a></td>
+                        <td colspan="10"><a href="javascript:" onclick="addPurchaseGoods();" class="btn">新增</a></td>
                     </tr>
                     </tfoot>
                 </table>
