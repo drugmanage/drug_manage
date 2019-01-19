@@ -92,8 +92,8 @@ public class PurchaseBackTicketController extends BaseController {
      * @param model
      * @return
      */
-    @RequiresPermissions("purchase:purchaseOrder:view")
-    @RequestMapping(value = "form")
+//    @RequiresPermissions("purchase:purchaseOrder:view")
+//    @RequestMapping(value = "form")
     public String toPurchaseGoodsList(PurchaseOrder purchaseOrder, Model model) {
         purchaseOrder = purchaseOrderService.findList(purchaseOrder).get(0);
         model.addAttribute("purchaseOrder", purchaseOrder);
