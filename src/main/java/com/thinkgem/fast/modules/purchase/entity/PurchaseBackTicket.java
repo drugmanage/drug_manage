@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
 
+import java.util.List;
+
 /**
  * 采购退款开票单Entity
  * @author 刘海涛
@@ -21,6 +23,8 @@ public class PurchaseBackTicket extends DataEntity<PurchaseBackTicket> {
 	private String backPriceTotalTax;		// 采购退回总税额
 	private String backPriceTaxAmount;		// 采购退回总含税金额
 	private String returnReason;		// 退货原因
+
+	private List<PurchaseOrder> purchaseOrderList;		// 采购订单列表
 	
 	public PurchaseBackTicket() {
 		super();
@@ -96,5 +100,12 @@ public class PurchaseBackTicket extends DataEntity<PurchaseBackTicket> {
 	public void setReturnReason(String returnReason) {
 		this.returnReason = returnReason;
 	}
-	
+
+	public List<PurchaseOrder> getPurchaseOrderList() {
+		return purchaseOrderList;
+	}
+
+	public void setPurchaseOrderList(List<PurchaseOrder> purchaseOrderList) {
+		this.purchaseOrderList = purchaseOrderList;
+	}
 }

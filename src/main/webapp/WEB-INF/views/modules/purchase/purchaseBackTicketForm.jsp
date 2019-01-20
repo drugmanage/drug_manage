@@ -26,16 +26,23 @@
 
         // 添加退回单商品
         function addPurchaseGoods() {
-            let width = $("#mainFrame", top.window.document).width();
-            let height = $("#mainFrame", top.window.document).height() - 80;
-            top.$.jBox.open("iframe:${ctx}/purchase/purchaseBackTicket/toPurchaseGoodsList", "采购订单商品筛选", width, height, {
-                buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
-                    if (v == "ok") {
+            // 获取采购订单的id
+            var purchaseId = document.getElementById("purchaseId").value;
+            if (purchaseId != null  && purchaseId != ""){
+                let width = $("#mainFrame", top.window.document).width();
+                let height = $("#mainFrame", top.window.document).height() - 80;
+                top.$.jBox.open("iframe:${ctx}/purchase/purchaseBackTicket/toPurchaseGoodsList?purchaseId="+purchaseId, "采购订单商品筛选", width, height, {
+                    buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
+                        if (v == "ok") {
+                        }
+                    }, loaded: function (h) {
+                        $(".jbox-content", top.document).css("overflow-y", "hidden");
                     }
-                }, loaded: function (h) {
-                    $(".jbox-content", top.document).css("overflow-y", "hidden");
-                }
-            });
+                });
+            } else {
+                // 提示输入订单号
+
+            }
         }
 
     </script>
@@ -70,7 +77,11 @@
                 <div class="div-b">
                     <label class="control-label">采购订单：</label>
                     <div class="controls">
-                        <form:input path="purchaseId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+                        <form:select path="purchaseId" class="input-xlselect ">
+                            <form:option value="" label=""/>
+                            <form:options items="${purchaseBackTicket.purchaseOrderList}" itemLabel="purchaseNumber" itemValue="id"
+                                          htmlEscape="false"/>
+                        </form:select>
                     </div>
                 </div>
             </div>

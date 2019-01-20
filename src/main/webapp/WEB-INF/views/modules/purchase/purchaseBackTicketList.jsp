@@ -36,7 +36,11 @@
                             notAllowSelectParent="true"/>
         </li>
         <li><label>采购订单：</label>
-            <form:input path="purchaseId" htmlEscape="false" maxlength="64" class="input-medium"/>
+            <form:select path="purchaseId" class="input-xlselect ">
+                <form:option value="" label=""/>
+                <form:options items="${purchaseBackTicket.purchaseOrderList}" itemLabel="purchaseNumber" itemValue="id"
+                              htmlEscape="false"/>
+            </form:select>
         </li>
         <li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
         <li class="clearfix"></li>
