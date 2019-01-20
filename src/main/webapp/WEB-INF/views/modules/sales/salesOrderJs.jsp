@@ -2,31 +2,45 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp" %>
 <script type="application/javascript">
 	var oper = {
-        goods: {
-            socpName: "goods_",
-            add: function () {
-                if ($("input[name='itemGoodsId']") && $("input[name='itemGoodsId']").length != 0) {
-                    var itemGoodsId = [];
-                    $("input[name='itemGoodsId']").each(function () {
-                        itemGoodsId.push(parseInt($(this).val()));
-                    });
-                    if (itemGoodsId.length != 0) {
-                        var maxId = Math.max.apply(null, itemGoodsId);
-                        if (maxId != undefined) {
-                            var newMaxId = maxId + 1;
-                            var html = this.appendHtml(newMaxId);
-                            $("#" + this.socpName + "tr_" + maxId).after(html);
+        sales: {
+            socpName: "sales_",
+            viewGoods: function () {
+                let width = $("#mainFrame", top.window.document).width();
+                let height = $("#mainFrame", top.window.document).height() - 80;
+                top.$.jBox.open("iframe:${ctx}/sales/salesGoods/getGoodsList", "商品筛选", width, height, {
+                    buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
+                        if (v == "ok") {
+                            let goods = h.find("iframe")[0].contentWindow.goodsData;
+                            if (goods != null) {
+                                if ($("input[name='itemGoodsId']") && $("input[name='itemGoodsId']").length != 0) {
+                                    let itemGoodsId = [];
+                                    $("input[name='itemGoodsId']").each(function () {
+                                        itemGoodsId.push(parseInt($(this).val()));
+                                    });
+                                    if (itemGoodsId.length != 0) {
+                                        let maxId = Math.max.apply(null, itemGoodsId);
+                                        if (maxId != undefined) {
+                                            let newMaxId = maxId + 1;
+                                            let html = window.appendHtml(newMaxId, goods);
+                                            $("#" + this.socpName + "tr_" + maxId).after(html);
+                                        }
+                                    }
+                                } else {
+                                    let newMaxId = 0;
+                                    let html = window.appendHtml(newMaxId, goods);
+                                    $("#" + oper.sales.socpName + "contentField").html(html);
+                                }
+                            }
                         }
+                    }, loaded: function (h) {
+                        $(".jbox-content", top.document).css("overflow-y", "hidden");
                     }
-                } else {
-                    var newMaxId = 0;
-                    var html = this.appendHtml(newMaxId);
-                    $("#" + oper.goods.socpName + "contentField").html(html);
-                }
+                });
+
             },
             del: function (itemGoodsId,entityId) {
                 if(entityId){
-                    var url = "${ctx}/purchase/purchaseGoods/delete";
+                    var url = "${ctx}/sales/salesGoods/delete";
                     tips="确定删除商品信息？";
                     top.$.jBox.confirm(tips, "清除确认", function(v){
                         if(v=="ok") {
@@ -39,7 +53,7 @@
                                 success: function (data) {
                                     if (data.code == 200) {
                                         alertx(data.msg);
-                                        $("#" + oper.goods.socpName + "tr_" + itemGoodsId).remove();
+                                        $("#" + oper.sales.socpName + "tr_" + itemGoodsId).remove();
                                     }
                                 }
                             })
@@ -48,65 +62,6 @@
                 }else{
                     $("#" + this.socpName + "tr_" + itemGoodsId).remove();
                 }
-            },
-            appendHtml: function (newMaxId) {
-                var trStr = '<tr id="' + this.socpName + 'tr_' + newMaxId + '">'
-                    +'<td>'
-                    +'<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
-                    +'<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value=""/>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsCode"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsName"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsSpec"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].goodsType"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].manufacturer"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].unit"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].content"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].retailPrice"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].tax"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].stock"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].arrivalNum"'
-                    +'value="" valid="vtext"/>'
-                    +'</td>'
-                    +'<td>'
-                    +'<a href="javascript:void(0)" class="btnDel" onclick="oper.goods.del(' + newMaxId + ');">删除</a>'
-                    +'</td>'
-                    +'</tr>';
-                var html = trStr;
-                return html;
             }
         }
     };

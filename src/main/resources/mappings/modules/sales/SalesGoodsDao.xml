@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.sales.dao.SalesGoodsDao">
+    
+	<sql id="salesGoodsColumns">
+		a.id AS "id",
+		a.sales_id AS "salesOrder.id",
+		a.goods_id AS "goods.id",
+		a.repo_id AS "repo.id",
+		a.cargo_number AS "cargoNumber",
+		a.lot_number AS "lotNumber",
+		a.valid_date_until AS "validDateUntil",
+		a.number AS "number",
+		a.billing_price AS "billingPrice",
+		a.settlement_price AS "settlementPrice",
+		a.high_price AS "highPrice",
+		a.tax AS "tax",
+		a.tax_free AS "taxFree",
+		a.tax_rate AS "taxRate",
+		a.tax_amount AS "taxAmount",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="salesGoodsJoins">
+	</sql>
+    
+	<select id="get" resultType="SalesGoods">
+		SELECT 
+			<include refid="salesGoodsColumns"/>
+		FROM sales_goods a
+		<include refid="salesGoodsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SalesGoods">
+		SELECT 
+			<include refid="salesGoodsColumns"/>
+		FROM sales_goods a
+		<include refid="salesGoodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SalesGoods">
+		SELECT 
+			<include refid="salesGoodsColumns"/>
+		FROM sales_goods a
+		<include refid="salesGoodsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sales_goods(
+			id,
+			sales_id,
+			goods_id,
+			repo_id,
+			cargo_number,
+			lot_number,
+			valid_date_until,
+			number,
+			billing_price,
+			settlement_price,
+			high_price,
+			tax,
+			tax_free,
+			tax_rate,
+			tax_amount,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{salesOrder.id},
+			#{goods.id},
+			#{repo.id},
+			#{cargoNumber},
+			#{lotNumber},
+			#{validDateUntil},
+			#{number},
+			#{billingPrice},
+			#{settlementPrice},
+			#{highPrice},
+			#{tax},
+			#{taxFree},
+			#{taxRate},
+			#{taxAmount},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sales_goods SET 	
+			sales_id = #{salesId},
+			goods_id = #{goodsId},
+			repo_id = #{repoId},
+			cargo_number = #{cargoNumber},
+			lot_number = #{lotNumber},
+			valid_date_until = #{validDateUntil},
+			number = #{number},
+			billing_price = #{billingPrice},
+			settlement_price = #{settlementPrice},
+			high_price = #{highPrice},
+			tax = #{tax},
+			tax_free = #{taxFree},
+			tax_rate = #{taxRate},
+			tax_amount = #{taxAmount},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE sales_goods SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

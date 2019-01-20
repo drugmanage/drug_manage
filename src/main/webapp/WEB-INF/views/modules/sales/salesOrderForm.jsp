@@ -29,6 +29,145 @@
                 $(this).tab('show');
             });
 		});
+		
+		function appendHtml(newMaxId, goodsStr) {
+            var goods = {
+                "id": "",
+                "goodsCode": "",
+                "goodsName": "",
+                "goodsSpec": "",
+                "goodsType": "",
+                "manufacturer": "",
+                "unit": "",
+                "content": "",
+                "repoId":"",
+                "cargoNumber": "",
+                "lotNumber": "",
+                "validDateUntil": "",
+                "number": "",
+                "billingPrice": "",
+                "settlementPrice": "",
+                "highPrice": "",
+                "tax": "",
+                "taxFree": "",
+                "taxAmount": "",
+                "taxRate": ""
+            };
+            var goodsAttr = goodsStr.split(",")
+            for (let i = 0; i < goodsAttr.length; i++) {
+                const element = goodsAttr[i];
+                var attr = element.split("=");
+                // 为需要的属性赋值
+                if (attr[0] == "id") {
+                    goods.id = attr[1];
+                } else if (attr[0] == "goodsCode") {
+                    goods.goodsCode = attr[1];
+                } else if (attr[0] == "goodsName") {
+                    goods.goodsName = attr[1];
+                } else if (attr[0] == "goodsSpec") {
+                    goods.goodsSpec = attr[1];
+                } else if (attr[0] == "goodsType") {
+                    goods.goodsType = attr[1];
+                } else if (attr[0] == "manufacturer") {
+                    goods.manufacturer = attr[1];
+                } else if (attr[0] == "unit") {
+                    goods.unit = attr[1];
+                } else if (attr[0] == "content") {
+                    goods.content = attr[1];
+                } else if (attr[0] == "repoId") {
+                    goods.repoId = attr[1];
+                } else if (attr[0] == "cargoNumber") {
+                    goods.cargoNumber = attr[1];
+                } else if (attr[0] == "lotNumber") {
+                    goods.lotNumber = attr[1];
+                } else if (attr[0] == "validDateUntil") {
+                    goods.validDateUntil = attr[1];
+                } else if (attr[0] == "tax") {
+                    goods.tax = attr[1];
+                } else if (attr[0] == "taxFree") {
+                    goods.taxFree = attr[1];
+                } else if (attr[0] == "taxAmount") {
+                    goods.taxAmount = attr[1];
+                } else if (attr[0] == "taxRate") {
+                    goods.taxRate = attr[1];
+                } else if (attr[0] == "number") {
+                    goods.number = attr[1];
+                } else if (attr[0] == "billingPrice") {
+                    goods.billingPrice = attr[1];
+                } else if (attr[0] == "settlementPrice") {
+                    goods.settlementPrice = attr[1];
+                } else if (attr[0] == "highPrice") {
+                    goods.highPrice = attr[1];
+                }
+            }
+
+            var trStr = '<tr id="sales_tr_' + newMaxId + '">'
+                + '<td>'
+                + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
+                + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsCode" value="' + goods.goodsCode + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsName" value="' + goods.goodsName + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsSpec" value="' + goods.goodsSpec + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsType" value="' + goods.goodsType + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].manufacturer" value="' + goods.manufacturer + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].unit" value="' + goods.unit + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].content" value="' + goods.content + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].repoId" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].cargoNumber" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].lotNumber" value="' + goods.lotNumber + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].validDateUntil" value="' + goods.validDateUntil + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].billingPrice" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].settlementPrice" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].highPrice" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].tax" value="' + goods.tax + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxFree" value="' + goods.taxFree + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxAmount" value="' + goods.taxAmount + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxRate" value="' + goods.taxRate + '" readonly="readonly"/>'
+                + '</td>'
+                + '<shiro:hasPermission name="sales:salesOrder:edit"><td>'
+                + '<a href="javascript:void(0)" class="btnDel" onclick="oper.sales.del(' + newMaxId + ');">删除</a>'
+                + '</td></shiro:hasPermission>'
+                + '</tr>';
+            var html = trStr;
+            return html;
+        }
 	</script>
 	<%@include file="/WEB-INF/views/modules/sales/salesOrderJs.jsp" %>
 </head>
@@ -212,19 +351,26 @@
 	                    <th>生产企业</th>
 	                    <th>单位</th>
 	                    <th>内装数</th>
-	                    <th>单价</th>
-	                    <th>采购数量</th>
-	                    <th>金额</th>
-	                    <th>当前库存</th>
-	                    <th>已到货数</th>
-	                    <shiro:hasPermission name="purchase:purchaseOrder:edit">
+	                    <th>仓库</th>
+	                    <th>货位号</th>
+	                    <th>批号</th>
+	                    <th>有效期至</th>
+	                    <th>销售数量</th>
+	                    <th>开票价格</th>
+	                    <th>结算价</th>
+	                    <th>高开价</th>
+	                    <th>含税金额</th>
+	                    <th>不含税金额</th>
+	                    <th>税额</th>
+	                    <th>税率</th>
+	                    <shiro:hasPermission name="sales:salesOrder:edit">
 	                        <th>操作</th>
 	                    </shiro:hasPermission>
 	                </tr>
 	                </thead>
-	                <tbody id="goods_contentField">
-	                <c:forEach items="${purchaseOrder.goodsList}" var="item" varStatus="i">
-	                    <tr id="goods_tr_${i.index}">
+	                <tbody id="sales_contentField">
+	                <c:forEach items="${salesOrder.goodsList}" var="item" varStatus="i">
+	                    <tr id="sales_tr_${i.index}">
 	                        <td>
 	                            <input type="hidden" name="itemGoodsId" value="${i.index}"/>
 	                            <input type="hidden" name="goodsList[${i.index }].goodsId" value="${item.goodsId}"/>
@@ -256,29 +402,56 @@
 	                                   value="${item.content }" valid='vtext'/>
 	                        </td>
 	                        <td>
-	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].retailPrice"
-	                                   value="${item.retailPrice }" valid='vtext'/>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].repoId"
+	                                   value="${item.repoId }" valid='vtext'/>
+	                        </td>
+	                        <td>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].cargoNumber"
+	                                   value="${item.cargoNumber }" valid='vtext'/>
+	                        </td>
+	                        <td>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].lotNumber"
+	                                   value="${item.lotNumber }" valid='vtext'/>
+	                        </td>
+	                        <td>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].validDateUntil"
+	                                   value="${item.validDateUntil }" valid='vtext'/>
 	                        </td>
 	                        <td>
 	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].number"
 	                                   value="${item.number }" valid='vtext'/>
 	                        </td>
 	                        <td>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].billingPrice"
+	                                   value="${item.billingPrice }" valid='vtext'/>
+	                        </td>
+	                        <td>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].settlementPrice"
+	                                   value="${item.settlementPrice }" valid='vtext'/>
+	                        </td>
+	                        <td>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].highPrice"
+	                                   value="${item.highPrice }" valid='vtext'/>
+	                        </td>
+	                        <td>
 	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
 	                                   value="${item.tax }" valid='vtext'/>
 	                        </td>
 	                        <td>
-	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].stock"
-	                                   value="${item.stock }" valid='vtext'/>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].taxFree"
+	                                   value="${item.taxFree }" valid='vtext'/>
 	                        </td>
 	                        <td>
-	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].arrivalNum"
-	                                   value="${item.arrivalNum }" valid='vtext'/>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].taxAmount"
+	                                   value="${item.taxAmount }" valid='vtext'/>
 	                        </td>
-	                        <shiro:hasPermission name="purchase:purchaseOrder:edit">
+	                        <td>
+	                            <input type="text" class="table-form-control" name="goodsList[${i.index }].taxRate"
+	                                   value="${item.taxRate }" valid='vtext'/>
+	                        </td>
+	                        <shiro:hasPermission name="sales:salesOrder:edit">
 	                            <td>
-	                                <a href="javascript:void(0)" class="btnDel"
-	                                   onclick="oper.edu.del('${i.index}','${item.id }');">删除</a>
+	                                <a href="javascript:void(0)" class="btnDel" onclick="oper.sales.del('${i.index}','${item.id }');">删除</a>
 	                            </td>
 	                        </shiro:hasPermission>
 	                    </tr>
@@ -286,7 +459,9 @@
 	                </tbody>
 	                <tfoot>
 	                <tr>
-	                    <td colspan="10"><a href="javascript:" onclick="oper.goods.add();" class="btn">新增</a></td>
+	                	<shiro:hasPermission name="sales:salesOrder:edit">
+	                   		<td colspan="20"><a href="javascript:" onclick="oper.sales.viewGoods();" class="btn">新增</a></td>
+	                	</shiro:hasPermission>
 	                </tr>
 	                </tfoot>
 	            </table>

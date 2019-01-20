@@ -90,7 +90,7 @@ public class SalesOrderService extends CrudService<SalesOrderDao, SalesOrder> {
 	/**
 	   * 构造页面显示的销售商品列表
      *
-     * @param purchaseOrder
+     * @param salesOrder
      * @return
      */
     public List<SalesGoodsVo> getSalesGoodsVoList(SalesOrder salesOrder) {

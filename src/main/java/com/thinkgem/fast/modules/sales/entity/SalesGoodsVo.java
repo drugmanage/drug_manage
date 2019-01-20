@@ -10,7 +10,7 @@ import com.thinkgem.fast.modules.goods.entity.Goods;
  * @version 2019-1-4
  */
 public class SalesGoodsVo {
-
+	private String id;
     private String goodsId;		// 商品Id
     private String goodsCode;		// 商品编码
     private String goodsName;		// 商品名
@@ -32,7 +32,11 @@ public class SalesGoodsVo {
 	private String taxRate;		// 税率
 	private String taxAmount;		// 税额
 
+	public SalesGoodsVo() {
+    }
+	
     public SalesGoodsVo(SalesGoods salesGoods, Goods goods){
+    	this.setId(salesGoods.getId());
     	this.goodsId = goods.getId();
         this.goodsCode = goods.getGoodsCode();
         this.goodsName = goods.getGoodsName();
@@ -41,7 +45,9 @@ public class SalesGoodsVo {
         this.manufacturer = goods.getManufacturer();
         this.unit = goods.getUnit();
         this.content = goods.getContent();
-        this.repoId = salesGoods.getRepo().getId();
+        if(salesGoods.getRepo()!=null) {
+        	this.repoId = salesGoods.getRepo().getId();
+        }
         this.cargoNumber = salesGoods.getCargoNumber();
         this.lotNumber = salesGoods.getLotNumber();
         this.validDateUntil = salesGoods.getValidDateUntil();
@@ -54,7 +60,13 @@ public class SalesGoodsVo {
         this.taxAmount = salesGoods.getTaxAmount();
         this.taxRate = salesGoods.getTaxRate();
     }
+    public String getId() {
+		return id;
+	}
 
+	public void setId(String id) {
+		this.id = id;
+	}
     public String getGoodsId() {
 		return goodsId;
 	}
@@ -214,5 +226,4 @@ public class SalesGoodsVo {
 	public void setTaxAmount(String taxAmount) {
 		this.taxAmount = taxAmount;
 	}
-
 }
