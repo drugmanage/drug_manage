@@ -3,6 +3,7 @@ package com.thinkgem.fast.modules.purchase.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseOrder;
 import com.thinkgem.fast.modules.purchase.service.PurchaseOrderService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,6 +24,7 @@ import com.thinkgem.fast.modules.purchase.entity.PurchaseBackTicket;
 import com.thinkgem.fast.modules.purchase.service.PurchaseBackTicketService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 采购退款开票单Controller
@@ -98,12 +100,24 @@ public class PurchaseBackTicketController extends BaseController {
      * @return
      */
     @RequiresPermissions("purchase:purchaseOrder:view")
-    @RequestMapping(value="toPurchaseGoodsList")
-    public String toPurchaseGoodsList(@RequestParam(value = "purchaseId") String purchaseId , Model model) {
+    @RequestMapping(value = "toPurchaseGoodsList")
+    public String toPurchaseGoodsList(@RequestParam(value = "purchaseId") String purchaseId, Model model) {
         PurchaseOrder purchaseOrderForQuery = new PurchaseOrder();
         purchaseOrderForQuery.setId(purchaseId);
         PurchaseOrder purchaseOrder = purchaseOrderService.findList(purchaseOrderForQuery).get(0);
-        model.addAttribute("purchaseOrder", purchaseOrder);
+        List<PurchaseGoodsVo> goodsList = purchaseOrder.getGoodsList();
+        model.addAttribute("goodsList", goodsList);
         return "modules/purchase/purchaseGoodsList";
     }
+
+//    @RequiresPermissions("purchase:purchaseOrder:view")
+//    @RequestMapping(value = "toPurchaseGoodsList")
+//    public String getGoodsList(@RequestParam(value = "purchaseId") String purchaseId, HttpServletRequest request, HttpServletResponse response, Model model) {
+//        PurchaseOrder purchaseOrderForQuery = new PurchaseOrder();
+//        purchaseOrderForQuery.setId(purchaseId);
+//        Page<PurchaseOrder> page = purchaseOrderService.findPage(new Page<PurchaseOrder>(request, response), purchaseOrderForQuery);
+//        model.addAttribute("page", page);
+//        return "modules/purchase/goodsList";
+//}
+
 }

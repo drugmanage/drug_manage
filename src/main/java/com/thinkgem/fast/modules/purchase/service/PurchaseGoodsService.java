@@ -40,5 +40,5 @@ public class PurchaseGoodsService extends CrudService<PurchaseGoodsDao, Purchase
 	public void delete(PurchaseGoods purchaseGoods) {
 		super.delete(purchaseGoods);
 	}
-	
+
 }

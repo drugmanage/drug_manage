@@ -28,12 +28,33 @@
         function addPurchaseGoods() {
             // 获取采购订单的id
             var purchaseId = document.getElementById("purchaseId").value;
-            if (purchaseId != null  && purchaseId != ""){
+            if (purchaseId != null && purchaseId != "") {
                 let width = $("#mainFrame", top.window.document).width();
                 let height = $("#mainFrame", top.window.document).height() - 80;
-                top.$.jBox.open("iframe:${ctx}/purchase/purchaseBackTicket/toPurchaseGoodsList?purchaseId="+purchaseId, "采购订单商品筛选", width, height, {
+                top.$.jBox.open("iframe:${ctx}/purchase/purchaseBackTicket/toPurchaseGoodsList?purchaseId=" + purchaseId, "采购订单商品筛选", width, height, {
                     buttons: {"确定": "ok", "关闭": true}, submit: function (v, h, f) {
                         if (v == "ok") {
+                            let goods = h.find("iframe")[0].contentWindow.goodsData;
+                            if (goods != null) {
+                                if ($("input[name='itemGoodsId']") && $("input[name='itemGoodsId']").length != 0) {
+                                    let itemGoodsId = [];
+                                    $("input[name='itemGoodsId']").each(function () {
+                                        itemGoodsId.push(parseInt($(this).val()));
+                                    });
+                                    if (itemGoodsId.length != 0) {
+                                        let maxId = Math.max.apply(null, itemGoodsId);
+                                        if (maxId != undefined) {
+                                            let newMaxId = maxId + 1;
+                                            let html = window.appendHtml(newMaxId, goods);
+                                            $("#" + "goods_" + "tr_" + maxId).after(html);
+                                        }
+                                    }
+                                } else {
+                                    let newMaxId = 0;
+                                    let html = window.appendHtml(newMaxId, goods);
+                                    $("#" + "goods_" + "contentField").html(html);
+                                }
+                            }
                         }
                     }, loaded: function (h) {
                         $(".jbox-content", top.document).css("overflow-y", "hidden");
@@ -41,8 +62,66 @@
                 });
             } else {
                 // 提示输入订单号
-
+                alertx("请输入采购订单号！");
             }
+        }
+
+        // 拼接退回开票单商品列表
+        function appendHtml(newMaxId, goods) {
+            var trStr = '<tr id="goods_tr_' + newMaxId + '">'
+                + '<td>'
+                + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
+                + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsCode" value="' + goods.goodsCode + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsName" value="' + goods.goodsName + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsSpec" value="' + goods.goodsSpec + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].goodsType" value="' + goods.goodsType + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].manufacturer" value="' + goods.manufacturer + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].unit" value="' + goods.unit + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].content" value="' + goods.content + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].purchasePrice" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number" value="" valid="vtext"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].tax" value="' + goods.tax + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxFree" value="' + goods.taxFree + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxAmount" value="' + goods.taxAmount + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].taxRate" value="' + goods.taxRate + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].stock" value="' + goods.stock + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].arrivalNum" value="' + goods.arrivalNum + '" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<a href="javascript:void(0)" class="btnDel" onclick="oper.goods.del(' + newMaxId + ');">删除</a>'
+                + '</td>'
+                + '</tr>';
+            var html = trStr;
+            return html;
         }
 
     </script>
@@ -79,7 +158,8 @@
                     <div class="controls">
                         <form:select path="purchaseId" class="input-xlselect ">
                             <form:option value="" label=""/>
-                            <form:options items="${purchaseBackTicket.purchaseOrderList}" itemLabel="purchaseNumber" itemValue="id"
+                            <form:options items="${purchaseBackTicket.purchaseOrderList}" itemLabel="purchaseNumber"
+                                          itemValue="id"
                                           htmlEscape="false"/>
                         </form:select>
                     </div>
