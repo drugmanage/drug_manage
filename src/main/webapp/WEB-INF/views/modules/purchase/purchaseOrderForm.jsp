@@ -203,7 +203,7 @@
                 <div class="div-b">
                     <label class="control-label">单据编号：</label>
                     <div class="controls">
-                        <form:input path="purchaseNumber" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+                        <form:input path="purchaseNumber" htmlEscape="false" maxlength="14" class="input-xlarge "/>
                     </div>
                 </div>
             </div>

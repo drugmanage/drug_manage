@@ -2,6 +2,7 @@ package com.thinkgem.fast.modules.purchase.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,9 @@ import com.thinkgem.fast.modules.purchase.dao.PurchaseBackTicketDao;
 @Service
 @Transactional(readOnly = true)
 public class PurchaseBackTicketService extends CrudService<PurchaseBackTicketDao, PurchaseBackTicket> {
+
+	@Autowired
+	private PurchaseBackTicketDao purchaseBackTicketDao;
 
 	public PurchaseBackTicket get(String id) {
 		return super.get(id);
@@ -40,5 +44,9 @@ public class PurchaseBackTicketService extends CrudService<PurchaseBackTicketDao
 	public void delete(PurchaseBackTicket purchaseBackTicket) {
 		super.delete(purchaseBackTicket);
 	}
-	
+
+	public PurchaseBackTicket findFirstByOrderNumLikeOrderByOrderNumDesc() {
+		return purchaseBackTicketDao.findFirstByOrderNumLikeOrderByOrderNumDesc();
+	}
+
 }

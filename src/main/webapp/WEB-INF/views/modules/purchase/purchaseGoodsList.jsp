@@ -44,76 +44,26 @@
                     "stock": "",
                     "arrivalNum": ""
                 };
-                goodsData.id = $("goods_" + index + "_id").val();
-                goodsData.goodsCode = $("goods_" + index + "_goodsCode").val();
-                    document.getElementById("goods_" + index + "_goodsCode").innerText;
-                goodsData.goodsName = document.getElementById("goods_" + index + "_goodsName").innerText;
-                goodsData.goodsSpec = document.getElementById("goods_" + index + "_goodsSpec").innerText;
-                goodsData.goodsType = document.getElementById("goods_" + index + "_goodsType").innerText;
-                goodsData.manufacturer = document.getElementById("goods_" + index + "_manufacturer").innerText;
-                goodsData.unit = document.getElementById("goods_" + index + "_unit").innerText;
-                goodsData.content = document.getElementById("goods_" + index + "_content");
-                goodsData.purchasePrice = document.getElementById("goods_" + index + "_purcasePrice").innerText;
-                goodsData.number = document.getElementById("goods_" + index + "_number").innerText;
-                goodsData.wholeNumber = document.getElementById("goods_" + index + "_wholeNumber").innerText;
-                goodsData.piecesNumber = document.getElementById("goods_" + index + "_piecesNumber").innerText;
-                goodsData.tax = document.getElementById("goods_" + index + "_tax").innerText;
-                goodsData.taxFree = document.getElementById("goods_" + index + "_taxFree");
-                goodsData.taxAmount = document.getElementById("goods_" + index + "_taxAmount").innerText;
-                goodsData.taxRate = document.getElementById("goods_" + index + "_taxRate").innerText;
-                goodsData.stock = document.getElementById("goods_" + index + "_stock").innerText;
-                goodsData.arrivalNum = document.getElementById("goods_" + index + "_arrivalNum").innerText;
-
+                goodsData.id = $("#goods_" + index + "_id").val();
+                goodsData.goodsCode = $("#goods_" + index + "_goodsCode").val();
+                goodsData.goodsName = $("#goods_" + index + "_goodsName").val();
+                goodsData.goodsSpec = $("#goods_" + index + "_goodsSpec").val();
+                goodsData.goodsType = $("#goods_" + index + "_goodsType").val();
+                goodsData.manufacturer = $("#goods_" + index + "_manufacturer").val();
+                goodsData.unit = $("#goods_" + index + "_unit").val();
+                goodsData.content = $("#goods_" + index + "_content").val();
+                goodsData.purchasePrice = $("#goods_" + index + "_purcasePrice").val();
+                goodsData.number = $("#goods_" + index + "_number").val();
+                goodsData.wholeNumber = $("#goods_" + index + "_wholeNumber").val();
+                goodsData.piecesNumber = $("#goods_" + index + "_piecesNumber").val();
+                goodsData.tax = $("#goods_" + index + "_tax").val();
+                goodsData.taxFree = $("#goods_" + index + "_taxFree").val();
+                goodsData.taxAmount = $("#goods_" + index + "_taxAmount").val();
+                goodsData.taxRate = $("#goods_" + index + "_taxRate").val();
+                goodsData.stock = $("#goods_" + index + "_stock").val();
+                goodsData.arrivalNum = $("#goods_" + index + "_arrivalNum").val();
             });
         });
-
-        function goodsOnclick(index) {
-            goodsData = null;
-            var goodsRadio = document.getElementsByName("goodsCheck");
-            for (var element in goodsRadio) {
-                if (goodsRadio[element].checked) {
-                    goodsData = {
-                        "id": "",
-                        "goodsCode": "",
-                        "goodsName": "",
-                        "goodsSpec": "",
-                        "goodsType": "",
-                        "manufacturer": "",
-                        "unit": "",
-                        "content": "",
-                        "purchasePrice": "",
-                        "number": "",
-                        "wholeNumber": "",
-                        "piecesNumber": "",
-                        "tax": "",
-                        "taxFree": "",
-                        "taxAmount": "",
-                        "taxRate": "",
-                        "stock": "",
-                        "arrivalNum": ""
-                    };
-                    goodsData.id = document.getElementById("goods_" + index + "_id").value;
-                    goodsData.goodsCode = document.getElementById("goods_" + index + "_goodsCode").innerText;
-                    goodsData.goodsName = document.getElementById("goods_" + index + "_goodsName").innerText;
-                    goodsData.goodsSpec = document.getElementById("goods_" + index + "_goodsSpec").innerText;
-                    goodsData.goodsType = document.getElementById("goods_" + index + "_goodsType").innerText;
-                    goodsData.manufacturer = document.getElementById("goods_" + index + "_manufacturer").innerText;
-                    goodsData.unit = document.getElementById("goods_" + index + "_unit").innerText;
-                    goodsData.content = document.getElementById("goods_" + index + "_content");
-                    goodsData.purchasePrice = document.getElementById("goods_" + index + "_purcasePrice").innerText;
-                    goodsData.number = document.getElementById("goods_" + index + "_number").innerText;
-                    goodsData.wholeNumber = document.getElementById("goods_" + index + "_wholeNumber").innerText;
-                    goodsData.piecesNumber = document.getElementById("goods_" + index + "_piecesNumber").innerText;
-                    goodsData.tax = document.getElementById("goods_" + index + "_tax").innerText;
-                    goodsData.taxFree = document.getElementById("goods_" + index + "_taxFree");
-                    goodsData.taxAmount = document.getElementById("goods_" + index + "_taxAmount").innerText;
-                    goodsData.taxRate = document.getElementById("goods_" + index + "_taxRate").innerText;
-                    goodsData.stock = document.getElementById("goods_" + index + "_stock").innerText;
-                    goodsData.arrivalNum = document.getElementById("goods_" + index + "_arrivalNum").innerText;
-                }
-            }
-
-        }
     </script>
 </head>
 
@@ -141,54 +91,69 @@
     </thead>
     <tbody>
     <c:forEach items="${goodsList}" var="goods" varStatus="i">
-        <tr>
+        <tr id="goods_${i.index}_tr">
             <td>
-                <input name="goodsCheck" type="radio" value="${i.index}" onclick="goodsOnclick(this.value)"/>
+                <input name="goodsCheck" type="radio" value="${i.index}"/>
                 <input id="goods_${i.index}_id" type="hidden" value="${goods.id}"/>
             </td>
-            <td id="goods_${i.index}_goodsCode">
+            <td>
+                <input id="goods_${i.index}_goodsCode" type="hidden" value="${goods.goodsCode}"/>
                     ${goods.goodsCode }
             </td>
-            <td id="goods_${i.index}_goodsName">
+            <td>
+                <input id="goods_${i.index}_goodsName" type="hidden" value="${goods.goodsName}"/>
                     ${goods.goodsName }
             </td>
-            <td id="goods_${i.index}_goodsSpec">
+            <td>
+                <input id="goods_${i.index}_goodsSpec" type="hidden" value="${goods.goodsSpec}"/>
                     ${goods.goodsSpec }
             </td>
-            <td id="goods_${i.index}_goodsType">
+            <td>
+                <input id="goods_${i.index}_goodsType" type="hidden" value="${goods.goodsType}"/>
                     ${goods.goodsType }
             </td>
-            <td id="goods_${i.index}_manufacturer">
+            <td>
+                <input id="goods_${i.index}_manufacturer" type="hidden" value="${goods.manufacturer}"/>
                     ${goods.manufacturer }
             </td>
-            <td id="goods_${i.index}_unit">
+            <td>
+                <input id="goods_${i.index}_unit" type="hidden" value="${goods.unit}"/>
                     ${goods.unit }
             </td>
-            <td id="goods_${i.index}_content">
+            <td>
+                <input id="goods_${i.index}_content" type="hidden" value="${goods.content}"/>
                     ${goods.content }
             </td>
-            <td id="goods_${i.index}_purchasePrice">
+            <td>
+                <input id="goods_${i.index}_purchasePrice" type="hidden" value="${goods.purchasePrice}"/>
                     ${goods.purchasePrice }
             </td>
-            <td id="goods_${i.index}_number">
+            <td>
+                <input id="goods_${i.index}_number" type="hidden" value="${goods.number}"/>
                     ${goods.number }
             </td>
-            <td id="goods_${i.index}_tax">
+            <td>
+                <input id="goods_${i.index}_tax" type="hidden" value="${goods.tax}"/>
                     ${goods.tax }
             </td>
-            <td id="goods_${i.index}_taxFree">
+            <td>
+                <input id="goods_${i.index}_taxFree" type="hidden" value="${goods.taxFree}"/>
                     ${goods.taxFree }
             </td>
-            <td id="goods_${i.index}_taxAmount">
+            <td>
+                <input id="goods_${i.index}_taxAmount" type="hidden" value="${goods.taxAmount}"/>
                     ${goods.taxAmount }
             </td>
-            <td id="goods_${i.index}_taxRate">
+            <td>
+                <input id="goods_${i.index}_taxRate" type="hidden" value="${goods.taxRate}"/>
                     ${goods.taxRate }
             </td>
-            <td id="goods_${i.index}_stock">
+            <td>
+                <input id="goods_${i.index}_stock" type="hidden" value="${goods.stock}"/>
                     ${goods.stock }
             </td>
-            <td id="goods_${i.index}_arrivalNum">
+            <td>
+                <input id="goods_${i.index}_arrivalNum" type="hidden" value="${goods.arrivalNum}"/>
                     ${goods.arrivalNum }
             </td>
         </tr>

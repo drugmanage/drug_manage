@@ -15,14 +15,17 @@ import java.util.List;
 public class PurchaseBackTicket extends DataEntity<PurchaseBackTicket> {
 	
 	private static final long serialVersionUID = 1L;
-	private Office office;		// 机构id
-	private String purchaseId;		// 采购id
-	private String goodsId;		// 商品id
+	private String backTicketNumber;       // 采购退回单编号
+	private Office office;		// 机构
+	private PurchaseOrder purchaseOrder;		// 采购订单
+	private PurchaseGoods purchaseGoods;		// 采购商品
 	private String unitBackNumber;		// 单位退货数量
 	private String backPriceTaxFree;		// 采购退回总不含税金额
 	private String backPriceTotalTax;		// 采购退回总税额
 	private String backPriceTaxAmount;		// 采购退回总含税金额
 	private String returnReason;		// 退货原因
+
+	private PurchaseGoodsVo purchaseGoodsVo;		// 采购商品所对应的商品
 
 	private List<PurchaseOrder> purchaseOrderList;		// 采购订单列表
 	
@@ -34,33 +37,39 @@ public class PurchaseBackTicket extends DataEntity<PurchaseBackTicket> {
 		super(id);
 	}
 
-	public Office getOffice() {
+    public String getBackTicketNumber() {
+        return backTicketNumber;
+    }
+
+    public void setBackTicketNumber(String backTicketNumber) {
+        this.backTicketNumber = backTicketNumber;
+    }
+
+    public Office getOffice() {
 		return office;
 	}
 
 	public void setOffice(Office office) {
 		this.office = office;
 	}
-	
-	@Length(min=0, max=64, message="采购id长度必须介于 0 和 64 之间")
-	public String getPurchaseId() {
-		return purchaseId;
-	}
 
-	public void setPurchaseId(String purchaseId) {
-		this.purchaseId = purchaseId;
-	}
-	
-	@Length(min=0, max=64, message="商品id长度必须介于 0 和 64 之间")
-	public String getGoodsId() {
-		return goodsId;
-	}
+    public PurchaseOrder getPurchaseOrder() {
+        return purchaseOrder;
+    }
 
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
-	}
-	
-	public String getUnitBackNumber() {
+    public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+        this.purchaseOrder = purchaseOrder;
+    }
+
+    public PurchaseGoods getPurchaseGoods() {
+        return purchaseGoods;
+    }
+
+    public void setPurchaseGoods(PurchaseGoods purchaseGoods) {
+        this.purchaseGoods = purchaseGoods;
+    }
+
+    public String getUnitBackNumber() {
 		return unitBackNumber;
 	}
 
@@ -99,6 +108,14 @@ public class PurchaseBackTicket extends DataEntity<PurchaseBackTicket> {
 
 	public void setReturnReason(String returnReason) {
 		this.returnReason = returnReason;
+	}
+
+	public PurchaseGoodsVo getPurchaseGoodsVo() {
+		return purchaseGoodsVo;
+	}
+
+	public void setPurchaseGoodsVo(PurchaseGoodsVo purchaseGoodsVo) {
+		this.purchaseGoodsVo = purchaseGoodsVo;
 	}
 
 	public List<PurchaseOrder> getPurchaseOrderList() {

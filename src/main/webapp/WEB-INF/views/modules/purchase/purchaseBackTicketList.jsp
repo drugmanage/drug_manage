@@ -36,7 +36,7 @@
                             notAllowSelectParent="true"/>
         </li>
         <li><label>采购订单：</label>
-            <form:select path="purchaseId" class="input-xlselect ">
+            <form:select path="purchaseOrder" class="input-xlselect ">
                 <form:option value="" label=""/>
                 <form:options items="${purchaseBackTicket.purchaseOrderList}" itemLabel="purchaseNumber" itemValue="id"
                               htmlEscape="false"/>
@@ -66,7 +66,7 @@
     <c:forEach items="${page.list}" var="purchaseBackTicket">
         <tr>
             <td>
-                    ${purchaseBackTicket.purchaseId}
+                    ${purchaseBackTicket.purchaseOrder.purchaseNumber}
             </td>
             <td>
                     ${purchaseBackTicket.goodsId}

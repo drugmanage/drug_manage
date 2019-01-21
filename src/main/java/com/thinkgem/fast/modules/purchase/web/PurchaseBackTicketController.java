@@ -3,6 +3,7 @@ package com.thinkgem.fast.modules.purchase.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.fast.common.utils.DateUtils;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseOrder;
 import com.thinkgem.fast.modules.purchase.service.PurchaseOrderService;
@@ -23,6 +24,7 @@ import com.thinkgem.fast.common.utils.StringUtils;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseBackTicket;
 import com.thinkgem.fast.modules.purchase.service.PurchaseBackTicketService;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +43,8 @@ public class PurchaseBackTicketController extends BaseController {
 
     @Autowired
     private PurchaseOrderService purchaseOrderService;
+
+    private static String orderNumberMain = "000000";
 
     @ModelAttribute
     public PurchaseBackTicket get(@RequestParam(required = false) String id) {
@@ -69,6 +73,10 @@ public class PurchaseBackTicketController extends BaseController {
     @RequiresPermissions("purchase:purchaseBackTicket:view")
     @RequestMapping(value = "form")
     public String form(PurchaseBackTicket purchaseBackTicket, Model model) {
+        if (StringUtils.isBlank(purchaseBackTicket.getId())) {
+            // 退回单编号
+            purchaseBackTicket.setBackTicketNumber(this.getOrderNumber());
+        }
         model.addAttribute("purchaseBackTicket", purchaseBackTicket);
         return "modules/purchase/purchaseBackTicketForm";
     }
@@ -110,14 +118,37 @@ public class PurchaseBackTicketController extends BaseController {
         return "modules/purchase/purchaseGoodsList";
     }
 
-//    @RequiresPermissions("purchase:purchaseOrder:view")
-//    @RequestMapping(value = "toPurchaseGoodsList")
-//    public String getGoodsList(@RequestParam(value = "purchaseId") String purchaseId, HttpServletRequest request, HttpServletResponse response, Model model) {
-//        PurchaseOrder purchaseOrderForQuery = new PurchaseOrder();
-//        purchaseOrderForQuery.setId(purchaseId);
-//        Page<PurchaseOrder> page = purchaseOrderService.findPage(new Page<PurchaseOrder>(request, response), purchaseOrderForQuery);
-//        model.addAttribute("page", page);
-//        return "modules/purchase/goodsList";
-//}
+    /**
+     * 拼接订单编号
+     *
+     * @return
+     */
+    private String getOrderNumber() {
+        synchronized (orderNumberMain) {
+            String nowDate = DateUtils.getDate("yyMMdd");
 
+            String preCode = "CGTH";
+            if ("000000".equals(orderNumberMain)) {
+                PurchaseBackTicket purchaseBackTicket = purchaseBackTicketService.findFirstByOrderNumLikeOrderByOrderNumDesc();
+                if (purchaseBackTicket != null) {
+                    orderNumberMain = purchaseBackTicket.getBackTicketNumber();
+                }
+            }
+            if (orderNumberMain != null && !"".equals(orderNumberMain) && orderNumberMain.length() > 6) {
+                Integer code = Integer.valueOf(orderNumberMain.substring(10)) + 1;
+                String codeNum = String.format("%06d", code);
+                Calendar calendar = Calendar.getInstance();
+                int today = calendar.get(Calendar.DAY_OF_MONTH);
+                if (today == 1) {//每个月重新计算
+                    orderNumberMain = preCode + nowDate + "000001";
+                } else {
+                    orderNumberMain = preCode + nowDate + codeNum;
+                }
+            } else {
+                orderNumberMain = preCode + nowDate + "000001";
+            }
+            String orderNumber = new String(orderNumberMain);
+            return orderNumber;
+        }
+    }
 }

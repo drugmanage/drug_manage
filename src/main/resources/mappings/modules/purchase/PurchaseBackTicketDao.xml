@@ -4,9 +4,10 @@
     
 	<sql id="purchaseBackTicketColumns">
 		a.id AS "id",
+		a.back_ticket_number AS "backTickerNumber",
 		a.office_id AS "office.id",
-		a.purchase_id AS "purchaseId",
-		a.goods_id AS "goodsId",
+		a.purchase_id AS "purchaseOrder.id",
+		a.goods_id AS "purchaseGoods.id",
 		a.unit_back_number AS "unitBackNumber",
 		a.back_price_tax_free AS "backPriceTaxFree",
 		a.back_price_total_tax AS "backPriceTotalTax",
@@ -18,11 +19,13 @@
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
-		o2.name AS "office.name"
+		o2.name AS "office.name",
+		b.purchase_number AS "purchaseOrder.purchaseNumber",
 	</sql>
 	
 	<sql id="purchaseBackTicketJoins">
 		LEFT JOIN sys_office o2 ON o2.id = a.office_id
+		LEFT JOIN purchase_order b ON b.id = a.purchase_id
 	</sql>
     
 	<select id="get" resultType="PurchaseBackTicket">
@@ -43,11 +46,11 @@
 			<if test="office != null and office.id != null and office.id != ''">
 				AND a.office_id = #{office.id}
 			</if>
-			<if test="purchaseId != null and purchaseId != ''">
-				AND a.purchase_id = #{purchaseId}
+			<if test="purchaseOrder != null and purchaseOrder.id != null and purchaseOrder.id != ''">
+				AND a.purchase_id = #{purchaseOrder.id}
 			</if>
-			<if test="goodsId != null and goodsId != ''">
-				AND a.goods_id = #{goodsId}
+			<if test="purchaseGoods != null and purchaseGoods.id != null and purchaseGoods.id != ''">
+				AND a.goods_id = #{purchaseGoods.id}
 			</if>
 			<if test="returnReason != null and returnReason != ''">
 				AND a.return_reason = #{returnReason}
@@ -84,6 +87,7 @@
 	<insert id="insert">
 		INSERT INTO purchase_back_ticket(
 			id,
+			back_ticket_number,
 			office_id,
 			purchase_id,
 			goods_id,
@@ -100,9 +104,10 @@
 			del_flag
 		) VALUES (
 			#{id},
+			#{backTicketNumber}
 			#{office.id},
-			#{purchaseId},
-			#{goodsId},
+			#{purchaseOrder.id},
+			#{purchaseGoods.id},
 			#{unitBackNumber},
 			#{backPriceTaxFree},
 			#{backPriceTotalTax},
@@ -119,9 +124,10 @@
 	
 	<update id="update">
 		UPDATE purchase_back_ticket SET 	
+			back_ticket_number = #{backTicketNumber},
 			office_id = #{office.id},
-			purchase_id = #{purchaseId},
-			goods_id = #{goodsId},
+			purchase_id = #{purchaseOrder.id},
+			goods_id = #{purchaseGoods.id},
 			unit_back_number = #{unitBackNumber},
 			back_price_tax_free = #{backPriceTaxFree},
 			back_price_total_tax = #{backPriceTotalTax},
@@ -138,5 +144,34 @@
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
 	</update>
-	
+
+	<select id="findFirstByOrderNumLikeOrderByOrderNumDesc" resultType="PurchaseBackTicket">
+		SELECT
+		<include refid="purchaseBackTicketColumns"/>
+		FROM purchase_back_ticket a
+		<include refid="purchaseBackTicketJoins"/>
+		where a.del_flag = '0'
+		order by back_ticket_number desc
+		limit 1
+	</select>
+
+	<select id="findListWithBackTicketNumber" resultType="PurchaseBackTicket">
+		SELECT
+		<include refid="purchaseBackTicketColumns"/>
+		FROM purchase_back_ticket a
+		<include refid="purchaseBackTicketJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.back_ticket_number = #{backTicketNumber}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
 </mapper>

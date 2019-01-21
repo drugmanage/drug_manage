@@ -27,7 +27,7 @@
         // 添加退回单商品
         function addPurchaseGoods() {
             // 获取采购订单的id
-            var purchaseId = document.getElementById("purchaseId").value;
+            var purchaseId = document.getElementById("purchaseOrder").value;
             if (purchaseId != null && purchaseId != "") {
                 let width = $("#mainFrame", top.window.document).width();
                 let height = $("#mainFrame", top.window.document).height() - 80;
@@ -93,37 +93,57 @@
                 + '<input type="text" name="goodsList[' + newMaxId + '].content" value="' + goods.content + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].purchasePrice" value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" class="table-form-control" name="goodsList[' + newMaxId + '].number" value="" valid="vtext"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].tax" value="' + goods.tax + '" readonly="readonly"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].taxFree" value="' + goods.taxFree + '" readonly="readonly"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].taxAmount" value="' + goods.taxAmount + '" readonly="readonly"/>'
-                + '</td>'
-                + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].taxRate" value="' + goods.taxRate + '" readonly="readonly"/>'
-                + '</td>'
-                + '<td>'
                 + '<input type="text" name="goodsList[' + newMaxId + '].stock" value="' + goods.stock + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].arrivalNum" value="' + goods.arrivalNum + '" readonly="readonly"/>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].backPriceTaxFree" value="" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<a href="javascript:void(0)" class="btnDel" onclick="oper.goods.del(' + newMaxId + ');">删除</a>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].backPriceTotalTax" value="" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].backPriceTaxAmount" value="" readonly="readonly"/>'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].unitBackNumber" value="" />'
+                + '</td>'
+                + '<td>'
+                + '<input type="text" name="goodsList[' + newMaxId + '].returnReason" value="" />'
+                + '</td>'
+                + '<td>'
+                + '<a href="javascript:void(0)" class="btnDel" onclick="del(' + newMaxId + ');">删除</a>'
                 + '</td>'
                 + '</tr>';
             var html = trStr;
             return html;
         }
 
+        // 删除
+        function del(itemGoodsId, entityId) {
+            if (entityId) {
+                var url = "${ctx}/purchase/purchaseGoods/delete";
+                tips = "确定删除订单商品信息？";
+                top.$.jBox.confirm(tips, "清除确认", function (v) {
+                    if (v == "ok") {
+                        $.ajax({
+                            url: url,
+                            data: {id: entityId},
+                            type: 'post',
+                            dataType: 'json',
+                            async: false,
+                            success: function (data) {
+                                if (data.code == 200) {
+                                    alertx(data.msg);
+                                    $("#" + oper.goods.socpName + "tr_" + itemGoodsId).remove();
+                                }
+                            }
+                        })
+                    }
+                });
+            } else {
+                $("#" + this.socpName + "tr_" + itemGoodsId).remove();
+            }
+        }
     </script>
 </head>
 <body>
@@ -156,7 +176,7 @@
                 <div class="div-b">
                     <label class="control-label">采购订单：</label>
                     <div class="controls">
-                        <form:select path="purchaseId" class="input-xlselect ">
+                        <form:select path="purchaseOrder" class="input-xlselect ">
                             <form:option value="" label=""/>
                             <form:options items="${purchaseBackTicket.purchaseOrderList}" itemLabel="purchaseNumber"
                                           itemValue="id"
@@ -165,98 +185,106 @@
                     </div>
                 </div>
             </div>
-
-            <div class="tab-pane" id="goodsInfo">
-                <table class="table table-striped table-bordered table-hover" width="100%">
-                    <thead>
-                    <tr>
-                        <th>药品编码</th>
-                        <th>品名</th>
-                        <th>规格</th>
-                        <th>剂型</th>
-                        <th>生产企业</th>
-                        <th>单位</th>
-                        <th>内装数</th>
-                        <th>单价</th>
-                        <th>采购数量</th>
-                        <th>金额</th>
-                        <th>当前库存</th>
-                        <th>已到货数</th>
-                        <shiro:hasPermission name="purchase:purchaseOrder:edit">
-                            <th>操作</th>
-                        </shiro:hasPermission>
-                    </tr>
-                    </thead>
-                    <tbody id="goods_contentField">
-                    <c:forEach items="${purchaseOrder.goodsList}" var="item" varStatus="i">
-                        <tr id="goods_tr_${i.index}">
-                            <td>
-                                <input type="hidden" name="itemGoodsId" value="${i.index}"/>
-                                <input type="hidden" name="goodsList[${i.index }].goodsId" value="${item.goodsId}"/>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsCode"
-                                       value="${item.goodsCode }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsName"
-                                       value="${item.goodsName }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsSpec"
-                                       value="${item.goodsSpec }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsType"
-                                       value="${item.goodsType }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].manufacturer"
-                                       value="${item.manufacturer }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].unit"
-                                       value="${item.unit }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].content"
-                                       value="${item.content }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].retailPrice"
-                                       value="${item.retailPrice }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].number"
-                                       value="${item.number }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
-                                       value="${item.tax }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].stock"
-                                       value="${item.stock }" valid='vtext'/>
-                            </td>
-                            <td>
-                                <input type="text" class="table-form-control" name="goodsList[${i.index }].arrivalNum"
-                                       value="${item.arrivalNum }" valid='vtext'/>
-                            </td>
-                            <shiro:hasPermission name="purchase:purchaseOrder:edit">
-                                <td>
-                                    <a href="javascript:void(0)" class="btnDel"
-                                       onclick="oper.edu.del('${i.index}','${item.id }');">删除</a>
-                                </td>
-                            </shiro:hasPermission>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colspan="10"><a href="javascript:" onclick="addPurchaseGoods();" class="btn">新增</a></td>
-                    </tr>
-                    </tfoot>
-                </table>
+            <div class="control-group">
+                <div class="div-a">
+                    <label class="control-label">单据编号：</label>
+                    <div class="controls">
+                        <form:input path="backTicketNumber" htmlEscape="false" maxlength="14" class="input-xlarge "/>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="tab-pane" id="goodsInfo">
+        <table class="table table-striped table-bordered table-hover" width="100%">
+            <thead>
+            <tr>
+                <th>药品编码</th>
+                <th>品名</th>
+                <th>规格</th>
+                <th>剂型</th>
+                <th>生产企业</th>
+                <th>单位</th>
+                <th>内装数</th>
+                <th>当前库存</th>
+                <th>不含税金额</th>
+                <th>税额</th>
+                <th>含税金额</th>
+                <th>退回数量</th>
+                <th>退货原因</th>
+                <shiro:hasPermission name="purchase:purchaseOrder:edit">
+                    <th>操作</th>
+                </shiro:hasPermission>
+            </tr>
+            </thead>
+            <tbody id="goods_contentField">
+            <c:forEach items="${purchaseOrder.goodsList}" var="item" varStatus="i">
+                <tr id="goods_tr_${i.index}">
+                    <td>
+                        <input type="hidden" name="itemGoodsId" value="${i.index}"/>
+                        <input type="hidden" name="goodsList[${i.index }].goodsId" value="${item.goodsId}"/>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsCode"
+                               value="${item.goodsCode }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsName"
+                               value="${item.goodsName }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsSpec"
+                               value="${item.goodsSpec }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsType"
+                               value="${item.goodsType }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].manufacturer"
+                               value="${item.manufacturer }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].unit"
+                               value="${item.unit }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].content"
+                               value="${item.content }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].retailPrice"
+                               value="${item.retailPrice }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].number"
+                               value="${item.number }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
+                               value="${item.tax }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].stock"
+                               value="${item.stock }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="goodsList[${i.index }].arrivalNum"
+                               value="${item.arrivalNum }" valid='vtext'/>
+                    </td>
+                    <shiro:hasPermission name="purchase:purchaseOrder:edit">
+                        <td>
+                            <a href="javascript:void(0)" class="btnDel"
+                               onclick="del('${i.index}','${item.id }');">删除</a>
+                        </td>
+                    </shiro:hasPermission>
+                </tr>
+            </c:forEach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="10"><a href="javascript:" onclick="addPurchaseGoods();" class="btn">新增</a></td>
+            </tr>
+            </tfoot>
+        </table>
     </div>
     <div class="form-actions">
         <shiro:hasPermission name="purchase:purchaseBackTicket:edit"><input id="btnSubmit" class="btn btn-primary"
