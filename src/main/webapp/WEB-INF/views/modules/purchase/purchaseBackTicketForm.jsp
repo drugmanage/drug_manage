@@ -189,7 +189,7 @@
                 <div class="div-a">
                     <label class="control-label">单据编号：</label>
                     <div class="controls">
-                        <form:input path="backTicketNumber" htmlEscape="false" maxlength="14" class="input-xlarge "/>
+                        <form:input path="backTicketNumber" htmlEscape="false" maxlength="16" class="input-xlarge "/>
                     </div>
                 </div>
             </div>
