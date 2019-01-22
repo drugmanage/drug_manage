@@ -71,44 +71,44 @@
             var trStr = '<tr id="goods_tr_' + newMaxId + '">'
                 + '<td>'
                 + '<input type="hidden" name="itemGoodsId" value="' + newMaxId + '"/>'
-                + '<input type="hidden" name="goodsList[' + newMaxId + '].goodsId" value="' + goods.id + '"/>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].goodsCode" value="' + goods.goodsCode + '" readonly="readonly"/>'
+                + '<input type="hidden" name="purchaseBackTicketVoList[' + newMaxId + '].purchaseGoodsId" value="' + goods.id + '"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].goodsCode" value="' + goods.goodsCode + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].goodsName" value="' + goods.goodsName + '" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].goodsName" value="' + goods.goodsName + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].goodsSpec" value="' + goods.goodsSpec + '" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].goodsSpec" value="' + goods.goodsSpec + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].goodsType" value="' + goods.goodsType + '" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].goodsType" value="' + goods.goodsType + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].manufacturer" value="' + goods.manufacturer + '" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].manufacturer" value="' + goods.manufacturer + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].unit" value="' + goods.unit + '" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].unit" value="' + goods.unit + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].content" value="' + goods.content + '" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].content" value="' + goods.content + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].stock" value="' + goods.stock + '" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].stock" value="' + goods.stock + '" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].backPriceTaxFree" value="" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].backPriceTaxFree" value="" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].backPriceTotalTax" value="" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].backPriceTotalTax" value="" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].backPriceTaxAmount" value="" readonly="readonly"/>'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].backPriceTaxAmount" value="" readonly="readonly"/>'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].unitBackNumber" value="" />'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].unitBackNumber" value="" />'
                 + '</td>'
                 + '<td>'
-                + '<input type="text" name="goodsList[' + newMaxId + '].returnReason" value="" />'
+                + '<input type="text" name="purchaseBackTicketVoList[' + newMaxId + '].returnReason" value="" />'
                 + '</td>'
                 + '<td>'
                 + '<a href="javascript:void(0)" class="btnDel" onclick="del(' + newMaxId + ');">删除</a>'
@@ -218,57 +218,61 @@
             </tr>
             </thead>
             <tbody id="goods_contentField">
-            <c:forEach items="${purchaseOrder.goodsList}" var="item" varStatus="i">
+            <c:forEach items="${purchaseBackTicket.purchaseBackTicketVoList}" var="item" varStatus="i">
                 <tr id="goods_tr_${i.index}">
                     <td>
                         <input type="hidden" name="itemGoodsId" value="${i.index}"/>
-                        <input type="hidden" name="goodsList[${i.index }].goodsId" value="${item.goodsId}"/>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsCode"
+                        <input type="hidden" name="purchaseBackTicketVoList[${i.index }].purchaseGoodsId" value="${item.purchaseGoodsId}"/>
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].goodsCode"
                                value="${item.goodsCode }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsName"
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].goodsName"
                                value="${item.goodsName }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsSpec"
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].goodsSpec"
                                value="${item.goodsSpec }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].goodsType"
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].goodsType"
                                value="${item.goodsType }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].manufacturer"
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].manufacturer"
                                value="${item.manufacturer }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].unit"
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].unit"
                                value="${item.unit }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].content"
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].content"
                                value="${item.content }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].retailPrice"
-                               value="${item.retailPrice }" valid='vtext'/>
-                    </td>
-                    <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].number"
-                               value="${item.number }" valid='vtext'/>
-                    </td>
-                    <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].tax"
-                               value="${item.tax }" valid='vtext'/>
-                    </td>
-                    <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].stock"
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].stock"
                                value="${item.stock }" valid='vtext'/>
                     </td>
                     <td>
-                        <input type="text" class="table-form-control" name="goodsList[${i.index }].arrivalNum"
-                               value="${item.arrivalNum }" valid='vtext'/>
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].backPriceTaxFree"
+                               value="${item.backPriceTaxFree }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].backPriceTotalTax"
+                               value="${item.backPriceTotalTax }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].backPriceTaxAmount"
+                               value="${item.backPriceTaxAmount }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].unitBackNumber"
+                               value="${item.unitBackNumber }" valid='vtext'/>
+                    </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="purchaseBackTicketVoList[${i.index }].returnReason"
+                               value="${item.returnReason }" valid='vtext'/>
                     </td>
                     <shiro:hasPermission name="purchase:purchaseOrder:edit">
                         <td>

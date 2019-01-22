@@ -4,9 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.thinkgem.fast.common.utils.DateUtils;
+import com.thinkgem.fast.modules.purchase.entity.PurchaseBackTicketVo;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseGoodsVo;
 import com.thinkgem.fast.modules.purchase.entity.PurchaseOrder;
 import com.thinkgem.fast.modules.purchase.service.PurchaseOrderService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import com.thinkgem.fast.modules.purchase.service.PurchaseBackTicketService;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -87,6 +90,12 @@ public class PurchaseBackTicketController extends BaseController {
         if (!beanValidator(model, purchaseBackTicket)) {
             return form(purchaseBackTicket, model);
         }
+        // 过滤无效数据
+        this.filterParam(purchaseBackTicket);
+        if (CollectionUtils.isEmpty(purchaseBackTicket.getPurchaseBackTicketVoList())) {
+            return form(purchaseBackTicket, model);
+        }
+        // todo 剩余可退回商品检查
         purchaseBackTicketService.save(purchaseBackTicket);
         addMessage(redirectAttributes, "保存采购退款开票单成功");
         return "redirect:" + Global.getAdminPath() + "/purchase/purchaseBackTicket/?repage";
@@ -151,4 +160,29 @@ public class PurchaseBackTicketController extends BaseController {
             return orderNumber;
         }
     }
+
+    /**
+     * 过滤数据
+     *
+     * @param purchaseBackTicket
+     */
+    private void filterParam(PurchaseBackTicket purchaseBackTicket) {
+        List<PurchaseBackTicketVo> purchaseBackTicketVoList = purchaseBackTicket.getPurchaseBackTicketVoList();
+        if (CollectionUtils.isNotEmpty(purchaseBackTicketVoList)) {
+            Iterator<PurchaseBackTicketVo> it = purchaseBackTicketVoList.iterator();
+            while (it.hasNext()) {
+                PurchaseBackTicketVo purchaseBackTicketVo = it.next();
+                if (purchaseBackTicketVo == null) {
+                    it.remove();
+                } else {
+                    if (StringUtils.isBlank(purchaseBackTicketVo.getPurchaseGoodsId()) ||
+                            StringUtils.isBlank(purchaseBackTicketVo.getUnitBackNumber()) ||
+                            StringUtils.isBlank(purchaseBackTicketVo.getReturnReason())) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+    }
+
 }

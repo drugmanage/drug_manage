@@ -26,7 +26,6 @@ public class PurchaseBackTicket extends DataEntity<PurchaseBackTicket> {
     private String backPriceTaxAmount;        // 采购退回总含税金额
     private String returnReason;        // 退货原因
 
-
     private List<PurchaseBackTicketVo> purchaseBackTicketVoList;
 
     private List<PurchaseOrder> purchaseOrderList;        // 采购订单列表
@@ -38,6 +37,18 @@ public class PurchaseBackTicket extends DataEntity<PurchaseBackTicket> {
     public PurchaseBackTicket(String id) {
         super(id);
     }
+
+    // 通过Vo构造实体对象
+    public PurchaseBackTicket(PurchaseBackTicketVo purchaseBackTicketVo){
+		this.backPriceTaxFree = purchaseBackTicketVo.getBackPriceTaxFree();
+		this.backPriceTotalTax = purchaseBackTicketVo.getBackPriceTotalTax();
+		this.backPriceTaxAmount = purchaseBackTicketVo.getBackPriceTaxAmount();
+		this.unitBackNumber = purchaseBackTicketVo.getUnitBackNumber();
+		this.returnReason = purchaseBackTicketVo.getReturnReason();
+		PurchaseGoods purchaseGoods1 = new PurchaseGoods();
+		purchaseGoods1.setId(purchaseBackTicketVo.getPurchaseGoodsId());
+		this.purchaseGoods = purchaseGoods1;
+	}
 
     public String getBackTicketNumber() {
         return backTicketNumber;

@@ -25,6 +25,23 @@ public class PurchaseBackTicketVo {
     private String unitBackNumber;
     private String returnReason;
 
+    public PurchaseBackTicketVo(PurchaseBackTicket purchaseBackTicket, PurchaseGoodsVo purchaseGoodsVo){
+        this.purchaseGoodsId = purchaseGoodsVo.getId();
+        this.goodsCode = purchaseGoodsVo.getGoodsCode();
+        this.goodsName = purchaseGoodsVo.getGoodsName();
+        this.goodsSpec = purchaseGoodsVo.getGoodsSpec();
+        this.goodsType = purchaseGoodsVo.getGoodsType();
+        this.manufacturer = purchaseGoodsVo.getManufacturer();
+        this.unit = purchaseGoodsVo.getUnit();
+        this.content = purchaseGoodsVo.getContent();
+        this.stock = purchaseGoodsVo.getStock();
+        this.backPriceTaxFree = purchaseBackTicket.getBackPriceTaxFree();
+        this.backPriceTotalTax = purchaseBackTicket.getBackPriceTotalTax();
+        this.backPriceTaxAmount = purchaseBackTicket.getBackPriceTaxAmount();
+        this.unitBackNumber = purchaseBackTicket.getUnitBackNumber();
+        this.returnReason = purchaseBackTicket.getReturnReason();
+    }
+
     public String getPurchaseGoodsId() {
         return purchaseGoodsId;
     }
