@@ -20,12 +20,12 @@
 		a.remarks AS "remarks",
 		a.del_flag AS "delFlag",
 		o2.name AS "office.name",
-		b.purchase_number AS "purchaseOrder.purchaseNumber",
+		o3.purchase_number AS "purchaseOrder.purchaseNumber"
 	</sql>
 	
 	<sql id="purchaseBackTicketJoins">
 		LEFT JOIN sys_office o2 ON o2.id = a.office_id
-		LEFT JOIN purchase_order b ON b.id = a.purchase_id
+		LEFT JOIN purchase_order o3 ON o3.id = a.purchase_id
 	</sql>
     
 	<select id="get" resultType="PurchaseBackTicket">
