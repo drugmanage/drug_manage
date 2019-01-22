@@ -37,7 +37,7 @@
 			<div class="div-a">
 				<label class="control-label">销售单：</label>
 				<div class="controls">
-					<form:input path="salesId" htmlEscape="false" maxlength="64" class="input-xlarge "/>
+					<form:input path="salesOrder.id" htmlEscape="false" maxlength="64" class="input-xlarge "/>
 				</div>
 			</div>
 			<div class="div-b">

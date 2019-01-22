@@ -12,7 +12,8 @@ import com.thinkgem.fast.common.persistence.DataEntity;
 public class SalesBackTicket extends DataEntity<SalesBackTicket> {
 	
 	private static final long serialVersionUID = 1L;
-	private String salesId;		// 销售单
+	private String backTicketNumber;       // 销售退回单编号
+	private SalesOrder salesOrder;		// 销售单
 	private String goodsId;		// 商品
 	private String unitBackNumber;		// 单位退货数量
 	private String backPriceTaxFree;		// 总不含税金额
@@ -28,13 +29,12 @@ public class SalesBackTicket extends DataEntity<SalesBackTicket> {
 		super(id);
 	}
 
-	@Length(min=0, max=64, message="销售单长度必须介于 0 和 64 之间")
-	public String getSalesId() {
-		return salesId;
+	public SalesOrder getSalesOrder() {
+		return salesOrder;
 	}
 
-	public void setSalesId(String salesId) {
-		this.salesId = salesId;
+	public void setSalesOrder(SalesOrder salesOrder) {
+		this.salesOrder = salesOrder;
 	}
 	
 	@Length(min=0, max=64, message="商品长度必须介于 0 和 64 之间")
@@ -85,6 +85,14 @@ public class SalesBackTicket extends DataEntity<SalesBackTicket> {
 
 	public void setReturnReason(String returnReason) {
 		this.returnReason = returnReason;
+	}
+
+	public String getBackTicketNumber() {
+		return backTicketNumber;
+	}
+
+	public void setBackTicketNumber(String backTicketNumber) {
+		this.backTicketNumber = backTicketNumber;
 	}
 	
 }
