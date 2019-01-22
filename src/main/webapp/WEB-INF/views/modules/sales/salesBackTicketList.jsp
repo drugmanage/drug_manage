@@ -26,7 +26,7 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>销售单：</label>
-				<form:input path="salesId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="salesOrder.orderNum" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>创建时间：</label>
 				<input name="createDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
@@ -41,17 +41,13 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>销售单</th>
-				<th>商品</th>
-				<th>单位退货数量</th>
+				<th>退回单单号</th>
+				<th>销售单单号</th>
 				<th>总不含税金额</th>
 				<th>总税额</th>
 				<th>总含税金额</th>
-				<th>退货原因</th>
 				<th>创建者</th>
 				<th>创建时间</th>
-				<th>更新时间</th>
-				<th>备注信息</th>
 				<shiro:hasPermission name="sales:salesBackTicket:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -59,13 +55,10 @@
 		<c:forEach items="${page.list}" var="salesBackTicket">
 			<tr>
 				<td><a href="${ctx}/sales/salesBackTicket/form?id=${salesBackTicket.id}">
-					${salesBackTicket.salesId}
+					${salesBackTicket.backTicketNumber}
 				</a></td>
 				<td>
-					${salesBackTicket.goodsId}
-				</td>
-				<td>
-					${salesBackTicket.unitBackNumber}
+					${salesBackTicket.salesOrder.orderNum}
 				</td>
 				<td>
 					${salesBackTicket.backPriceTaxFree}
@@ -77,19 +70,10 @@
 					${salesBackTicket.backPriceTaxAmount}
 				</td>
 				<td>
-					${salesBackTicket.returnReason}
-				</td>
-				<td>
 					${salesBackTicket.createBy.id}
 				</td>
 				<td>
 					<fmt:formatDate value="${salesBackTicket.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					<fmt:formatDate value="${salesBackTicket.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${salesBackTicket.remarks}
 				</td>
 				<shiro:hasPermission name="sales:salesBackTicket:edit"><td>
     				<a href="${ctx}/sales/salesBackTicket/form?id=${salesBackTicket.id}">修改</a>

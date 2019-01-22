@@ -4,7 +4,8 @@
     
 	<sql id="salesBackTicketColumns">
 		a.id AS "id",
-		a.sales_id AS "salesId",
+		a.back_ticket_number AS "backTicketNumber",
+		a.sales_id AS "salesOrder.id",
 		a.goods_id AS "goodsId",
 		a.unit_back_number AS "unitBackNumber",
 		a.back_price_tax_free AS "backPriceTaxFree",
@@ -20,6 +21,7 @@
 	</sql>
 	
 	<sql id="salesBackTicketJoins">
+		LEFT JOIN sales_order s ON s.id = a.sales_id
 	</sql>
     
 	<select id="get" resultType="SalesBackTicket">
@@ -32,21 +34,27 @@
 	
 	<select id="findList" resultType="SalesBackTicket">
 		SELECT 
-			<include refid="salesBackTicketColumns"/>
+			a.back_ticket_number AS "backTicketNumber",
+			sum(a.back_price_tax_free) AS "backPriceTaxFree",
+			sum(a.back_price_total_tax) AS "backPriceTotalTax",
+			sum(a.back_price_tax_amount) AS "backPriceTaxAmount",
+			a.create_by AS "createBy.id",
+			a.create_date AS "createDate"
 		FROM sales_back_ticket a
 		<include refid="salesBackTicketJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="salesId != null and salesId != ''">
-				AND a.sales_id LIKE 
-					<if test="dbName == 'oracle'">'%'||#{salesId}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{salesId}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{salesId},'%')</if>
+			<if test="salesOrder != null and salesOrder.orderNum != null and salesOrder.orderNum != ''">
+				AND s.order_num LIKE 
+					<if test="dbName == 'oracle'">'%'||#{salesOrder.orderNum}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{salesOrder.orderNum}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{salesOrder.orderNum},'%')</if>
 			</if>
 			<if test="createDate != null and createDate != ''">
 				AND a.create_date = #{createDate}
 			</if>
 		</where>
+		Group By a.back_ticket_number
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
