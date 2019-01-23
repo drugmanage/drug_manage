@@ -1,8 +1,12 @@
 package com.thinkgem.fast.modules.sales.entity;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
+import com.thinkgem.fast.modules.sales.entity.SalesBackTicketVo;
+import com.thinkgem.fast.modules.sales.entity.SalesGoods;
 
 /**
  * 销售退回开票单Entity
@@ -14,19 +18,50 @@ public class SalesBackTicket extends DataEntity<SalesBackTicket> {
 	private static final long serialVersionUID = 1L;
 	private String backTicketNumber;       // 销售退回单编号
 	private SalesOrder salesOrder;		// 销售单
-	private String goodsId;		// 商品
+	private SalesGoods salesGoods;		// 商品
 	private String unitBackNumber;		// 单位退货数量
 	private String backPriceTaxFree;		// 总不含税金额
 	private String backPriceTotalTax;		// 总税额
 	private String backPriceTaxAmount;		// 总含税金额
 	private String returnReason;		// 退货原因
 	
+	private List<SalesBackTicketVo> salesBackTicketVoList;
+
+    private List<SalesOrder> salesOrderList;
+    
 	public SalesBackTicket() {
 		super();
 	}
-
+	
 	public SalesBackTicket(String id){
 		super(id);
+	}
+	
+	// 通过Vo构造实体对象
+    public SalesBackTicket(SalesBackTicketVo salesBackTicketVo){
+		this.backPriceTaxFree = salesBackTicketVo.getBackPriceTaxFree();
+		this.backPriceTotalTax = salesBackTicketVo.getBackPriceTotalTax();
+		this.backPriceTaxAmount = salesBackTicketVo.getBackPriceTaxAmount();
+		this.unitBackNumber = salesBackTicketVo.getUnitBackNumber();
+		this.returnReason = salesBackTicketVo.getReturnReason();
+		SalesGoods salesGoods1 = new SalesGoods();
+		salesGoods1.setId(salesBackTicketVo.getSalesGoodsId());
+		this.salesGoods = salesGoods1;
+	}
+	public List<SalesBackTicketVo> getSalesBackTicketVoList() {
+		return salesBackTicketVoList;
+	}
+
+	public void setSalesBackTicketVoList(List<SalesBackTicketVo> salesBackTicketVoList) {
+		this.salesBackTicketVoList = salesBackTicketVoList;
+	}
+
+	public List<SalesOrder> getSalesOrderList() {
+		return salesOrderList;
+	}
+
+	public void setSalesOrderList(List<SalesOrder> salesOrderList) {
+		this.salesOrderList = salesOrderList;
 	}
 
 	public SalesOrder getSalesOrder() {
@@ -37,13 +72,12 @@ public class SalesBackTicket extends DataEntity<SalesBackTicket> {
 		this.salesOrder = salesOrder;
 	}
 	
-	@Length(min=0, max=64, message="商品长度必须介于 0 和 64 之间")
-	public String getGoodsId() {
-		return goodsId;
+	public SalesGoods getSalesGoods() {
+		return salesGoods;
 	}
 
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
+	public void setSalesGoods(SalesGoods salesGoods) {
+		this.salesGoods = salesGoods;
 	}
 	
 	public String getUnitBackNumber() {
