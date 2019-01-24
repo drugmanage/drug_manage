@@ -179,7 +179,7 @@
             </div>
         </div>
     </div>
-    <div class="tab-pane" id="goodsInfo">
+    <div class="tab-pane" id="goodsInfo" style="overflow:auto;">
         <table class="table table-striped table-bordered table-hover" width="100%">
             <thead>
             <tr>
