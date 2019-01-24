@@ -53,15 +53,15 @@ public class PurchaseBackTicketService extends CrudService<PurchaseBackTicketDao
 		purchaseBackTicket.setPurchaseBackTicketVoList(purchaseBackTicketVoList);
 		return purchaseBackTicket;
 	}
-	
+
 	public List<PurchaseBackTicket> findList(PurchaseBackTicket purchaseBackTicket) {
 		return super.findList(purchaseBackTicket);
 	}
-	
+
 	public Page<PurchaseBackTicket> findPage(Page<PurchaseBackTicket> page, PurchaseBackTicket purchaseBackTicket) {
 		return super.findPage(page, purchaseBackTicket);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(PurchaseBackTicket purchaseBackTicket) {
 		List<PurchaseBackTicketVo> purchaseBackTicketVoList = purchaseBackTicket.getPurchaseBackTicketVoList();
@@ -73,7 +73,7 @@ public class PurchaseBackTicketService extends CrudService<PurchaseBackTicketDao
 			super.save(purchaseBackTicketSave);
 		}
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(PurchaseBackTicket purchaseBackTicket) {
 		super.delete(purchaseBackTicket);

@@ -25,7 +25,10 @@ public class PurchaseBackTicketVo {
     private String unitBackNumber;
     private String returnReason;
 
-    public PurchaseBackTicketVo(PurchaseBackTicket purchaseBackTicket, PurchaseGoodsVo purchaseGoodsVo){
+    public PurchaseBackTicketVo() {
+    }
+
+    public PurchaseBackTicketVo(PurchaseBackTicket purchaseBackTicket, PurchaseGoodsVo purchaseGoodsVo) {
         this.purchaseGoodsId = purchaseGoodsVo.getId();
         this.goodsCode = purchaseGoodsVo.getGoodsCode();
         this.goodsName = purchaseGoodsVo.getGoodsName();
