@@ -22,9 +22,9 @@ public class SalesBackTicketVo extends DataEntity<SalesBackTicketVo> {
     private String unit;
     private String content;
 	private String unitBackNumber;		// 单位退货数量
-	private String backPriceTaxFree;		// 总不含税金额
-	private String backPriceTotalTax;		// 总税额
-	private String backPriceTaxAmount;		// 总含税金额
+	private Double backPriceTaxFree;		// 总不含税金额
+	private Double backPriceTotalTax;		// 总税额
+	private Double backPriceTaxAmount;		// 总含税金额
 	private String returnReason;		// 退货原因
 	
 	public SalesBackTicketVo() {
@@ -119,27 +119,27 @@ public class SalesBackTicketVo extends DataEntity<SalesBackTicketVo> {
 		this.unitBackNumber = unitBackNumber;
 	}
 
-	public String getBackPriceTaxFree() {
+	public Double getBackPriceTaxFree() {
 		return backPriceTaxFree;
 	}
 
-	public void setBackPriceTaxFree(String backPriceTaxFree) {
+	public void setBackPriceTaxFree(Double backPriceTaxFree) {
 		this.backPriceTaxFree = backPriceTaxFree;
 	}
 
-	public String getBackPriceTotalTax() {
+	public Double getBackPriceTotalTax() {
 		return backPriceTotalTax;
 	}
 
-	public void setBackPriceTotalTax(String backPriceTotalTax) {
+	public void setBackPriceTotalTax(Double backPriceTotalTax) {
 		this.backPriceTotalTax = backPriceTotalTax;
 	}
 
-	public String getBackPriceTaxAmount() {
+	public Double getBackPriceTaxAmount() {
 		return backPriceTaxAmount;
 	}
 
-	public void setBackPriceTaxAmount(String backPriceTaxAmount) {
+	public void setBackPriceTaxAmount(Double backPriceTaxAmount) {
 		this.backPriceTaxAmount = backPriceTaxAmount;
 	}
 

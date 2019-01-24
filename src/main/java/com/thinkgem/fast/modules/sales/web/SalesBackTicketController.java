@@ -130,7 +130,7 @@ public class SalesBackTicketController extends BaseController {
         synchronized (orderNumberMain) {
             String nowDate = DateUtils.getDate("yyMMdd");
 
-            String preCode = "CGTH";
+            String preCode = "SXTH";
             if ("000000".equals(orderNumberMain)) {
                 SalesBackTicket salesBackTicket = salesBackTicketService.findFirstByOrderNumLikeOrderByOrderNumDesc();
                 if (salesBackTicket != null) {
