@@ -5,8 +5,6 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.fast.common.persistence.DataEntity;
-import com.thinkgem.fast.modules.sales.entity.SalesBackTicketVo;
-import com.thinkgem.fast.modules.sales.entity.SalesGoods;
 
 /**
  * 销售退回开票单Entity

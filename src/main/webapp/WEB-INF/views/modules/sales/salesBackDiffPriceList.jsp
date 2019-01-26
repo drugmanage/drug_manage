@@ -26,7 +26,7 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
 			<li><label>销售单：</label>
-				<form:input path="salesId" htmlEscape="false" maxlength="64" class="input-medium"/>
+				<form:input path="salesOrder.orderNum" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
 			<li><label>创建时间：</label>
 				<input name="createDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
@@ -41,14 +41,13 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>销售单</th>
-				<th>商品</th>
-				<th>单位退补差价</th>
+				<th>退补差价单单号</th>
+				<th>销售单单号</th>
 				<th>总不含税金额</th>
 				<th>总税额</th>
 				<th>总含税金额</th>
 				<th>创建者</th>
-				<th>备注信息</th>
+				<th>创建时间</th>
 				<shiro:hasPermission name="sales:salesBackDiffPrice:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -56,13 +55,10 @@
 		<c:forEach items="${page.list}" var="salesBackDiffPrice">
 			<tr>
 				<td><a href="${ctx}/sales/salesBackDiffPrice/form?id=${salesBackDiffPrice.id}">
-					${salesBackDiffPrice.salesId}
+					${salesBackDiffPrice.backDiffPriceNumber}
 				</a></td>
 				<td>
-					${salesBackDiffPrice.goodsId}
-				</td>
-				<td>
-					${salesBackDiffPrice.backPriceUnit}
+					${salesBackDiffPrice.salesOrder.orderNum}
 				</td>
 				<td>
 					${salesBackDiffPrice.backPriceTaxFree}
@@ -77,7 +73,7 @@
 					${salesBackDiffPrice.createBy.id}
 				</td>
 				<td>
-					${salesBackDiffPrice.remarks}
+					<fmt:formatDate value="${salesBackDiffPrice.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<shiro:hasPermission name="sales:salesBackDiffPrice:edit"><td>
     				<a href="${ctx}/sales/salesBackDiffPrice/form?id=${salesBackDiffPrice.id}">修改</a>

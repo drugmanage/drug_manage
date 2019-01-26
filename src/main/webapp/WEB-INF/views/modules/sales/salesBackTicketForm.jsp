@@ -195,7 +195,7 @@
                 <th>含税金额</th>
                 <th>退回数量</th>
                 <th>退货原因</th>
-                <shiro:hasPermission name="sales:salesOrder:edit">
+                <shiro:hasPermission name="sales:salesBackTicket:edit">
                     <th>操作</th>
                 </shiro:hasPermission>
             </tr>
@@ -253,7 +253,7 @@
                         <input type="text" class="table-form-control" name="salesBackTicketVoList[${i.index }].returnReason"
                                value="${item.returnReason }" valid='vtext'/>
                     </td>
-                    <shiro:hasPermission name="sales:salesOrder:edit">
+                    <shiro:hasPermission name="sales:salesBackTicket:edit">
                         <td>
                             <a href="javascript:void(0)" class="btnDel"
                                onclick="del('${i.index}','${item.id }');">删除</a>

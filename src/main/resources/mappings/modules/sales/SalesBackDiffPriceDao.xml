@@ -4,8 +4,9 @@
     
 	<sql id="salesBackDiffPriceColumns">
 		a.id AS "id",
-		a.sales_id AS "salesId",
-		a.goods_id AS "goodsId",
+		a.back_diffPrice_number AS "backDiffPriceNumber",
+		a.sales_id AS "salesOrder.id",
+		a.goods_id AS "salesGoods.id",
 		a.back_price_unit AS "backPriceUnit",
 		a.back_price_tax_free AS "backPriceTaxFree",
 		a.back_price_total_tax AS "backPriceTotalTax",
@@ -19,6 +20,7 @@
 	</sql>
 	
 	<sql id="salesBackDiffPriceJoins">
+		LEFT JOIN sales_order s ON s.id = a.sales_id
 	</sql>
     
 	<select id="get" resultType="SalesBackDiffPrice">
@@ -31,21 +33,27 @@
 	
 	<select id="findList" resultType="SalesBackDiffPrice">
 		SELECT 
-			<include refid="salesBackDiffPriceColumns"/>
+			a.back_diffPrice_number AS "backDiffPriceNumber",
+			sum(a.back_price_tax_free) AS "backPriceTaxFree",
+			sum(a.back_price_total_tax) AS "backPriceTotalTax",
+			sum(a.back_price_tax_amount) AS "backPriceTaxAmount",
+			a.create_by AS "createBy.id",
+			a.create_date AS "createDate"
 		FROM sales_back_diff_price a
 		<include refid="salesBackDiffPriceJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="salesId != null and salesId != ''">
-				AND a.sales_id LIKE 
-					<if test="dbName == 'oracle'">'%'||#{salesId}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{salesId}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{salesId},'%')</if>
+			<if test="salesOrder != null and salesOrder.orderNum != null and salesOrder.orderNum != ''">
+				AND s.order_num LIKE 
+					<if test="dbName == 'oracle'">'%'||#{salesOrder.orderNum}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{salesOrder.orderNum}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{salesOrder.orderNum},'%')</if>
 			</if>
 			<if test="createDate != null and createDate != ''">
 				AND a.create_date = #{createDate}
 			</if>
 		</where>
+		Group By a.back_diffPrice_number
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
@@ -91,8 +99,8 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{salesId},
-			#{goodsId},
+			#{salesOrder.id},
+			#{salesGoods.id},
 			#{backPriceUnit},
 			#{backPriceTaxFree},
 			#{backPriceTotalTax},
@@ -108,8 +116,8 @@
 	
 	<update id="update">
 		UPDATE sales_back_diff_price SET 	
-			sales_id = #{salesId},
-			goods_id = #{goodsId},
+			sales_id = #{salesOrder.id},
+			goods_id = #{salesGoods.id},
 			back_price_unit = #{backPriceUnit},
 			back_price_tax_free = #{backPriceTaxFree},
 			back_price_total_tax = #{backPriceTotalTax},
@@ -126,4 +134,32 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="findFirstByOrderNumLikeOrderByOrderNumDesc" resultType="SalesBackDiffPrice">
+		SELECT
+		<include refid="salesBackDiffPriceColumns"/>
+		FROM sales_back_diff_price a
+		<include refid="salesBackDiffPriceJoins"/>
+		where a.del_flag = '0'
+		order by back_diffPrice_number desc
+		limit 1
+	</select>
+
+	<select id="findListWithBackDiffPriceNumber" resultType="SalesBackDiffPrice">
+		SELECT
+		<include refid="salesBackDiffPriceColumns"/>
+		FROM sales_back_diff_price a
+		<include refid="salesBackDiffPriceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.back_diffPrice_number = #{backDiffPriceNumber}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

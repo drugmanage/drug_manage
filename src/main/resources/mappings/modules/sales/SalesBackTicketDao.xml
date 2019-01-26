@@ -119,7 +119,7 @@
 	
 	<update id="update">
 		UPDATE sales_back_ticket SET 	
-			sales_id = #{salesId},
+			sales_id = #{salesOrder.id},
 			goods_id = #{goodsId},
 			unit_back_number = #{unitBackNumber},
 			back_price_tax_free = #{backPriceTaxFree},
