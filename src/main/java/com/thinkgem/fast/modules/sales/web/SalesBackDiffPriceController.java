@@ -168,8 +168,7 @@ public class SalesBackDiffPriceController extends BaseController {
 	             if (salesBackDiffPriceVo == null) {
 	                 it.remove();
 	             } else {
-	                 if (StringUtils.isBlank(salesBackDiffPriceVo.getSalesGoodsId()) ||
-	                        (salesBackDiffPriceVo.getBackPriceUnit()!=null&&salesBackDiffPriceVo.getBackPriceUnit()>0)) {
+	                 if (StringUtils.isBlank(salesBackDiffPriceVo.getSalesGoodsId()) || salesBackDiffPriceVo.getBackPriceUnit()==null || salesBackDiffPriceVo.getBackPriceUnit()<=0) {
 	                     it.remove();
 	                 }
 	             }

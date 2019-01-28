@@ -107,9 +107,9 @@
                 + '<td>'
                 + '<input type="text" name="salesBackTicketVoList[' + newMaxId + '].returnReason" value="" />'
                 + '</td>'
-                + '<td>'
+                + '<shiro:hasPermission name="sales:salesBackTicket:edit"><td>'
                 + '<a href="javascript:void(0)" class="btnDel" onclick="del(' + newMaxId + ');">删除</a>'
-                + '</td>'
+                + '</td></shiro:hasPermission>'
                 + '</tr>';
             var html = trStr;
             return html;
@@ -264,7 +264,9 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="10"><a href="javascript:" onclick="addSalesGoods();" class="btn">新增</a></td>
+            	<shiro:hasPermission name="sales:salesBackTicket:edit">
+               		<td colspan="8"><a href="javascript:" onclick="addSalesGoods();" class="btn">新增</a></td>
+             	</shiro:hasPermission>
             </tr>
             </tfoot>
         </table>
