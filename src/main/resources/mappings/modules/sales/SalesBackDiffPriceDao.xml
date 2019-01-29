@@ -34,6 +34,7 @@
 	<select id="findList" resultType="SalesBackDiffPrice">
 		SELECT 
 			a.back_diffPrice_number AS "backDiffPriceNumber",
+			a.sales_id AS "salesOrder.id",
 			sum(a.back_price_tax_free) AS "backPriceTaxFree",
 			sum(a.back_price_total_tax) AS "backPriceTotalTax",
 			sum(a.back_price_tax_amount) AS "backPriceTaxAmount",
@@ -87,6 +88,7 @@
 			id,
 			sales_id,
 			goods_id,
+			back_diffPrice_number,
 			back_price_unit,
 			back_price_tax_free,
 			back_price_total_tax,
@@ -101,6 +103,7 @@
 			#{id},
 			#{salesOrder.id},
 			#{salesGoods.id},
+			#{backDiffPriceNumber},
 			#{backPriceUnit},
 			#{backPriceTaxFree},
 			#{backPriceTotalTax},
@@ -118,6 +121,7 @@
 		UPDATE sales_back_diff_price SET 	
 			sales_id = #{salesOrder.id},
 			goods_id = #{salesGoods.id},
+			back_diffPrice_number = #{backDiffPriceNumber},
 			back_price_unit = #{backPriceUnit},
 			back_price_tax_free = #{backPriceTaxFree},
 			back_price_total_tax = #{backPriceTotalTax},
