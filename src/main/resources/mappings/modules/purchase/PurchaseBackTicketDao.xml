@@ -104,7 +104,7 @@
 			del_flag
 		) VALUES (
 			#{id},
-			#{backTicketNumber}
+			#{backTicketNumber},
 			#{office.id},
 			#{purchaseOrder.id},
 			#{purchaseGoods.id},
