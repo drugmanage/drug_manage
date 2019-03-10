@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.repo.dao.AcceptanceDao">
+    
+	<sql id="acceptanceColumns">
+		a.id AS "id",
+		a.purchase_id AS "purchaseId",
+		a.receipt_id AS "receiptId",
+		a.supplier_id AS "supplierId",
+		a.buyer_id AS "buyerId",
+		a.order_date AS "orderDate",
+		a.abstract_data AS "abstractData",
+		a.other_saleman_id AS "otherSalemanId",
+		a.repo_id AS "repoId",
+		a.biz_group AS "bizGroup",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="acceptanceJoins">
+	</sql>
+    
+	<select id="get" resultType="Acceptance">
+		SELECT 
+			<include refid="acceptanceColumns"/>
+		FROM acceptance a
+		<include refid="acceptanceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Acceptance">
+		SELECT 
+			<include refid="acceptanceColumns"/>
+		FROM acceptance a
+		<include refid="acceptanceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="purchaseId != null and purchaseId != ''">
+				AND a.purchase_id = #{purchaseId}
+			</if>
+			<if test="receiptId != null and receiptId != ''">
+				AND a.receipt_id = #{receiptId}
+			</if>
+			<if test="supplierId != null and supplierId != ''">
+				AND a.supplier_id = #{supplierId}
+			</if>
+			<if test="buyerId != null and buyerId != ''">
+				AND a.buyer_id = #{buyerId}
+			</if>
+			<if test="orderDate != null and orderDate != ''">
+				AND a.order_date = #{orderDate}
+			</if>
+			<if test="otherSalemanId != null and otherSalemanId != ''">
+				AND a.other_saleman_id = #{otherSalemanId}
+			</if>
+			<if test="repoId != null and repoId != ''">
+				AND a.repo_id = #{repoId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Acceptance">
+		SELECT 
+			<include refid="acceptanceColumns"/>
+		FROM acceptance a
+		<include refid="acceptanceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO acceptance(
+			id,
+			purchase_id,
+			receipt_id,
+			supplier_id,
+			buyer_id,
+			order_date,
+			abstract_data,
+			other_saleman_id,
+			repo_id,
+			biz_group,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{purchaseId},
+			#{receiptId},
+			#{supplierId},
+			#{buyerId},
+			#{orderDate},
+			#{abstractData},
+			#{otherSalemanId},
+			#{repoId},
+			#{bizGroup},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE acceptance SET 	
+			purchase_id = #{purchaseId},
+			receipt_id = #{receiptId},
+			supplier_id = #{supplierId},
+			buyer_id = #{buyerId},
+			order_date = #{orderDate},
+			abstract_data = #{abstractData},
+			other_saleman_id = #{otherSalemanId},
+			repo_id = #{repoId},
+			biz_group = #{bizGroup},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE acceptance SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

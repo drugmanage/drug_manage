@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.repo.dao.RepoTransferDao">
+    
+	<sql id="repoTransferColumns">
+		a.id AS "id",
+		a.transfer_date AS "transferDate",
+		a.transfer_number AS "transferNumber",
+		a.out_repo_id AS "outRepoId",
+		a.in_repo_id AS "inRepoId",
+		a.transfer_user_id AS "transferUserId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="repoTransferJoins">
+	</sql>
+    
+	<select id="get" resultType="RepoTransfer">
+		SELECT 
+			<include refid="repoTransferColumns"/>
+		FROM repo_transfer a
+		<include refid="repoTransferJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="RepoTransfer">
+		SELECT 
+			<include refid="repoTransferColumns"/>
+		FROM repo_transfer a
+		<include refid="repoTransferJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="transferDate != null and transferDate != ''">
+				AND a.transfer_date = #{transferDate}
+			</if>
+			<if test="transferNumber != null and transferNumber != ''">
+				AND a.transfer_number = #{transferNumber}
+			</if>
+			<if test="outRepoId != null and outRepoId != ''">
+				AND a.out_repo_id = #{outRepoId}
+			</if>
+			<if test="inRepoId != null and inRepoId != ''">
+				AND a.in_repo_id = #{inRepoId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RepoTransfer">
+		SELECT 
+			<include refid="repoTransferColumns"/>
+		FROM repo_transfer a
+		<include refid="repoTransferJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO repo_transfer(
+			id,
+			transfer_date,
+			transfer_number,
+			out_repo_id,
+			in_repo_id,
+			transfer_user_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{transferDate},
+			#{transferNumber},
+			#{outRepoId},
+			#{inRepoId},
+			#{transferUserId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE repo_transfer SET 	
+			transfer_date = #{transferDate},
+			transfer_number = #{transferNumber},
+			out_repo_id = #{outRepoId},
+			in_repo_id = #{inRepoId},
+			transfer_user_id = #{transferUserId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE repo_transfer SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

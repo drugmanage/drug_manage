@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.repo.dao.InventoryDao">
+    
+	<sql id="inventoryColumns">
+		a.id AS "id",
+		a.doc_number AS "docNumber",
+		a.status AS "status",
+		a.repo_id AS "repoId",
+		a.inventory_name AS "inventoryName",
+		a.inventory_time AS "inventoryTime",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="inventoryJoins">
+	</sql>
+    
+	<select id="get" resultType="Inventory">
+		SELECT 
+			<include refid="inventoryColumns"/>
+		FROM inventory a
+		<include refid="inventoryJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Inventory">
+		SELECT 
+			<include refid="inventoryColumns"/>
+		FROM inventory a
+		<include refid="inventoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="docNumber != null and docNumber != ''">
+				AND a.doc_number = #{docNumber}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="repoId != null and repoId != ''">
+				AND a.repo_id = #{repoId}
+			</if>
+			<if test="inventoryName != null and inventoryName != ''">
+				AND a.inventory_name = #{inventoryName}
+			</if>
+			<if test="inventoryTime != null and inventoryTime != ''">
+				AND a.inventory_time = #{inventoryTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Inventory">
+		SELECT 
+			<include refid="inventoryColumns"/>
+		FROM inventory a
+		<include refid="inventoryJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO inventory(
+			id,
+			doc_number,
+			status,
+			repo_id,
+			inventory_name,
+			inventory_time,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{docNumber},
+			#{status},
+			#{repoId},
+			#{inventoryName},
+			#{inventoryTime},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE inventory SET 	
+			doc_number = #{docNumber},
+			status = #{status},
+			repo_id = #{repoId},
+			inventory_name = #{inventoryName},
+			inventory_time = #{inventoryTime},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE inventory SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
