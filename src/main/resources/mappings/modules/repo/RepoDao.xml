@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.repo.dao.RepoDao">
+    
+	<sql id="repoColumns">
+		a.id AS "id",
+		a.repo_name AS "repoName",
+		a.repo_type AS "repoType",
+		a.is_stop AS "isStop",
+		a.is_pause_in AS "isPauseIn",
+		a.is_pause_out AS "isPauseOut",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.repo_desc AS "repoDesc",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="repoJoins">
+	</sql>
+    
+	<select id="get" resultType="Repo">
+		SELECT 
+			<include refid="repoColumns"/>
+		FROM repo a
+		<include refid="repoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Repo">
+		SELECT 
+			<include refid="repoColumns"/>
+		FROM repo a
+		<include refid="repoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Repo">
+		SELECT 
+			<include refid="repoColumns"/>
+		FROM repo a
+		<include refid="repoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO repo(
+			id,
+			repo_name,
+			repo_type,
+			is_stop,
+			is_pause_in,
+			is_pause_out,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			repo_desc,
+			del_flag
+		) VALUES (
+			#{id},
+			#{repoName},
+			#{repoType},
+			#{isStop},
+			#{isPauseIn},
+			#{isPauseOut},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{repoDesc},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE repo SET 	
+			repo_name = #{repoName},
+			repo_type = #{repoType},
+			is_stop = #{isStop},
+			is_pause_in = #{isPauseIn},
+			is_pause_out = #{isPauseOut},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			repo_desc = #{repoDesc}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE repo SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

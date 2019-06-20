@@ -105,8 +105,11 @@
                 + '<input type="text" name="salesBackDiffPriceVoList[' + newMaxId + '].backPriceUnit" value="" />'
                 + '</td>'
                 + '<td>'
-                + '<a href="javascript:void(0)" class="btnDel" onclick="del(' + newMaxId + ');">删除</a>'
+                + '<input type="text" name="salesBackDiffPriceVoList[' + newMaxId + '].remarks" value="" />'
                 + '</td>'
+                + '<shiro:hasPermission name="sales:salesBackDiffPrice:edit"><td>'
+                + '<a href="javascript:void(0)" class="btnDel" onclick="del(' + newMaxId + ');">删除</a>'
+                + '</td></shiro:hasPermission>'
                 + '</tr>';
             var html = trStr;
             return html;
@@ -191,6 +194,7 @@
                 <th>税额</th>
                 <th>含税金额</th>
                 <th>单位退补差价</th>
+                <th>备注</th>
                 <shiro:hasPermission name="sales:salesBackDiffPrice:edit">
                     <th>操作</th>
                 </shiro:hasPermission>
@@ -245,6 +249,10 @@
                         <input type="text" class="table-form-control" name="salesBackDiffPriceVoList[${i.index }].unitBackNumber"
                                value="${item.unitBackNumber }" valid='vtext'/>
                     </td>
+                    <td>
+                        <input type="text" class="table-form-control" name="salesBackDiffPriceVoList[${i.index }].remarks"
+                               value="${item.remarks }" valid='vtext'/>
+                    </td>
                     <shiro:hasPermission name="sales:salesBackDiffPrice:edit">
                         <td>
                             <a href="javascript:void(0)" class="btnDel"
@@ -256,7 +264,9 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="10"><a href="javascript:" onclick="addSalesGoods();" class="btn">新增</a></td>
+            	<shiro:hasPermission name="sales:salesBackDiffPrice:edit">
+                	<td colspan="13"><a href="javascript:" onclick="addSalesGoods();" class="btn">新增</a></td>
+               	</shiro:hasPermission>
             </tr>
             </tfoot>
         </table>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.fast.modules.repo.dao.StockDao">
+    
+	<sql id="stockColumns">
+		a.id AS "id",
+		a.repo_id AS "repoId",
+		a.goods_id AS "goodsId",
+		a.stock_num AS "stockNum",
+		a.saleman_id AS "salemanId",
+		a.goods_first_repo_time AS "goodsFirstRepoTime",
+		a.whole_number AS "wholeNumber",
+		a.tax_free AS "taxFree",
+		a.occupy_num AS "occupyNum",
+		a.pieces_number AS "piecesNumber",
+		a.tax AS "tax",
+		a.tax_amount AS "taxAmount",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="stockJoins">
+	</sql>
+    
+	<select id="get" resultType="Stock">
+		SELECT 
+			<include refid="stockColumns"/>
+		FROM stock a
+		<include refid="stockJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Stock">
+		SELECT 
+			<include refid="stockColumns"/>
+		FROM stock a
+		<include refid="stockJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="repoId != null and repoId != ''">
+				AND a.repo_id = #{repoId}
+			</if>
+			<if test="goodsId != null and goodsId != ''">
+				AND a.goods_id = #{goodsId}
+			</if>
+			<if test="salemanId != null and salemanId != ''">
+				AND a.saleman_id = #{salemanId}
+			</if>
+			<if test="goodsFirstRepoTime != null and goodsFirstRepoTime != ''">
+				AND a.goods_first_repo_time = #{goodsFirstRepoTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Stock">
+		SELECT 
+			<include refid="stockColumns"/>
+		FROM stock a
+		<include refid="stockJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO stock(
+			id,
+			repo_id,
+			goods_id,
+			stock_num,
+			saleman_id,
+			goods_first_repo_time,
+			whole_number,
+			tax_free,
+			occupy_num,
+			pieces_number,
+			tax,
+			tax_amount,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{repoId},
+			#{goodsId},
+			#{stockNum},
+			#{salemanId},
+			#{goodsFirstRepoTime},
+			#{wholeNumber},
+			#{taxFree},
+			#{occupyNum},
+			#{piecesNumber},
+			#{tax},
+			#{taxAmount},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE stock SET 	
+			repo_id = #{repoId},
+			goods_id = #{goodsId},
+			stock_num = #{stockNum},
+			saleman_id = #{salemanId},
+			goods_first_repo_time = #{goodsFirstRepoTime},
+			whole_number = #{wholeNumber},
+			tax_free = #{taxFree},
+			occupy_num = #{occupyNum},
+			pieces_number = #{piecesNumber},
+			tax = #{tax},
+			tax_amount = #{taxAmount},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE stock SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -65,11 +65,11 @@
     <tbody>
     <c:forEach items="${page.list}" var="purchaseBackTicket">
         <tr>
+        	<td><a href="${ctx}/purchase/purchaseBackTicket/form?id=${purchaseBackTicket.id}">
+					${purchaseBackTicket.backTicketNumber}
+				</a></td>
             <td>
                     ${purchaseBackTicket.purchaseOrder.purchaseNumber}
-            </td>
-            <td>
-                    ${purchaseBackTicket.goodsId}
             </td>
             <td>
                     ${purchaseBackTicket.office.name}
