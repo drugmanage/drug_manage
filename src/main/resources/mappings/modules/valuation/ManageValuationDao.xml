@@ -24,6 +24,7 @@
 	</sql>
 
 	<sql id="goodsColumns">
+		g.id AS "goods.id",
 		g.office_id AS "goods.office.id",
 		g.goods_category AS "goods.goodsCategory",
 		g.goods_code AS "goods.goodsCode",

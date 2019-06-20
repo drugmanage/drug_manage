@@ -72,6 +72,8 @@ public class AreaController extends BaseController {
 //			}
 //			area.setCode(area.getParent().getCode() + StringUtils.leftPad(String.valueOf(size > 0 ? size : 1), 4, "0"));
 //		}
+
+
 		model.addAttribute("area", area);
 		return "modules/sys/areaForm";
 	}
